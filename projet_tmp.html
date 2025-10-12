@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>projet.md</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+html,footer,header{
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Custom MD PDF CSS
+ */
+html,footer,header{
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+
+ }
+body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+<link rel="stylesheet" href="file:///r%3A/2.Travail/1.Enseignement/Cours/_1.Outils/2.Developpement/1.SCSS/main.css" type="text/css"><link rel="stylesheet" href="file:///d%3A/rdaros/Cours/_1.Outils/2.Developpement/1.SCSS/main.css" type="text/css">
+</head>
+
+<body>
+    <h1 id="projet-de-g%C3%A9nie-logiciel">Projet de Génie Logiciel</h1>
+<p>VELUZ Jesse - 592040</p>
+<h2 id="sujet">Sujet</h2>
+<ol>
+<li>Ingénierie des - Élicitation : Collecter et catégoriser les différentes exigences. Exigences - Spécification : Créer un Document de Spécification des Exigences Logicielles (SRS). 2. Conception et Architecture Logicielle - Architecture : Concevoir une architecture adaptée à l’application en se basant sur les patterns d’architecture. - Conception : Utiliser des patrons de conception pour concevoir les différentes fonctionnalités de l’application. - Modélisation : Créer des diagrammes UML pour représenter les composants de l’application et leurs interactions. 4. Implémentation - Mise en œuvre : - Utiliser un langage de programmation orienté objet (ex : Java, Python, . . .) pour développer le backend et le frontend de l’application. - Implémenter les fonctionnalités de base en fonction des spécifications de conception et les intégrer dans l’application. - Contrôle de Version : Utiliser Git avec un workflow de branches de fonctionnalités. Chaque nouvelle fonctionnalité est développée dans sa propre branche et fusionnée via un Pull Request. 5. Tests et Assurance Qualité - Tests Unitaires : Effectuer des tests pour les fonctions backend individuelles (ex : logique d’inscription, validation de demande). - Tests d’Intégration : Tester les composants externes intégrés qui sont intégrés dans l’application (ex : S’assurer que la messagerie chat fonctionne correctement). 6. DevOps et CI/CD - Pipeline CI/CD : Mettre en œuvre un pipeline CI/CD pour automatiser le processus de déploiement et surveiller les performances de l’application. 7. Sécurité - Authentification : Hacher les mots de passe dans la base de données (ex : avec bcrypt). - Confidentialité : Ne pas exposer les adresses exactes des utilisateurs 8. Maintenance et Évolution - Documentation : Rédiger un README.md complet avec les instructions d’installation. - Déploiement : Déployer l’application localement ou sur une URL publique.</li>
+</ol>
+<h2 id="exigences">Exigences</h2>
+<h3 id="elicitation">Elicitation</h3>
+<h4 id="fonctionnelles">Fonctionnelles</h4>
+<ol>
+<li>Authentification des Utilisateurs
+<ul>
+<li>Inscription et Profil Utilisateur</li>
+<li>Connexion Sécurisée</li>
+<li>Gestion du Profil</li>
+</ul>
+</li>
+<li>Gestion des Annonces d’Objets
+<ul>
+<li>Créer une Annonce d’Objet</li>
+<li>Parcourir et Rechercher des Annonces</li>
+<li>Voir les Détails d’une Annonce</li>
+</ul>
+</li>
+<li>Gestion des Échanges de Compétences
+<ul>
+<li>Proposer une Compétence</li>
+<li>Parcourir les Compétences</li>
+</ul>
+</li>
+<li>Flux de Transaction d’Échange
+<ul>
+<li>Envoyer une Demande d’Échange</li>
+<li>Gérer les Demandes</li>
+<li>Messagerie</li>
+</ul>
+</li>
+<li>Système de Réputation et de Confiance</li>
+<li>Système de notification</li>
+</ol>
+<h4 id="non-fonctionnelles">Non-fonctionnelles</h4>
+<ul>
+<li>Sécurité : L'application doit garantir la sécurité des données des utilisateurs, y compris le chiffrement des mots de passe et la protection contre les attaques courantes telles que les injections SQL et les attaques XSS.</li>
+<li>Performance : L'application doit être capable de gérer un grand nombre d'utilisateurs simultanés sans dégradation significative des performances.</li>
+<li>Scalabilité : L'architecture de l'application doit permettre une montée en charge facile pour accueillir une croissance future du nombre d'utilisateurs et de données.</li>
+<li>Accessibilité : L'application doit être conforme aux normes d'accessibilité pour garantir que tous les utilisateurs, y compris ceux ayant des handicaps, puissent l'utiliser facilement.</li>
+<li>Compatibilité : L'application doit être compatible avec les principaux navigateurs web (Chrome, Firefox, Safari, Edge) et être responsive pour une utilisation sur différents appareils (ordinateurs, tablettes, smartphones).</li>
+</ul>
+<h3 id="sp%C3%A9cification-srs">Spécification (SRS)</h3>
+<h2 id="conception">Conception</h2>
+<h3 id="architecture">Architecture</h3>
+<p>Pour l'architecture de l'application, j'ai opté pour une architecture en couches qui sépare les différentes préoccupations de l'application. Cette architecture comprend les couches suivantes :</p>
+<ol>
+<li>Couche de Présentation (Frontend) : Cette couche est responsable de l'interface utilisateur. Elle est développée en utilisant...</li>
+<li>Couche Métier (Backend) : Cette couche gère la logique métier de l'application. Elle est développée en utilisant....<br>
+Cette couche traite les demandes des utilisateurs, applique les règles métier et interagit avec la couche de données.</li>
+<li>Couche de Données : Cette couche est responsable de la gestion des données de l'application. Elle utilise... pour stocker les informations des utilisateurs, les annonces, les compétences, etc.</li>
+</ol>
+<h3 id="patron-de-conception">Patron de conception</h3>
+<p>J'ai utilisé plusieurs patrons de conception pour structurer l'application de manière efficace :</p>
+<ul>
+<li>Singleton : Pour gérer la connexion à la base de données, assurant qu'une seule instance de la connexion est utilisée à travers l'application.</li>
+<li>Builder : Pour la création d'objets complexes comme les annonces et les profils utilisateurs, facilitant la construction étape par étape.</li>
+<li>Observer : Pour implémenter le système de notifications, permettant aux utilisateurs de recevoir des mises à jour en temps réel sur les activités pertinentes.</li>
+</ul>
+<h3 id="mod%C3%A9lisation">Modélisation</h3>
+<h2 id="impl%C3%A9mentation">Implémentation</h2>
+<h3 id="frontend">Frontend</h3>
+<h3 id="backend">Backend</h3>
+<h2 id="tests">Tests</h2>
+<h2 id="devops">DevOps</h2>
+<h2 id="s%C3%A9curit%C3%A9">Sécurité</h2>
+<h2 id="maintenance">Maintenance</h2>
+
+</body>
+
+</html>
