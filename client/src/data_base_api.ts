@@ -11,11 +11,11 @@ export default class DataBaseAPI {
         return DataBaseAPI.instance
     }
 
-    public getUser(id: number): string {
-        return JSON.stringify({ name: "Jesse" })
+    public get(collection: string, documentID: number): string {
+        return "{}"
     }
 
-    public saveUser(json: string): void {
-        console.log("Saving user:", json)
+    public save(collection: string, document: string): void {
+        console.log("Saved to " + collection + ": " + document)
     }
 }
