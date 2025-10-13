@@ -1,3 +1,4 @@
 node_modules
-public/script
+client/public/script
 .env
+*.js

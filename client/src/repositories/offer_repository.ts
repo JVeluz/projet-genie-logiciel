@@ -1,6 +1,6 @@
 import DataBaseAPI from "../data_base_api"
 import Offer from "../models/offer"
-import OfferMapper from "./mappers/offer_mapper"
+import OfferMapper from "../mappers/offer_mapper"
 
 export default class OfferRepository {
 
