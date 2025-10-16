@@ -1,5 +1,5 @@
-import Offer from "../models/offer"
-import OfferRepository from "../repositories/offer_repository"
+import Offer from "@models/offer"
+import OfferRepository from "@repositories/offer_repository"
 
 export default class OfferService {
 
@@ -11,5 +11,9 @@ export default class OfferService {
 
     public save(offer: Offer): void {
         this.repository.save(offer)
+    }
+
+    public search(query: string): Offer[] {
+        return this.repository.search(query)
     }
 }

@@ -1,5 +1,5 @@
-import User from "../models/user"
-import UserRepository from "../repositories/user_repository"
+import User from "@models/user"
+import UserRepository from "@repositories/user_repository"
 
 export default class UserService {
 
