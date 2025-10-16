@@ -1,6 +1,6 @@
-import DataBaseAPI from "../data_base_api"
-import User from "../models/user"
-import UserMapper from "../mappers/user_mapper"
+import DataBaseAPI from "@data/data_base_api"
+import User from "@models/user"
+import UserMapper from "@models/user_mapper"
 
 export default class UserRepository {
 

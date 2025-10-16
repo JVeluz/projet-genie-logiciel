@@ -12,8 +12,13 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.ts$/,
         use: 'ts-loader',
         exclude: /node_modules/,
+      },
+      {
+        test: /\.html$/,
+        use: 'raw-loader',
       },
     ],
   },
@@ -30,6 +35,15 @@ module.exports = {
 
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
+    alias: {
+      "@utils": path.resolve(__dirname, "src/utils/"),
+      "@models": path.resolve(__dirname, "src/models/"),
+      "@services": path.resolve(__dirname, "src/services/"),
+      "@repositories": path.resolve(__dirname, "src/repositories/"),
+      "@data": path.resolve(__dirname, "src/data/"),
+      "@pages": path.resolve(__dirname, "src/presentation/pages/"),
+      "@components": path.resolve(__dirname, "src/presentation/components/")
+    }
   },
 
   plugins: [

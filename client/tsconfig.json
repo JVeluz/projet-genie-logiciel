@@ -6,6 +6,30 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "baseUrl": "src",
+    "paths": {
+      "@utils/*": [
+        "utils/*"
+      ],
+      "@models/*": [
+        "models/*"
+      ],
+      "@services/*": [
+        "services/*"
+      ],
+      "@repositories/*": [
+        "repositories/*"
+      ],
+      "@data/*": [
+        "data/*"
+      ],
+      "@pages/*": [
+        "presentation/pages/*"
+      ],
+      "@components/*": [
+        "presentation/components/*"
+      ],
+    }
   },
   "include": [
     "src"
