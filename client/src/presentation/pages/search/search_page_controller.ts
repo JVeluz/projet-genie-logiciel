@@ -1,12 +1,12 @@
-import SearchModel from "./search_model"
+import SearchPageModel from "./search_page_model"
 import Offer from "@models/offer"
 import OfferService from "@services/offer_service"
 
-export default class SearchController {
+export default class SearchPageController {
 
-    private model: SearchModel | null = null
+    private model: SearchPageModel | null = null
 
-    public setModel(model: SearchModel): void {
+    public setModel(model: SearchPageModel): void {
         this.model = model
     }
 

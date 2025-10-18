@@ -1,20 +1,20 @@
 import SearchPage from "./search_page.html"
-import SearchController from "./search_controller"
+import SearchPageController from "./search_page_controller"
 import HTMLParser from "@utils/html_parser"
 import Offer from "@models/offer"
 import Card from "@components/card"
 import Grid from "@components/grid"
 
-export default class SearchView {
+export default class SearchPageView {
 
-    private controller: SearchController | null = null
+    private controller: SearchPageController | null = null
 
     private element: HTMLElement = HTMLParser.parse(SearchPage, true)
     private searchForm: HTMLElement = this.element.querySelector("#search-form") as HTMLElement
     private progressBar: HTMLElement = this.element.querySelector("#progress-bar") as HTMLElement
     private offerContainer: HTMLElement = this.element.querySelector("#offer-container") as HTMLElement
 
-    public setController(controller: SearchController): void {
+    public setController(controller: SearchPageController): void {
         this.controller = controller
     }
 
