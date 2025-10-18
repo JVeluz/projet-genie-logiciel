@@ -1,6 +1,6 @@
-import SearchModel from "@pages/search/search_model"
-import SearchController from "@pages/search/search_controller"
-import SearchView from "@pages/search/search_view"
+import SearchModel from "@pages/search-page/search_page_model"
+import SearchController from "@pages/search-page/search_page_controller"
+import SearchView from "@pages/search-page/search_page_view"
 
 window.addEventListener("DOMContentLoaded", () => {
     const root: HTMLElement = document.getElementById("root")!

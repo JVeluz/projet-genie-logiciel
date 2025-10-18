@@ -1,13 +1,13 @@
-import SearchView from "./search_view"
+import SearchPageView from "./search_page_view"
 import Offer from "@models/offer"
 
-export default class SearchModel {
+export default class SearchPageModel {
 
-    private view: SearchView | null = null
+    private view: SearchPageView | null = null
 
     private offers: Offer[] = []
 
-    public setView(view: SearchView): void {
+    public setView(view: SearchPageView): void {
         this.view = view
     }
 
