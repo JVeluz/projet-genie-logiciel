@@ -4,12 +4,13 @@ export default class UserMapper {
 
     public static fromJSON(json: string): User {
         const data = JSON.parse(json)
-        return new User(data.name)
+        return new User(data.name, data.password)
     }
 
     public static toJSON(user: User): string {
         return JSON.stringify({
-            name: user.getName()
+            name: user.getName(),
+            password: user.getPassword()
         })
     }
 }

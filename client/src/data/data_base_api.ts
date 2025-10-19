@@ -26,4 +26,8 @@ export default class DataBaseAPI {
             '{"title": "Offer 3", "description": "Description 3", "price": 300}'
         ]
     }
+
+    public findByField(collection: string, field: string, value: string): string {
+        return ""
+    }
 }

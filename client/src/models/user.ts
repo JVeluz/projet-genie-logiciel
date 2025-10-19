@@ -1,12 +1,16 @@
 export default class User {
 
-    private name: string
-
-    public constructor(name: string) {
-        this.name = name
-    }
+    public constructor(private name: string, private password: string) { }
 
     public getName(): string {
         return this.name
+    }
+
+    public getPassword(): string {
+        return this.password
+    }
+
+    public getHashedPassword(): string {
+        return this.password
     }
 }
