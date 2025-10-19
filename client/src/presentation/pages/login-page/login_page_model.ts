@@ -1,35 +1,26 @@
-import Model from "@pages/model"
 import LoginPageView from "./login_page_view"
+import Model from "@presentation/mvc/model"
 import User from "@models/user"
 
 
-const USER_NOT_FOUND_MESSAGE: string = "Aucun utilisateur trouvé."
-const PASSWORD_FAILED_MESSAGE: string = "Mot de passe incorrect."
-const REGISTRATION_FAILED_MESSAGE: string = "Échec de l'inscription de l'utilisateur."
-const REGISTRATION_SUCCESS_MESSAGE: string = "Utilisateur enregistré avec succès."
-
-
 export default class LoginPageModel extends Model<LoginPageView> {
+
     private user: User | null = null
+    private loginState: any = {}
+    private registerState: any = {}
 
     public setUser(user: User): void {
         this.user = user
-        this.view?.onLoginSuccess(this.user.getName())
+        this.view?.onUserChanged(this.user)
     }
 
-    public userNotFound(): void {
-        this.view?.onLoginFailure(USER_NOT_FOUND_MESSAGE)
+    public setLoginResponse(success: boolean, user: User | null, isPasswordCorrect: boolean): void {
+        this.loginState = { success, user, isPasswordCorrect }
+        this.view?.onLoginResponse(this.loginState)
     }
 
-    public passwordFailed(): void {
-        this.view?.onLoginFailure(PASSWORD_FAILED_MESSAGE)
-    }
-
-    public userRegistered(): void {
-        this.view?.onRegisterSuccess(REGISTRATION_SUCCESS_MESSAGE)
-    }
-
-    public userRegistrationFailed(): void {
-        this.view?.onRegisterFailure(REGISTRATION_FAILED_MESSAGE)
+    public setRegisterResponse(success: boolean, isEmailTaken: boolean): void {
+        this.registerState = { success, isEmailTaken }
+        this.view?.onRegisterResponse(this.registerState)
     }
 }

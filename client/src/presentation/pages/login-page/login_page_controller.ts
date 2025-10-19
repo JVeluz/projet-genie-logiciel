@@ -1,31 +1,19 @@
-import Controller from "@pages/controller"
+import Controller from "@presentation/mvc/controller"
 import LoginPageModel from "@pages/login-page/login_page_model"
-import UserService, { LoginResponse } from "@services/user_service"
+import UserService, { LoginResponse, RegisterResponse } from "@services/user_service"
 
 
 export default class LoginPageController extends Controller<LoginPageModel> {
 
+    private service: UserService = new UserService()
+
     public handleLogin(email: string, password: string): void {
-        const service: UserService = new UserService()
-        const result: LoginResponse = service.tryLogin(email, password)
-        if (result.user == null) {
-            this.model?.userNotFound()
-            return
-        }
-        if (result.passwordCorrect === false) {
-            this.model?.passwordFailed()
-            return
-        }
-        this.model?.setUser(result.user)
+        const result: LoginResponse = this.service.tryLogin(email, password)
+        this.model?.setLoginResponse(result.success, result.user, result.isPasswordCorrect)
     }
 
     public handleRegister(email: string, password: string): void {
-        const service: UserService = new UserService()
-        const success: boolean = service.tryRegister(email, password)
-        if (success) {
-            this.model?.userRegistered()
-        } else {
-            this.model?.userRegistrationFailed()
-        }
+        const result: RegisterResponse = this.service.tryRegister(email, password)
+        this.model?.setRegisterResponse(result.success, result.isEmailTaken)
     }
 }
