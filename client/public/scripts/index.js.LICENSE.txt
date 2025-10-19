@@ -2,9 +2,21 @@
 
 /*! ./login_page.html */
 
+/*! ./login_page_controller */
+
+/*! ./login_page_model */
+
+/*! ./login_page_view */
+
 /*! ./offer */
 
 /*! ./search_page.html */
+
+/*! ./search_page_controller */
+
+/*! ./search_page_model */
+
+/*! ./search_page_view */
 
 /*! ./user */
 
@@ -16,19 +28,21 @@
 
 /*! @models/offer_mapper */
 
+/*! @models/user */
+
 /*! @models/user_mapper */
 
-/*! @pages/login-page/login_page_controller */
+/*! @pages/controller */
 
-/*! @pages/login-page/login_page_model */
+/*! @pages/login-page/login_page */
 
-/*! @pages/login-page/login_page_view */
+/*! @pages/model */
 
-/*! @pages/search-page/search_page_controller */
+/*! @pages/page */
 
-/*! @pages/search-page/search_page_model */
+/*! @pages/search-page/search_page */
 
-/*! @pages/search-page/search_page_view */
+/*! @pages/view */
 
 /*! @repositories/offer_repository */
 
@@ -72,6 +86,18 @@
   !*** ./src/services/offer_service.ts ***!
   \***************************************/
 
+/*!****************************************!*\
+  !*** ./src/presentation/pages/page.ts ***!
+  \****************************************/
+
+/*!****************************************!*\
+  !*** ./src/presentation/pages/view.ts ***!
+  \****************************************/
+
+/*!*****************************************!*\
+  !*** ./src/presentation/pages/model.ts ***!
+  \*****************************************/
+
 /*!*********************************************!*\
   !*** ./src/presentation/components/card.ts ***!
   \*********************************************/
@@ -85,6 +111,10 @@
   \*********************************************/
 
 /*!**********************************************!*\
+  !*** ./src/presentation/pages/controller.ts ***!
+  \**********************************************/
+
+/*!**********************************************!*\
   !*** ./src/repositories/offer_repository.ts ***!
   \**********************************************/
 
@@ -92,8 +122,16 @@
   !*** ./src/presentation/components/card.html ***!
   \***********************************************/
 
+/*!*********************************************************!*\
+  !*** ./src/presentation/pages/login-page/login_page.ts ***!
+  \*********************************************************/
+
 /*!***********************************************************!*\
   !*** ./src/presentation/pages/login-page/login_page.html ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./src/presentation/pages/search-page/search_page.ts ***!
   \***********************************************************/
 
 /*!*************************************************************!*\

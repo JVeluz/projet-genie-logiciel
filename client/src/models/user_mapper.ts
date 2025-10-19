@@ -10,7 +10,7 @@ export default class UserMapper {
     public static toJSON(user: User): string {
         return JSON.stringify({
             name: user.getName(),
-            password: user.getPassword()
+            password: user.getHashedPassword()
         })
     }
 }

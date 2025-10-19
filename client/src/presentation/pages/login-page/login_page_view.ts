@@ -1,36 +1,42 @@
-import LoginPage from "./login_page.html"
+import View from "@pages/view"
 import LoginPageController from "./login_page_controller"
-import HTMLParser from "@utils/html_parser"
+import HTML from "./login_page.html"
 
-export default class LoginPageView {
 
-    private controller: LoginPageController | null = null
+export default class LoginPageView extends View<LoginPageController> {
 
-    private element: HTMLElement = HTMLParser.parse(LoginPage, true)
-    private loginForm: HTMLFormElement = this.element.querySelector("#login-form") as HTMLFormElement
-    private loginButton: HTMLButtonElement = this.element.querySelector("#login-button") as HTMLButtonElement
-    private registerButton: HTMLButtonElement = this.element.querySelector("#register-button") as HTMLButtonElement
+    private loginForm: HTMLFormElement
+    private loginButton: HTMLButtonElement
+    private registerButton: HTMLButtonElement
 
-    public getElement(): HTMLElement {
-        return this.element
-    }
-
-    public setController(controller: LoginPageController): void {
-        this.controller = controller
+    public constructor() {
+        super()
+        this.setHTML(HTML)
+        this.loginForm = this.element.querySelector("#login-form") as HTMLFormElement
+        this.loginButton = this.element.querySelector("#login-button") as HTMLButtonElement
+        this.registerButton = this.element.querySelector("#register-button") as HTMLButtonElement
         this.connectEvents()
     }
 
-    public connectEvents() {
-        this.loginButton.addEventListener("click", this.onLoginButtonClicked.bind(this))
-        this.registerButton.addEventListener("click", this.onRegisterButtonClicked.bind(this))
+    public connectEvents(): void {
+        this.loginButton.onclick = this.onLoginButtonClicked.bind(this)
+        this.registerButton.onclick = this.onRegisterButtonClicked.bind(this)
     }
 
-    public onUserConnected(userName: string): void {
+    public onLoginSuccess(userName: string): void {
         alert("Welcome, " + userName + "!")
     }
 
-    public onLoginFailed(errorMessage: string): void {
+    public onLoginFailure(errorMessage: string): void {
         alert("Login failed: " + errorMessage)
+    }
+
+    public onRegisterSuccess(message: string): void {
+        alert("Registration successful: " + message)
+    }
+
+    public onRegisterFailure(errorMessage: string): void {
+        alert("Registration failed: " + errorMessage)
     }
 
     private onLoginButtonClicked(event: Event): void {
@@ -43,6 +49,9 @@ export default class LoginPageView {
 
     private onRegisterButtonClicked(event: Event): void {
         event.preventDefault()
-        // Handle registration logic here
+        const formData: FormData = new FormData(this.loginForm)
+        const email: string = formData.get("email") as string
+        const password: string = formData.get("password") as string
+        this.controller?.handleRegister(email, password)
     }
 }

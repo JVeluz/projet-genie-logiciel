@@ -24,4 +24,14 @@ export default class UserService {
         }
         return new LoginResponse(null, false)
     }
+
+    public tryRegister(email: string, password: string): boolean {
+        const existingUser: User | null = this.repository.findByEmail(email)
+        if (existingUser) {
+            return false
+        }
+        const newUser: User = new User(email, password)
+        this.repository.save(newUser)
+        return true
+    }
 }

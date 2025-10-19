@@ -11,6 +11,6 @@ export default class User {
     }
 
     public getHashedPassword(): string {
-        return this.password
+        return this.password + "hashed"
     }
 }

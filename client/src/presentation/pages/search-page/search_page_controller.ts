@@ -1,14 +1,10 @@
 import SearchPageModel from "./search_page_model"
 import Offer from "@models/offer"
+import Controller from "@pages/controller"
 import OfferService from "@services/offer_service"
 
-export default class SearchPageController {
 
-    private model: SearchPageModel | null = null
-
-    public setModel(model: SearchPageModel): void {
-        this.model = model
-    }
+export default class SearchPageController extends Controller<SearchPageModel> {
 
     public handleSearch(query: string): void {
         const service: OfferService = new OfferService()

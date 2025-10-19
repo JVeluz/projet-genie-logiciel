@@ -1,28 +1,30 @@
 import SearchPage from "./search_page.html"
 import SearchPageController from "./search_page_controller"
-import HTMLParser from "@utils/html_parser"
+
 import Offer from "@models/offer"
 import Card from "@components/card"
 import Grid from "@components/grid"
+import View from "@pages/view"
 
-export default class SearchPageView {
 
-    private controller: SearchPageController | null = null
+export default class SearchPageView extends View<SearchPageController> {
 
-    private element: HTMLElement = HTMLParser.parse(SearchPage, true)
-    private searchForm: HTMLElement = this.element.querySelector("#search-form") as HTMLElement
-    private progressBar: HTMLElement = this.element.querySelector("#progress-bar") as HTMLElement
-    private offerContainer: HTMLElement = this.element.querySelector("#offer-container") as HTMLElement
+    private searchForm: HTMLElement
+    private progressBar: HTMLElement
+    private offerContainer: HTMLElement
 
-    public setController(controller: SearchPageController): void {
-        this.controller = controller
+    constructor() {
+        super()
+        this.setHTML(SearchPage)
+        this.searchForm = this.element.querySelector("#search-form") as HTMLElement
+        this.progressBar = this.element.querySelector("#progress-bar") as HTMLElement
+        this.offerContainer = this.element.querySelector("#offer-container") as HTMLElement
+        this.connectEvents()
     }
 
     public connectEvents() {
-        this.searchForm.addEventListener("submit", (event) => this.onSearchFormSubmit(event))
+        this.searchForm.onsubmit = this.onSearchFormSubmit.bind(this)
     }
-
-    public getElement(): HTMLElement { return this.element }
 
     public onOffersUpdated(offers: Offer[]): void {
         const grid: Grid = new Grid()
