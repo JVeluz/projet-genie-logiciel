@@ -1,4 +1,4 @@
-import Model from "@pages/model"
+import Model from "@presentation/mvc/model"
 import SearchPageView from "./search_page_view"
 import Offer from "@models/offer"
 

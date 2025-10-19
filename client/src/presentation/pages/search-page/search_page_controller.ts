@@ -1,6 +1,6 @@
 import SearchPageModel from "./search_page_model"
 import Offer from "@models/offer"
-import Controller from "@pages/controller"
+import Controller from "@presentation/mvc/controller"
 import OfferService from "@services/offer_service"
 
 

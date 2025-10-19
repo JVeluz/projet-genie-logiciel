@@ -41,6 +41,7 @@ module.exports = {
       "@services": path.resolve(__dirname, "src/services/"),
       "@repositories": path.resolve(__dirname, "src/repositories/"),
       "@data": path.resolve(__dirname, "src/data/"),
+      "@presentation": path.resolve(__dirname, "src/presentation/"),
       "@pages": path.resolve(__dirname, "src/presentation/pages/"),
       "@components": path.resolve(__dirname, "src/presentation/components/")
     }

@@ -1,6 +1,6 @@
-import Model from './model'
-import View from './view'
-import Controller from './controller'
+import Model from '../mvc/model'
+import View from '../mvc/view'
+import Controller from '../mvc/controller'
 
 export default abstract class Page {
 

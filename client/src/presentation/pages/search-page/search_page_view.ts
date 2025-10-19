@@ -1,10 +1,10 @@
 import SearchPage from "./search_page.html"
 import SearchPageController from "./search_page_controller"
 
+import View from "@presentation/mvc/view"
 import Offer from "@models/offer"
 import Card from "@components/card"
 import Grid from "@components/grid"
-import View from "@pages/view"
 
 
 export default class SearchPageView extends View<SearchPageController> {

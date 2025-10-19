@@ -23,6 +23,9 @@
       "@data/*": [
         "data/*"
       ],
+      "@presentation/*": [
+        "presentation/*"
+      ],
       "@pages/*": [
         "presentation/pages/*"
       ],
