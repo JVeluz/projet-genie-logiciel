@@ -1,5 +1,21 @@
 export default class Offer {
-    public title: string = ""
-    public description: string = ""
-    public price: number = 0
+
+    constructor(
+        private title: string,
+        private description: string,
+        private price: number,
+    ) { }
+
+    public getTitle(): string {
+        return this.title
+    }
+
+    public getDescription(): string {
+        return this.description
+    }
+
+    public getPrice(): number {
+        return this.price
+    }
+
 }

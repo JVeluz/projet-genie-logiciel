@@ -1,9 +1,17 @@
 export default class User {
 
-    public constructor(private name: string, private password: string) { }
+    public constructor(
+        private name: string,
+        private email: string,
+        private password: string,
+    ) { }
 
     public getName(): string {
         return this.name
+    }
+
+    public getEmail(): string {
+        return this.email
     }
 
     public getPassword(): string {

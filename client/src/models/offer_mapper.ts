@@ -4,18 +4,14 @@ export default class OfferMapper {
 
     public static fromJSON(json: string): Offer {
         const data = JSON.parse(json)
-        const offer = new Offer()
-        offer.title = data.title
-        offer.description = data.description
-        offer.price = data.price
-        return offer
+        return new Offer(data.title, data.description, data.price)
     }
 
     public static toJSON(offer: Offer): string {
         return JSON.stringify({
-            title: offer.title,
-            description: offer.description,
-            price: offer.price
+            title: offer.getTitle(),
+            description: offer.getDescription(),
+            price: offer.getPrice()
         })
     }
 }
