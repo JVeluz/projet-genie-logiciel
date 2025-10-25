@@ -1,12 +1,16 @@
-import OfferPageView from "./offer_page_view";
-import Controller from "@presentation/controller"
+import OfferPageElement from "@presentation/offer_page_element";
 import Offer from "@models/offer"
 import OfferService from "@services/offer_service";
 
 
-export default class OfferPageController extends Controller<OfferPageView> {
+export default class OfferPageController {
 
     private model: Offer[] = [];
+    private view: OfferPageElement;
+
+    public constructor(view: OfferPageElement) {
+        this.view = view;
+    }
 
     public onSubmit(event: Event): void {
         event.preventDefault();

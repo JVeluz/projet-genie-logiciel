@@ -2,8 +2,6 @@ import User from "@models/user"
 import UserRepository from "@data/user_repository"
 
 
-const LOGIN_SUCCESS: any = { success: true, isPasswordCorrect: true }
-const REGISTER_SUCCESS: any = { success: true, isEmailTaken: false }
 const LOGIN_FAILED: any = { success: false }
 const REGISTER_FAILED: any = { success: false }
 const LOGIN_WRONG_PASSWORD: any = { success: false, isPasswordCorrect: false }
@@ -31,7 +29,7 @@ export default class UserService {
         if (user.getHashedPassword() !== password) {
             return LOGIN_WRONG_PASSWORD;
         }
-        return LOGIN_SUCCESS;
+        return { success: true, isPasswordCorrect: true, user: user };
     }
 
     public tryRegister(name: string, email: string, password: string): any {
@@ -41,6 +39,6 @@ export default class UserService {
         }
         const newUser: User = new User(name, email, password);
         this.repository.save(newUser);
-        return REGISTER_SUCCESS;
+        return { success: true, isEmailTaken: false, user: newUser };
     }
 }

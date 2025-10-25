@@ -1,21 +1,21 @@
-import OfferPageController from "./offer_page_controller";
-import HTML from "./offer_page.html";
-import HTMLLoader from "@utils/html_loader";
+import OfferPageController from "./controllers/offer_page_controller";
+import HTML from "./html/offer_page.html";
 
 import Offer from "@models/offer";
 
-import Card from "@components/card";
-import Grid from "@components/grid";
+import Card from "@presentation/card_element";
+import Grid from "@presentation/grid_element";
 
 
-export default class OfferPageView extends HTMLElement {
+export default class OfferPageElement extends HTMLElement {
 
     private controller!: OfferPageController;
+
     private offerContainer!: HTMLElement;
     private form!: HTMLFormElement;
 
     public connectedCallback(): void {
-        this.innerHTML = HTMLLoader.load(HTML);
+        this.innerHTML = HTML;
         this.controller = new OfferPageController(this);
 
         this.offerContainer = this.querySelector("#offer-container")!;
@@ -36,4 +36,4 @@ export default class OfferPageView extends HTMLElement {
     }
 }
 
-customElements.define("offer-page-view", OfferPageView);
+customElements.define("app-offer-page", OfferPageElement);

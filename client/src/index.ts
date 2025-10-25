@@ -1,9 +1,12 @@
-import Application from "./application"
+// Load custom elements
+import "@presentation/offer_page_element";
+import "@presentation/login_element";
+import "@presentation/navbar_element";
+import "@presentation/card_element";
+import "@presentation/grid_element";
 
-import "@pages/offer-page/offer_page_view";
-import "@components/card";
-import "@components/grid";
+const navbar: HTMLElement = document.createElement("app-navbar");
+const offerPage: HTMLElement = document.createElement("app-offer-page");
 
-const offerPageView: HTMLElement = document.createElement("offer-page-view");
-
-Application.getInstance().changeView(offerPageView);
+document.body.prepend(navbar);
+document.body.appendChild(offerPage);

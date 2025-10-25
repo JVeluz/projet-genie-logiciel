@@ -1,4 +1,4 @@
-export default class Grid extends HTMLElement {
+export default class GridElement extends HTMLElement {
 
     public connectedCallback(): void {
         this.classList.add("row", "row-cols-1", "row-cols-md-2", "g-4")
@@ -12,4 +12,4 @@ export default class Grid extends HTMLElement {
     }
 }
 
-customElements.define("app-grid", Grid);
+customElements.define("app-grid", GridElement);

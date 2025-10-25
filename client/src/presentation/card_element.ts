@@ -1,10 +1,9 @@
-import HTMLLoader from "@utils/html_loader"
-import HTML from "./card.html"
+import HTML from "./html/card.html";
 
-export default class Card extends HTMLElement {
+export default class CardElement extends HTMLElement {
 
     public connectedCallback(): void {
-        this.innerHTML = HTMLLoader.load(HTML);
+        this.innerHTML = HTML;
     }
 
     public async setTitle(title: string): Promise<void> {
@@ -20,4 +19,4 @@ export default class Card extends HTMLElement {
     }
 }
 
-customElements.define("app-card", Card);
+customElements.define("app-card", CardElement);
