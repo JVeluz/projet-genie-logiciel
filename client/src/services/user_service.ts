@@ -1,59 +1,46 @@
 import User from "@models/user"
-import UserRepository from "@repositories/user_repository"
+import UserRepository from "@data/user_repository"
 
 
-export class LoginResponse {
-    public constructor(
-        public success: boolean,
-        public isPasswordCorrect: boolean,
-        public user: User | null = null,
-    ) { }
-    public static wrongPassword(): LoginResponse { return new LoginResponse(false, false) }
-    public static userNotFound(): LoginResponse { return new LoginResponse(false, true) }
-    public static success(user: User): LoginResponse { return new LoginResponse(true, true, user) }
-}
-
-export class RegisterResponse {
-    public constructor(
-        public success: boolean,
-        public isEmailTaken: boolean,
-        public user: User | null = null,
-    ) { }
-    public static emailTaken(): RegisterResponse { return new RegisterResponse(false, true) }
-    public static success(user: User): RegisterResponse { return new RegisterResponse(true, false, user) }
-}
+const LOGIN_SUCCESS: any = { success: true, isPasswordCorrect: true }
+const REGISTER_SUCCESS: any = { success: true, isEmailTaken: false }
+const LOGIN_FAILED: any = { success: false }
+const REGISTER_FAILED: any = { success: false }
+const LOGIN_WRONG_PASSWORD: any = { success: false, isPasswordCorrect: false }
+const LOGIN_USER_NOT_FOUND: any = { success: false, isPasswordCorrect: true }
+const REGISTER_EMAIL_TAKEN: any = { success: false, isEmailTaken: true }
 
 
 export default class UserService {
 
-    private repository: UserRepository = new UserRepository()
+    private repository: UserRepository = new UserRepository();
 
     public get(id: number): User {
-        return this.repository.get(id)
+        return this.repository.get(id);
     }
 
     public save(user: User): void {
-        this.repository.save(user)
+        this.repository.save(user);
     }
 
-    public tryLogin(email: string, password: string): LoginResponse {
-        const user: User | null = this.repository.findByEmail(email)
+    public tryLogin(email: string, password: string): any {
+        const user: User | null = this.repository.findByEmail(email);
         if (user === null) {
-            return LoginResponse.userNotFound()
+            return LOGIN_USER_NOT_FOUND;
         }
         if (user.getHashedPassword() !== password) {
-            return LoginResponse.wrongPassword()
+            return LOGIN_WRONG_PASSWORD;
         }
-        return LoginResponse.success(user)
+        return LOGIN_SUCCESS;
     }
 
-    public tryRegister(email: string, password: string): RegisterResponse {
-        const existingUser: User | null = this.repository.findByEmail(email)
+    public tryRegister(name: string, email: string, password: string): any {
+        const existingUser: User | null = this.repository.findByEmail(email);
         if (existingUser) {
-            return RegisterResponse.emailTaken()
+            return REGISTER_EMAIL_TAKEN;
         }
-        const newUser: User = new User(email, password)
-        this.repository.save(newUser)
-        return RegisterResponse.success(newUser)
+        const newUser: User = new User(name, email, password);
+        this.repository.save(newUser);
+        return REGISTER_SUCCESS;
     }
 }

@@ -1,16 +1,9 @@
-import Page from "@pages/page"
-import SearchPage from "@pages/search-page/search_page"
-import LoginPage from "@pages/login-page/login_page"
+import Application from "./application"
 
+import "@pages/offer-page/offer_page_view";
+import "@components/card";
+import "@components/grid";
 
-function changePage(page: Page): void {
-    const root: HTMLElement = document.getElementById("root")!
-    root.innerHTML = ""
-    root.appendChild(page.getElement())
-}
+const offerPageView: HTMLElement = document.createElement("offer-page-view");
 
-window.addEventListener("DOMContentLoaded", () => {
-    const loginPage = new LoginPage()
-    const searchPage = new SearchPage()
-    changePage(loginPage)
-})
+Application.getInstance().changeView(offerPageView);

@@ -23,11 +23,6 @@ module.exports = {
     ],
   },
 
-  optimization: {
-    minimize: true,
-    usedExports: true,
-  },
-
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'public/scripts'),

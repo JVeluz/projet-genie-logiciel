@@ -1,5 +1,5 @@
 import Offer from "@models/offer"
-import OfferRepository from "@repositories/offer_repository"
+import OfferRepository from "@data/offer_repository"
 
 export default class OfferService {
 
