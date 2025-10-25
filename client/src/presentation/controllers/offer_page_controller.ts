@@ -1,4 +1,4 @@
-import OfferPageElement from "@presentation/offer_page_element";
+import OfferPageElement from "@presentation/elements/offer_page_element";
 import Offer from "@models/offer"
 import OfferService from "@services/offer_service";
 

@@ -1,9 +1,9 @@
 // Load custom elements
-import "@presentation/offer_page_element";
-import "@presentation/login_element";
-import "@presentation/navbar_element";
-import "@presentation/card_element";
-import "@presentation/grid_element";
+import "@elements/offer_page_element";
+import "@elements/login_element";
+import "@elements/navbar_element";
+import "@elements/card_element";
+import "@elements/grid_element";
 
 const navbar: HTMLElement = document.createElement("app-navbar");
 const offerPage: HTMLElement = document.createElement("app-offer-page");

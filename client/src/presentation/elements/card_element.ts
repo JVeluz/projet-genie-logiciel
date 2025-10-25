@@ -1,4 +1,5 @@
-import HTML from "./html/card.html";
+import HTML from "@html/card.html";
+
 
 export default class CardElement extends HTMLElement {
 

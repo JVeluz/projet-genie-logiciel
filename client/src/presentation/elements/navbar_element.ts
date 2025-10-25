@@ -1,4 +1,5 @@
-import HTML from "./html/navbar.html";
+import HTML from "@html/navbar.html";
+
 
 export default class NavbarElement extends HTMLElement {
 

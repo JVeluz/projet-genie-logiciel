@@ -17,20 +17,20 @@
       "@services/*": [
         "services/*"
       ],
-      "@repositories/*": [
-        "repositories/*"
-      ],
       "@data/*": [
         "data/*"
       ],
       "@presentation/*": [
         "presentation/*"
       ],
-      "@pages/*": [
-        "presentation/pages/*"
+      "@controllers/*": [
+        "presentation/controllers/*"
       ],
-      "@components/*": [
-        "presentation/components/*"
+      "@elements/*": [
+        "presentation/elements/*"
+      ],
+      "@html/*": [
+        "presentation/html/*"
       ],
     }
   },

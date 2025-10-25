@@ -1,5 +1,5 @@
-import HTML from "./html/login.html";
-import LoginController from "./controllers/login_controller";
+import HTML from "@html/login.html";
+import LoginController from "@controllers/login_controller";
 
 import User from "@models/user";
 

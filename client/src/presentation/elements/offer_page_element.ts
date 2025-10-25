@@ -1,10 +1,9 @@
-import OfferPageController from "./controllers/offer_page_controller";
-import HTML from "./html/offer_page.html";
-
+import HTML from "@html/offer_page.html";
 import Offer from "@models/offer";
+import Card from "@elements/card_element";
+import Grid from "@elements/grid_element";
 
-import Card from "@presentation/card_element";
-import Grid from "@presentation/grid_element";
+import OfferPageController from "@controllers/offer_page_controller";
 
 
 export default class OfferPageElement extends HTMLElement {

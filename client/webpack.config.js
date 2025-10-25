@@ -31,14 +31,13 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
     alias: {
-      "@utils": path.resolve(__dirname, "src/utils/"),
       "@models": path.resolve(__dirname, "src/models/"),
       "@services": path.resolve(__dirname, "src/services/"),
-      "@repositories": path.resolve(__dirname, "src/repositories/"),
       "@data": path.resolve(__dirname, "src/data/"),
       "@presentation": path.resolve(__dirname, "src/presentation/"),
-      "@pages": path.resolve(__dirname, "src/presentation/pages/"),
-      "@components": path.resolve(__dirname, "src/presentation/components/")
+      "@controllers": path.resolve(__dirname, "src/presentation/controllers/"),
+      "@elements": path.resolve(__dirname, "src/presentation/elements/"),
+      "@html": path.resolve(__dirname, "src/presentation/html/"),
     }
   },
 
