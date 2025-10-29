@@ -1,0 +1,42 @@
+<navbar-element></navbar-element>
+
+<div class="pt-4"></div>
+
+<main class="container main-container d-flex align-items-center justify-content-center py-5">
+    <div class="col-12 col-md-8 col-lg-5 col-xl-4">
+        <div class="card shadow-lg border-0 rounded-3">
+            <div class="card-body p-4 p-md-5">
+
+                <h2 class="card-title text-center fw-bold text-primary mb-4">Connexion</h2>
+
+                <form is="login-element">
+                    <!-- Champ Email -->
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" name="email" id="floatingEmail"
+                            placeholder="votre.email@exemple.com" required>
+                        <label for="floatingEmail">Adresse Email</label>
+                    </div>
+
+                    <!-- Champ Mot de passe -->
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" name="password" id="floatingPassword"
+                            placeholder="Mot de passe" required>
+                        <label for="floatingPassword">Mot de passe</label>
+                    </div>
+
+                    <!-- Bouton de Soumission -->
+                    <div class="d-grid mb-3">
+                        <button class="btn btn-primary btn-lg fw-bold" type="submit">Se connecter</button>
+                    </div>
+
+                    <!-- Lien vers l'inscription -->
+                    <div class="text-center">
+                        <small class="text-muted">Pas encore de compte ? <a href="/register"
+                                class="fw-bold text-primary">S'inscrire</a></small>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</main>

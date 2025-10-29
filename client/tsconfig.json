@@ -1,15 +1,16 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
-    "module": "ES2022",
-    "strict": true,
+    "target": "ES2020",
+    "module": "esnext", // ou "commonjs"
+    "moduleResolution": "node",
     "esModuleInterop": true,
+    "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": "src",
     "paths": {
-      "@utils/*": [
-        "utils/*"
+      "@core/*": [
+        "core/*"
       ],
       "@models/*": [
         "models/*"
@@ -19,9 +20,6 @@
       ],
       "@data/*": [
         "data/*"
-      ],
-      "@presentation/*": [
-        "presentation/*"
       ],
       "@controllers/*": [
         "presentation/controllers/*"

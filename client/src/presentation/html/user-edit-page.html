@@ -1,0 +1,137 @@
+<!-- La navbar est incluse ici (composant personnalisé) -->
+<navbar-element></navbar-element>
+
+<!-- Contenu Principal -->
+<main class="container py-5">
+    <!-- Changement de la structure en 2 colonnes avec g-5 pour l'espacement -->
+    <div class="row g-5 justify-content-center">
+
+        <!-- COLONNE 1: FORMULAIRE D'ÉDITION -->
+        <div class="col-12 col-lg-7">
+
+            <h2 class="text-center fw-bold text-primary mb-4">Modifier votre profil</h2>
+
+            <!-- Carte principale contenant le formulaire -->
+            <div class="card shadow-lg border-0">
+                <div class="card-body p-4 p-md-5">
+
+                    <form>
+
+                        <!-- Champ Avatar -->
+                        <div class="mb-3 text-center">
+                            <label for="edit-avatar" class="form-label fw-bold">Photo de profil</label>
+                            <div>
+                                <img src="https://placehold.co/120x120/17A2B8/ffffff?text=U"
+                                    class="img-thumbnail rounded-circle mb-3" alt="Avatar actuel" width="120"
+                                    height="120">
+                            </div>
+                            <!-- ID ajouté pour le script -->
+                            <input class="form-control" type="file" accept="image/*" id="edit-avatar">
+                        </div>
+
+                        <!-- Champ Nom -->
+                        <div class="mb-3">
+                            <label for="edit-name" class="form-label fw-bold">Votre Nom</label>
+                            <!-- ID ajouté pour le script -->
+                            <input type="text" class="form-control" value="Alice Dubois" required id="edit-name">
+                        </div>
+
+                        <!-- Champ Email -->
+                        <div class="mb-3">
+                            <label for="edit-email" class="form-label fw-bold">Adresse Email</label>
+                            <!-- ID ajouté pour le script -->
+                            <input type="email" class="form-control" value="alice.dubois@exemple.com" required
+                                id="edit-email">
+                        </div>
+
+                        <!-- Champ Biographie -->
+                        <div class="mb-3">
+                            <label for="edit-bio" class="form-label fw-bold">Ma biographie</label>
+                            <!-- ID ajouté pour le script -->
+                            <textarea class="form-control" rows="4"
+                                id="edit-bio">J'aime le jardinage et les échanges de services.</textarea>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <!-- Boutons d'action -->
+                        <div class="d-flex flex-wrap justify-content-between align-items-center">
+                            <button type="submit" class="btn btn-primary btn-lg mb-2">
+                                <i class="bi bi-check-circle me-2"></i>Enregistrer
+                            </button>
+                            <a href="/profile" class="btn btn-outline-secondary mb-2">
+                                Annuler
+                            </a>
+                            <button type="button" class="btn btn-outline-danger mb-2" data-bs-toggle="modal"
+                                data-bs-target="#deleteUserModal">
+                                <i class="bi bi-trash me-2"></i>Supprimer le compte
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div> <!-- Fin de la colonne formulaire -->
+
+        <!-- COLONNE 2: APERÇU DE LA CARTE -->
+        <div class="col-12 col-lg-5">
+            <!-- sticky-top garde l'aperçu visible pendant le scroll -->
+            <div class="sticky-top" style="top: 5rem;">
+                <h4 class="text-center text-primary mb-4">Aperçu de la carte</h4>
+
+                <!-- Carte d'aperçu -->
+                <div class="card shadow-lg text-center p-3">
+                    <div class="card-body">
+
+                        <user-element>
+                            <img src="https://placehold.co/120x120/17A2B8/ffffff?text=U" alt="Aperçu Avatar" width="120"
+                                height="120"
+                                class="user-avatar rounded-circle mb-3 border border-3 border-primary shadow">
+
+                            <h5 class="user-name fw-bold mb-1">
+                                ?
+                            </h5>
+
+                            <p class="user-bio text-muted fst-italic">
+                                ?
+                            </p>
+
+                            <p class="user-rating mb-3 text-warning">⭐⭐⭐⭐⭐ <small class="text-muted">(Aperçu)</small>
+                            </p>
+
+                            <a href="#" class="btn btn-outline-primary w-100 mt-2 disabled" tabindex="-1"
+                                aria-disabled="true">
+                                Voir le Profil
+                            </a>
+                        </user-element>
+
+                    </div>
+                </div>
+            </div>
+        </div> <!-- Fin de la colonne aperçu -->
+
+    </div>
+</main>
+
+<!-- Modal de Confirmation de Suppression de Compte (Inchangé) -->
+<div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger" id="deleteUserModalLabel">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>Confirmer la suppression du compte
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Êtes-vous sûr de vouloir supprimer votre compte ? <br>
+                Toutes vos annonces et informations seront définitivement perdues.
+                <br><strong>Cette action est irréversible.</strong>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-danger">Oui, supprimer mon compte</button>
+            </div>
+        </div>
+    </div>
+</div>

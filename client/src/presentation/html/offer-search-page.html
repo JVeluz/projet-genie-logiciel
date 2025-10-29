@@ -1,0 +1,63 @@
+<navbar-element></navbar-element>
+
+<div class="pt-4"></div>
+
+<main class="container">
+    <div class="row">
+        <aside class="col-lg-3 mb-4">
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-primary text-white fw-bold">
+                    Filtres de Recherche
+                </div>
+                <div class="card-body">
+
+                    <form id="filter-form">
+                        <h6 class="card-title text-muted mb-3">Catégorie</h6>
+                        <div class="form-check mb-2">
+                            <input checked name="enable-objects" class="form-check-input" type="checkbox"
+                                id="filter-objects" value="true">
+                            <label class="form-check-label" for="filter-objects">Objets</label>
+                        </div>
+                        <div class="form-check">
+                            <input checked name="enable-skills" class="form-check-input" type="checkbox"
+                                id="filter-skills" value="true">
+                            <label class="form-check-label" for="filter-skills">Compétences</label>
+                        </div>
+
+                        <hr class="my-3">
+
+                        <h6 class="card-title text-muted mb-3">Localisation</h6>
+                        <input name="location" type="text" class="form-control" placeholder="Ville ou code postal"
+                            aria-label="Localisation">
+
+                        <hr class="my-3">
+
+                        <button class="btn btn-primary w-100 mt-2" type="submit">Appliquer les filtres</button>
+                    </form>
+
+                </div>
+            </div>
+
+        </aside>
+
+        <section class="col-lg-9">
+
+            <form id="search-form" class="mb-4">
+                <div class="input-group input-group-lg shadow-sm">
+                    <input name="input" class="form-control border-end-0"
+                        placeholder="Rechercher des objets ou des compétences..." aria-label="Rechercher">
+                    <button class="btn btn-warning" type="submit" aria-label="Lancer la recherche">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </form>
+
+            <h2 class="mb-3">Annonces Disponibles</h2>
+
+            <div class="offer-container row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+            </div>
+
+        </section>
+    </div>
+</main>

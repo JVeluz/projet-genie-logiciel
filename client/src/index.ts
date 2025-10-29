@@ -1,12 +1,10 @@
-// Load custom elements
-import "@elements/offer_page_element";
-import "@elements/login_element";
-import "@elements/navbar_element";
-import "@elements/card_element";
-import "@elements/grid_element";
+import Application from "@core/Application";
 
-const navbar: HTMLElement = document.createElement("app-navbar");
-const offerPage: HTMLElement = document.createElement("app-offer-page");
+// Chargement des éléments personnalisés
+import "./loader";
 
-document.body.prepend(navbar);
-document.body.appendChild(offerPage);
+// Configuration du routeur
+import "./router"
+
+// Initialisation de l'application
+Application.getInstance();

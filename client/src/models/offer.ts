@@ -1,21 +1,17 @@
+import User from "./User";
+
 export default class Offer {
 
-    constructor(
-        private title: string,
-        private description: string,
-        private price: number,
-    ) { }
+    public id!: number;
+    public title!: string;
+    public description!: string;
+    public price!: number;
+    public available!: boolean;
+    public seller!: User;
+    public category!: string;
 
-    public getTitle(): string {
-        return this.title
-    }
-
-    public getDescription(): string {
-        return this.description
-    }
-
-    public getPrice(): number {
-        return this.price
-    }
-
+    public askExchange?: string;
+    public location?: string;
+    public pictures?: string[];
+    public comments?: string[];
 }
