@@ -23,7 +23,6 @@ export default function navigateTo(fullPath: string): void {
 
 window.onpopstate = () => renderCurrentPage();
 
-
 const initialPath = window.location.pathname + window.location.search;
 history.replaceState(null, "", initialPath);
 renderCurrentPage();
