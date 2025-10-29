@@ -781,7 +781,7 @@ class OfferElement extends HTMLElement {
             descriptionElement.textContent = offer.description;
         }
         if (lookupButton) {
-            lookupButton.href = `/offer?id=${offer.id}`;
+            lookupButton.href = `./offer?id=${offer.id}`;
         }
     }
 }
