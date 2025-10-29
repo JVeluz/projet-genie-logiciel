@@ -1113,10 +1113,22 @@ function navigateTo(fullPath) {
     history.pushState(null, "", fullPath);
     renderCurrentPage();
 }
-window.onpopstate = () => renderCurrentPage();
 const initialPath = window.location.pathname + window.location.search;
 history.replaceState(null, "", initialPath);
 renderCurrentPage();
+window.onpopstate = () => renderCurrentPage();
+window.addEventListener('click', (event) => {
+    const anchor = event.target.closest('a');
+    if (!anchor) {
+        return; // Ce n'est pas un clic sur un lien, on ne fait rien.
+    }
+    const href = anchor.getAttribute('href');
+    if (href && href.startsWith('/')) {
+        // Empêche le navigateur de recharger la page
+        event.preventDefault();
+        navigateTo(href);
+    }
+});
 
 
 /***/ }),

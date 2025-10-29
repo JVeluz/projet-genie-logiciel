@@ -21,8 +21,21 @@ export default function navigateTo(fullPath: string): void {
     renderCurrentPage();
 }
 
-window.onpopstate = () => renderCurrentPage();
-
 const initialPath = window.location.pathname + window.location.search;
 history.replaceState(null, "", initialPath);
 renderCurrentPage();
+
+window.onpopstate = () => renderCurrentPage();
+
+window.addEventListener('click', (event: Event) => {
+    const anchor = (event.target as HTMLElement).closest('a');
+    if (!anchor) {
+        return; // Ce n'est pas un clic sur un lien, on ne fait rien.
+    }
+    const href = anchor.getAttribute('href');
+    if (href && href.startsWith('/')) {
+        // Empêche le navigateur de recharger la page
+        event.preventDefault();
+        navigateTo(href);
+    }
+});
