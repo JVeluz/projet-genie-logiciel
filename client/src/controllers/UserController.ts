@@ -1,4 +1,4 @@
-import UserElement from "@elements/UserElement";
+import UserElement from "../elements/UserElement";
 
 export default class UserController {
 

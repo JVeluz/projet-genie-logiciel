@@ -1,9 +1,9 @@
-import HTML from "@html/offer-search-page.html";
+import HTML from "../html/offer-search-page.html";
 
-import SearchPageController from "@controllers/SearchPageController";
+import SearchPageController from "../controllers/SearchPageController";
 
-import OfferCardHTML from "@html/offer-card.html";
-import OfferElement from "elements/OfferElement";
+import OfferCardHTML from "../html/offer-card.html";
+import OfferElement from "../elements/OfferElement";
 
 
 export default class OfferSearchPage extends HTMLElement {

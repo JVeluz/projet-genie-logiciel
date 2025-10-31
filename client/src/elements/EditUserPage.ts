@@ -1,7 +1,7 @@
-import HTML from "@html/user-edit-page.html";
-import UserElement from "@elements/UserElement";
-import ApplicationModel from "@core/ApplicationModel";
-import User from "@models/User";
+import HTML from "../html/user-edit-page.html";
+import UserElement from "../elements/UserElement";
+import ApplicationModel from "../core/ApplicationModel";
+import User from "../models/User";
 
 
 export default class EditUserPage extends HTMLElement {

@@ -1,6 +1,6 @@
-import HTML from "@html/user-page.html";
-import UserElement from "@elements/UserElement";
-import UserController from "@controllers/UserController";
+import HTML from "../html/user-page.html";
+import UserElement from "../elements/UserElement";
+import UserController from "../controllers/UserController";
 
 
 export default class UserPage extends HTMLElement {

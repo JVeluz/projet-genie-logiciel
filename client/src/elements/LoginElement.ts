@@ -1,4 +1,4 @@
-import LoginController from "@controllers/LoginController";
+import LoginController from "../controllers/LoginController";
 
 export default class LoginElement extends HTMLFormElement {
 

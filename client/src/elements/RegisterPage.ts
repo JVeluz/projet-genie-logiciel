@@ -1,5 +1,5 @@
-import RegisterController from "@controllers/RegisterController";
-import HTML from "@html/register-page.html";
+import RegisterController from "../controllers/RegisterController";
+import HTML from "../html/register-page.html";
 
 
 export default class RegisterPage extends HTMLElement {

@@ -1,4 +1,4 @@
-import HTML from "@html/login-page.html";
+import HTML from "../html/login-page.html";
 
 export default class LoginPage extends HTMLElement {
 

@@ -1,4 +1,4 @@
-import HTML from "@html/create-offer-page.html";
+import HTML from "../html/create-offer-page.html";
 
 export default class CreateOfferPageElement extends HTMLElement {
 

@@ -1,6 +1,6 @@
-import OfferEditorController from "@controllers/OfferEditorController";
-import HTML from "@html/offer-edit-page.html";
-import Offer from "@models/Offer";
+import OfferEditorController from "../controllers/OfferEditorController";
+import HTML from "../html/offer-edit-page.html";
+import Offer from "../models/Offer";
 
 
 export default class EditOfferPage extends HTMLElement {

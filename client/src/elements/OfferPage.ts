@@ -1,6 +1,6 @@
-import HTML from "@html/offer-page.html";
-import OfferElement from "@elements/OfferElement";
-import OfferController from "@controllers/OfferController";
+import HTML from "../html/offer-page.html";
+import OfferElement from "../elements/OfferElement";
+import OfferController from "../controllers/OfferController";
 
 
 export default class OfferPage extends HTMLElement {

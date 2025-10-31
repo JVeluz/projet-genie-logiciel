@@ -1,5 +1,5 @@
-import User from "@models/User";
-import OfferElement from "@elements/OfferElement";
+import User from "../models/User";
+import OfferElement from "../elements/OfferElement";
 
 
 export default class UserElement extends HTMLElement {

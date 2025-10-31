@@ -1,6 +1,6 @@
-import ApplicationModel from "@core/ApplicationModel";
-import NavbarElement from "@elements/NavbarElement";
-import User from "@models/User";
+import ApplicationModel from "../core/ApplicationModel";
+import NavbarElement from "../elements/NavbarElement";
+import User from "../models/User";
 
 
 export default class NavbarController {

@@ -1,6 +1,6 @@
-import Offer from "@models/Offer";
-import UserElement from "@elements/UserElement";
-import UserController from "@controllers/UserController";
+import Offer from "../models/Offer";
+import UserElement from "../elements/UserElement";
+import UserController from "../controllers/UserController";
 
 
 export default class OfferElement extends HTMLElement {

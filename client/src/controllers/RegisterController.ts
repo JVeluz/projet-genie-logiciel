@@ -1,5 +1,5 @@
-import ApplicationModel from "@core/ApplicationModel";
-import UserService from "@services/UserService";
+import ApplicationModel from "../core/ApplicationModel";
+import UserService from "../services/UserService";
 
 export default class RegisterController {
 

@@ -1,9 +1,9 @@
-import LoginController from "@controllers/LoginController";
-import NavbarController from "@controllers/NavbarController";
-import ApplicationModel from "@core/ApplicationModel";
-import HTML from "@html/navbar-element.html";
-import User from "@models/User";
-import UserElement from "@elements/UserElement";
+import LoginController from "../controllers/LoginController";
+import NavbarController from "../controllers/NavbarController";
+import ApplicationModel from "../core/ApplicationModel";
+import HTML from "../html/navbar-element.html";
+import User from "../models/User";
+import UserElement from "../elements/UserElement";
 
 
 export default class NavbarElement extends HTMLElement {

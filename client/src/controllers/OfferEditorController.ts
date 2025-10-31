@@ -1,5 +1,5 @@
-import Offer from "@models/Offer";
-import EditOfferPage from "elements/EditOfferPage";
+import Offer from "../models/Offer";
+import EditOfferPage from "../elements/EditOfferPage";
 
 export default class OfferController {
 

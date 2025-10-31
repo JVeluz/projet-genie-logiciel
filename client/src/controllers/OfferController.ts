@@ -1,5 +1,5 @@
-import Offer from "@models/Offer";
-import OfferElement from "@elements/OfferElement";
+import Offer from "../models/Offer";
+import OfferElement from "../elements/OfferElement";
 
 
 export default class OfferController {
