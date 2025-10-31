@@ -1,5 +1,3 @@
-import User from "./User";
-
 export default class Offer {
 
     public id!: number;
@@ -7,7 +5,7 @@ export default class Offer {
     public description!: string;
     public price!: number;
     public available!: boolean;
-    public seller!: User;
+    public sellerID!: number;
     public category!: string;
 
     public askExchange?: string;

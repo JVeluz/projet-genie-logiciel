@@ -25,16 +25,15 @@ const initialPath = window.location.pathname + window.location.search;
 history.replaceState(null, "", initialPath);
 renderCurrentPage();
 
+// Gérer la navigation via les boutons Précédent/Suivant du navigateur
 window.onpopstate = () => renderCurrentPage();
 
+// Intercepter les clics sur les liens internes
 window.addEventListener('click', (event: Event) => {
     const anchor = (event.target as HTMLElement).closest('a');
-    if (!anchor) {
-        return; // Ce n'est pas un clic sur un lien, on ne fait rien.
-    }
+    if (!anchor) return;
     const href = anchor.getAttribute('href');
     if (href && href.startsWith('/')) {
-        // Empêche le navigateur de recharger la page
         event.preventDefault();
         navigateTo(href);
     }

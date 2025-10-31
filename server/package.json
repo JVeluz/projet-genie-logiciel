@@ -1,0 +1,19 @@
+{
+  "scripts": {
+    "start": "node public/index.js",
+    "build": "tsc",
+    "dev": "node --watch --env-file=.env public/index.js"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/express": "^5.0.5",
+    "@types/jsonwebtoken": "^9.0.10",
+    "express": "^5.1.0",
+    "mongoose": "^8.19.2",
+    "ts-loader": "^9.5.4"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

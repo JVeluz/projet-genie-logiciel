@@ -1,15 +1,15 @@
-import OfferSearchPage from "@elements/OfferSearchPage";
-import LoginPage from "@elements/LoginPage";
-import RegisterPage from "@elements/RegisterPage";
-import OfferPage from "@elements/OfferPage";
-import UserPage from "@elements/UserPage";
-import EditOfferPage from "@elements/EditOfferPage";
-import EditUserPage from "@elements/EditUserPage";
+import OfferSearchPage from "elements/OfferSearchPage";
+import LoginPage from "elements/LoginPage";
+import RegisterPage from "elements/RegisterPage";
+import OfferPage from "elements/OfferPage";
+import UserPage from "elements/UserPage";
+import EditOfferPage from "elements/EditOfferPage";
+import EditUserPage from "elements/EditUserPage";
 
-import LoginElement from "@elements/LoginElement";
-import NavbarElement from "@elements/NavbarElement";
-import OfferElement from "@elements/OfferElement";
-import UserElement from "@elements/UserElement";
+import LoginElement from "elements/LoginElement";
+import NavbarElement from "elements/NavbarElement";
+import OfferElement from "elements/OfferElement";
+import UserElement from "elements/UserElement";
 
 
 // Pages

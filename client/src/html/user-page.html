@@ -1,0 +1,82 @@
+<navbar-element></navbar-element>
+
+<div class="pt-4"></div>
+
+<main class="container">
+    <user-element class="page-user">
+        <div class="row">
+            <!-- Colonne Profil (gauche) -->
+            <div class="col-lg-4 mb-4">
+                <div class="card shadow-lg border-0 text-center p-4">
+                    <div class="card-body">
+                        <!-- Avatar -->
+                        <img src="https://placehold.co/128x128/17A2B8/ffffff?text=JD" alt="Avatar Utilisateur"
+                            width="128" height="128"
+                            class="user-avatar rounded-circle mb-3 border border-4 border-primary shadow-sm">
+
+                        <!-- Nom et Taux -->
+                        <h2 class="user-name fw-bold mb-1">
+                            ?
+                        </h2>
+                        <p class="user-rating text-warning mb-4">
+                            ?
+                        </p>
+
+                        <!-- Bouton Modifier -->
+                        <a href="/user/edit" class="user-edit-button btn btn-primary w-100 mb-2">
+                            <i class="bi bi-pencil-square me-2"></i>
+                            Modifier le Profil
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Colonne Contenu (droite) -->
+            <div class="col-lg-8">
+
+                <!-- Section Informations de Base -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header border-bottom fw-bold text-primary">
+                        <i class="bi bi-person-lines-fill me-2"></i>Informations de Compte
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">
+                                Habite à:
+                            </span>
+                            <span class="user-location">
+                                ?
+                            </span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">
+                                Membre depuis:
+                            </span>
+                            <span class="member-since">
+                                ?
+                            </span>
+                        </li>
+                        <li class="list-group-item">
+                            <span class="fw-bold d-block mb-1">
+                                Ma Bio:
+                            </span>
+                            <p class="user-bio text-muted mb-0">
+                                ?
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Section Annonces -->
+                <h3 class="mt-4 mb-3 text-secondary border-bottom pb-2">
+                    Mes Annonces
+                </h3>
+                <div class="user-offers row row-cols-1 row-cols-md-2 g-4">
+
+                </div>
+
+            </div>
+        </div>
+    </user-element>
+</main>
