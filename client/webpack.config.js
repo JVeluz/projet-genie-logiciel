@@ -1,6 +1,8 @@
 const path = require("path");
 const Dotenv = require("dotenv-webpack");
 
+const SRC_PATH = path.resolve(__dirname, "./src");
+
 module.exports = {
   entry: "./src/index.ts",
   mode: process.env.NODE_ENV || "development",
@@ -28,12 +30,12 @@ module.exports = {
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
     alias: {
-      "@controllers": path.resolve(__dirname, "./src/controllers/"),
-      "@core": path.resolve(__dirname, "./src/core/"),
-      "@elements": path.resolve(__dirname, "./src/elements/"),
-      "@html": path.resolve(__dirname, "./src/html/"),
-      "@models": path.resolve(__dirname, "./src/models/"),
-      "@services": path.resolve(__dirname, "./src/services/"),
+      "@controllers": path.resolve(SRC_PATH, "controllers/"),
+      "@core": path.resolve(SRC_PATH, "core/"),
+      "@elements": path.resolve(SRC_PATH, "elements/"),
+      "@html": path.resolve(SRC_PATH, "html/"),
+      "@models": path.resolve(SRC_PATH, "models/"),
+      "@services": path.resolve(SRC_PATH, "services/"),
     }
   },
 
