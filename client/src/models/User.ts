@@ -1,4 +1,4 @@
-import Offer from "./Offer";
+
 
 export default class User {
 
@@ -8,7 +8,7 @@ export default class User {
     public rating!: number;
 
     public bio?: string;
-    public offers?: Offer[];
+    public offers?: any[];
     public avatar?: string;
     public location?: string;
 }
