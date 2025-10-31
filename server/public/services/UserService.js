@@ -8,65 +8,73 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const UserRepository_1 = __importDefault(require("../repositories/UserRepository"));
-const mongoose_1 = require("mongoose");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const JWT_SECRET = process.env.JWT_SECRET;
-if (!JWT_SECRET) {
-    console.error("❌ JWT_SECRET is not defined in environment variables");
-    process.exit(1);
-}
 class UserService {
-    constructor() {
-        this.userRepository = new UserRepository_1.default();
-    }
-    getUserById(id) {
+    static getById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!mongoose_1.Types.ObjectId.isValid(id))
-                throw new Error("Invalid user ID format");
-            const user = yield this.userRepository.findById(id);
+            const user = yield UserRepository_1.default.findById(id);
             if (!user)
                 throw new Error("User not found");
             return user;
         });
     }
-    getAllUsers() {
+    static getAll() {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.userRepository.findAll();
+            return UserRepository_1.default.findAll();
         });
     }
-    createUser(userData) {
+    static register(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!userData.email || !userData.name)
+            if (!data.email || !data.name)
                 throw new Error("Email and name are required");
-            const existingUser = yield this.userRepository.findByEmail(userData.email);
+            const existingUser = yield UserRepository_1.default.findByEmail(data.email);
             if (existingUser)
                 throw new Error("Email already in use");
-            const newUser = yield this.userRepository.create(userData);
-            // On pourrait ici envoyer un email de bienvenue, etc.
-            // sendWelcomeEmail(newUser.email, newUser.name);
-            return newUser;
+            const user = yield UserRepository_1.default.create(data);
+            const payload = {
+                userId: user._id,
+                email: user.email
+            };
+            const token = jsonwebtoken_1.default.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+            return { user, token };
         });
     }
-    login(loginData) {
+    static login(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { email, password } = loginData;
+            const { email, password } = data;
             if (!email || !password)
                 throw new Error("Email and password are required");
-            const user = yield this.userRepository.findByEmailWithPassword(email);
+            const user = yield UserRepository_1.default.findByEmailWithPassword(email);
             if (!user)
                 throw new Error("Invalid email or password");
             const isMatch = yield user.comparePassword(password);
             if (!isMatch)
                 throw new Error("Invalid email or password");
-            const payload = { userId: user._id, email: user.email };
-            const token = jsonwebtoken_1.default.sign(payload, JWT_SECRET, { expiresIn: '1h' });
-            return token;
+            const payload = {
+                userId: user._id,
+                email: user.email
+            };
+            const token = jsonwebtoken_1.default.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+            const plainUser = user.toObject ? user.toObject() : user;
+            const { password: passwordHash } = plainUser, userWithoutPassword = __rest(plainUser, ["password"]);
+            return { user: userWithoutPassword, token };
         });
     }
 }

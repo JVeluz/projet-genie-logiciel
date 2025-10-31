@@ -9,26 +9,23 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": "src",
     "paths": {
+      "@controllers/*": [
+        "controllers/*"
+      ],
       "@core/*": [
         "core/*"
+      ],
+      "@elements/*": [
+        "elements/*"
+      ],
+      "@html/*": [
+        "html/*"
       ],
       "@models/*": [
         "models/*"
       ],
       "@services/*": [
         "services/*"
-      ],
-      "@data/*": [
-        "data/*"
-      ],
-      "@controllers/*": [
-        "presentation/controllers/*"
-      ],
-      "@elements/*": [
-        "presentation/elements/*"
-      ],
-      "@html/*": [
-        "presentation/html/*"
       ],
     }
   },

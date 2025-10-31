@@ -1,5 +1,5 @@
 import HTML from "@html/user-edit-page.html";
-import UserElement from "./UserElement";
+import UserElement from "@elements/UserElement";
 import ApplicationModel from "@core/ApplicationModel";
 import User from "@models/User";
 

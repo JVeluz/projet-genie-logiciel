@@ -1,4 +1,4 @@
-import RegisterController from "controllers/RegisterController";
+import RegisterController from "@controllers/RegisterController";
 import HTML from "@html/register-page.html";
 
 

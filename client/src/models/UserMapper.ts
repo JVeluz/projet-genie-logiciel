@@ -1,18 +1,28 @@
 import User from "./User";
 
+type UserDTO = {
+    _id: string;
+    name: string;
+    email: string;
+};
+
 export default class UserMapper {
 
     public static fromJSON(json: string): User {
-        const data = JSON.parse(json);
+        const data: UserDTO = JSON.parse(json);
         const user: User = new User();
-        Object.assign(user, data);
-        console.log(user);
+        user.id = data._id;
+        user.name = data.name;
+        user.email = data.email;
         return user;
     }
 
     public static toJSON(user: User): string {
-        console.log(JSON.stringify(user));
-
-        return JSON.stringify(user);
+        const data: UserDTO = {
+            _id: user.id,
+            name: user.name,
+            email: user.email
+        };
+        return JSON.stringify(data);
     }
 }

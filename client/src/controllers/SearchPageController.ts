@@ -1,6 +1,4 @@
 import OfferSearchPage from "elements/OfferSearchPage";
-import OfferService from "@services/OfferService";
-
 
 export default class SearchPageController {
 
@@ -13,8 +11,6 @@ export default class SearchPageController {
         this.filterForm.onsubmit = (event) => this.onSearchSubmit(event);
     }
 
-    private offerService: OfferService = new OfferService();
-
     public onSearchSubmit(event: Event): void {
         event.preventDefault();
 
@@ -24,9 +20,9 @@ export default class SearchPageController {
 
         console.log(`onSearchSubmit(${JSON.stringify(query)})`);
 
-        const result = this.offerService.search(query);
-        console.log(result);
+        // const result = this.offerService.search(query);
+        // console.log(result);
 
-        this.view.update(result);
+        // this.view.update(result);
     }
 }

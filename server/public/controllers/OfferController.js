@@ -12,48 +12,49 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const OfferRepository_1 = __importDefault(require("../repositories/OfferRepository"));
-class OfferService {
-    static getAll() {
+const OfferService_1 = __importDefault(require("../services/OfferService"));
+class OfferController {
+    getAll(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            return OfferRepository_1.default.findAll();
+            const result = yield OfferService_1.default.getAll();
+            return response.status(200).json(result);
         });
     }
-    static getById(id) {
+    getById(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const offer = yield OfferRepository_1.default.findById(id);
-            if (!offer)
-                throw new Error("Offer not found");
-            return offer;
+            const id = request.params.id;
+            const result = yield OfferService_1.default.getById(id);
+            return response.status(200).json(result);
         });
     }
-    static getByTerms(terms) {
+    search(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            return OfferRepository_1.default.findByTerms(terms);
+            const terms = request.params.terms;
+            const result = yield OfferService_1.default.getByTerms(terms);
+            return response.status(200).json(result);
         });
     }
-    static create(data) {
+    create(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!data.title || !data.description)
-                throw new Error("Title and description are required");
-            return OfferRepository_1.default.create(data);
+            const offerData = request.body;
+            const result = yield OfferService_1.default.create(offerData);
+            return response.status(201).json(result);
         });
     }
-    static update(id, data) {
+    update(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const offer = yield OfferRepository_1.default.findById(id);
-            if (!offer)
-                throw new Error("Offer not found");
-            return OfferRepository_1.default.update(id, data);
+            const id = request.params.id;
+            const offerData = request.body;
+            const result = yield OfferService_1.default.update(id, offerData);
+            return response.status(200).json(result);
         });
     }
-    static delete(id) {
+    delete(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const offer = yield OfferRepository_1.default.findById(id);
-            if (!offer)
-                throw new Error("Offer not found");
-            return OfferRepository_1.default.delete(id);
+            const id = request.params.id;
+            yield OfferService_1.default.delete(id);
+            return response.status(204).send();
         });
     }
 }
-exports.default = OfferService;
+exports.default = OfferController;

@@ -11,27 +11,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const User_1 = require("../models/User");
 class UserRepository {
-    findAll() {
+    static findAll() {
         return __awaiter(this, void 0, void 0, function* () {
             return User_1.User.find().exec();
         });
     }
-    findById(id) {
+    static findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return User_1.User.findById(id).exec();
         });
     }
-    findByEmail(email) {
+    static findByEmail(email) {
         return __awaiter(this, void 0, void 0, function* () {
             return User_1.User.findOne({ email }).exec();
         });
     }
-    findByEmailWithPassword(email) {
+    static findByEmailWithPassword(email) {
         return __awaiter(this, void 0, void 0, function* () {
             return User_1.User.findOne({ email }).select('+password').exec();
         });
     }
-    create(userData) {
+    static create(userData) {
         return __awaiter(this, void 0, void 0, function* () {
             const newUser = new User_1.User(userData);
             return newUser.save();

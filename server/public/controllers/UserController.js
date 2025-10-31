@@ -12,25 +12,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const UserService_1 = require("../services/UserService");
 class UserController {
     constructor() {
-        this.service = new UserService_1.UserService();
-        this.getUserById = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
-            const user = yield this.service.getUserById(id);
-            return res.status(200).json(user);
+        this.getById = (request, response) => __awaiter(this, void 0, void 0, function* () {
+            const { id } = request.params;
+            const result = yield UserService_1.UserService.getById(id);
+            return response.status(200).json(result);
         });
-        this.getAllUsers = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const users = yield this.service.getAllUsers();
-            return res.status(200).json(users);
+        this.register = (request, response) => __awaiter(this, void 0, void 0, function* () {
+            const userData = request.body;
+            const result = yield UserService_1.UserService.register(userData);
+            return response.status(201).json(result);
         });
-        this.createUser = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const userData = req.body;
-            const newUser = yield this.service.createUser(userData);
-            return res.status(201).json(newUser);
-        });
-        this.login = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const userData = req.body;
-            const token = yield this.service.login(userData);
-            return res.status(200).json({ token });
+        this.login = (request, response) => __awaiter(this, void 0, void 0, function* () {
+            const userData = request.body;
+            const result = yield UserService_1.UserService.login(userData);
+            return response.status(200).json(result);
         });
     }
 }

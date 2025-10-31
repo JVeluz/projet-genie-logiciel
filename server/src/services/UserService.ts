@@ -5,37 +5,42 @@ import { IUser } from "../models/User";
 
 export class UserService {
 
-    private userRepository: UserRepository = new UserRepository();
-
-    public async getUserById(id: string): Promise<IUser> {
-        const user = await this.userRepository.findById(id);
+    public static async getById(id: string): Promise<any> {
+        const user = await UserRepository.findById(id);
         if (!user)
             throw new Error("User not found");
         return user;
     }
 
-    public async getAllUsers(): Promise<IUser[]> {
-        return this.userRepository.findAll();
+    public static async getAll(): Promise<any> {
+        return UserRepository.findAll();
     }
 
-    public async createUser(userData: IUser): Promise<IUser> {
-        if (!userData.email || !userData.name)
+    public static async register(data: IUser): Promise<any> {
+        if (!data.email || !data.name)
             throw new Error("Email and name are required");
 
-        const existingUser = await this.userRepository.findByEmail(userData.email);
+        const existingUser = await UserRepository.findByEmail(data.email);
         if (existingUser)
             throw new Error("Email already in use");
 
-        return this.userRepository.create(userData);
+        const user = await UserRepository.create(data);
+        const payload = {
+            userId: user._id,
+            email: user.email
+        };
+        const token = jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: '1h' });
+
+        return { user, token };
     }
 
-    public async login(loginData: IUser): Promise<string> {
-        const { email, password } = loginData;
+    public static async login(data: IUser): Promise<any> {
+        const { email, password } = data;
 
         if (!email || !password)
             throw new Error("Email and password are required");
 
-        const user = await this.userRepository.findByEmailWithPassword(email);
+        const user = await UserRepository.findByEmailWithPassword(email);
         if (!user)
             throw new Error("Invalid email or password");
 
@@ -43,10 +48,16 @@ export class UserService {
         if (!isMatch)
             throw new Error("Invalid email or password");
 
-        const payload = { userId: user._id, email: user.email };
+        const payload = {
+            userId: user._id,
+            email: user.email
+        };
 
         const token = jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: '1h' });
 
-        return token;
+        const plainUser = (user as any).toObject ? (user as any).toObject() : (user as any);
+        const { password: passwordHash, ...userWithoutPassword } = plainUser;
+
+        return { user: userWithoutPassword, token };
     }
 }

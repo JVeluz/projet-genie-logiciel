@@ -1,4 +1,4 @@
-import OfferEditorController from "controllers/OfferEditorController";
+import OfferEditorController from "@controllers/OfferEditorController";
 import HTML from "@html/offer-edit-page.html";
 import Offer from "@models/Offer";
 

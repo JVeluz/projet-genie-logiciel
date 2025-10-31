@@ -1,11 +1,11 @@
 export default class Offer {
 
-    public id!: number;
+    public id!: string;
     public title!: string;
     public description!: string;
     public price!: number;
     public available!: boolean;
-    public sellerID!: number;
+    public sellerID!: string;
     public category!: string;
 
     public askExchange?: string;
