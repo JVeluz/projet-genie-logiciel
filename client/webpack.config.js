@@ -2,10 +2,8 @@ const path = require("path");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 
-const SRC_PATH = path.resolve(__dirname, "./src");
-
 module.exports = {
-  entry: "./src/index.ts",
+  entry: path.resolve(__dirname, "src", "index.ts"),
   mode: process.env.NODE_ENV || "development",
   devtool: "source-map",
 
@@ -31,7 +29,9 @@ module.exports = {
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
     plugins: [
-      new TsconfigPathsPlugin({ configFile: "./tsconfig.json" })
+      new TsconfigPathsPlugin({
+        configFile: path.resolve(__dirname, 'tsconfig.json')
+      }),
     ],
   },
 
