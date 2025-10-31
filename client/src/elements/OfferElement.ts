@@ -1,4 +1,4 @@
-import Offer from "../models/offer";
+import Offer from "../models/Offer";
 import UserElement from "../elements/UserElement";
 import UserController from "../controllers/UserController";
 
