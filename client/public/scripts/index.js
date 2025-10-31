@@ -12,8 +12,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ LoginController)
 /* harmony export */ });
-/* harmony import */ var _core_ApplicationModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @core/ApplicationModel */ "./src/core/ApplicationModel.ts");
-/* harmony import */ var _services_UserService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @services/UserService */ "./src/services/UserService.ts");
+/* harmony import */ var _core_ApplicationModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/ApplicationModel */ "./src/core/ApplicationModel.ts");
+/* harmony import */ var _services_UserService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/UserService */ "./src/services/UserService.ts");
 
 
 class LoginController {
@@ -61,7 +61,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ NavbarController)
 /* harmony export */ });
-/* harmony import */ var _core_ApplicationModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @core/ApplicationModel */ "./src/core/ApplicationModel.ts");
+/* harmony import */ var _core_ApplicationModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/ApplicationModel */ "./src/core/ApplicationModel.ts");
 
 class NavbarController {
     constructor(view) {
@@ -137,8 +137,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ RegisterController)
 /* harmony export */ });
-/* harmony import */ var _core_ApplicationModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @core/ApplicationModel */ "./src/core/ApplicationModel.ts");
-/* harmony import */ var _services_UserService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @services/UserService */ "./src/services/UserService.ts");
+/* harmony import */ var _core_ApplicationModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/ApplicationModel */ "./src/core/ApplicationModel.ts");
+/* harmony import */ var _services_UserService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/UserService */ "./src/services/UserService.ts");
 
 
 class RegisterController {
@@ -293,7 +293,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ CreateOfferPageElement)
 /* harmony export */ });
-/* harmony import */ var _html_create_offer_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @html/create-offer-page.html */ "./src/html/create-offer-page.html");
+/* harmony import */ var _html_create_offer_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../html/create-offer-page.html */ "./src/html/create-offer-page.html");
 
 class CreateOfferPageElement extends HTMLElement {
     connectedCallback() {
@@ -314,8 +314,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ EditOfferPage)
 /* harmony export */ });
-/* harmony import */ var _controllers_OfferEditorController__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @controllers/OfferEditorController */ "./src/controllers/OfferEditorController.ts");
-/* harmony import */ var _html_offer_edit_page_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @html/offer-edit-page.html */ "./src/html/offer-edit-page.html");
+/* harmony import */ var _controllers_OfferEditorController__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../controllers/OfferEditorController */ "./src/controllers/OfferEditorController.ts");
+/* harmony import */ var _html_offer_edit_page_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../html/offer-edit-page.html */ "./src/html/offer-edit-page.html");
 
 
 class EditOfferPage extends HTMLElement {
@@ -344,8 +344,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ EditUserPage)
 /* harmony export */ });
-/* harmony import */ var _html_user_edit_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @html/user-edit-page.html */ "./src/html/user-edit-page.html");
-/* harmony import */ var _core_ApplicationModel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @core/ApplicationModel */ "./src/core/ApplicationModel.ts");
+/* harmony import */ var _html_user_edit_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../html/user-edit-page.html */ "./src/html/user-edit-page.html");
+/* harmony import */ var _core_ApplicationModel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/ApplicationModel */ "./src/core/ApplicationModel.ts");
 
 
 class EditUserPage extends HTMLElement {
@@ -374,7 +374,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ LoginElement)
 /* harmony export */ });
-/* harmony import */ var _controllers_LoginController__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @controllers/LoginController */ "./src/controllers/LoginController.ts");
+/* harmony import */ var _controllers_LoginController__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../controllers/LoginController */ "./src/controllers/LoginController.ts");
 
 class LoginElement extends HTMLFormElement {
     connectedCallback() {
@@ -395,7 +395,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ LoginPage)
 /* harmony export */ });
-/* harmony import */ var _html_login_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @html/login-page.html */ "./src/html/login-page.html");
+/* harmony import */ var _html_login_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../html/login-page.html */ "./src/html/login-page.html");
 
 class LoginPage extends HTMLElement {
     connectedCallback() {
@@ -416,9 +416,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ NavbarElement)
 /* harmony export */ });
-/* harmony import */ var _controllers_LoginController__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @controllers/LoginController */ "./src/controllers/LoginController.ts");
-/* harmony import */ var _controllers_NavbarController__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @controllers/NavbarController */ "./src/controllers/NavbarController.ts");
-/* harmony import */ var _html_navbar_element_html__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @html/navbar-element.html */ "./src/html/navbar-element.html");
+/* harmony import */ var _controllers_LoginController__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../controllers/LoginController */ "./src/controllers/LoginController.ts");
+/* harmony import */ var _controllers_NavbarController__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../controllers/NavbarController */ "./src/controllers/NavbarController.ts");
+/* harmony import */ var _html_navbar_element_html__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../html/navbar-element.html */ "./src/html/navbar-element.html");
 
 
 
@@ -511,8 +511,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ OfferPage)
 /* harmony export */ });
-/* harmony import */ var _html_offer_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @html/offer-page.html */ "./src/html/offer-page.html");
-/* harmony import */ var _controllers_OfferController__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @controllers/OfferController */ "./src/controllers/OfferController.ts");
+/* harmony import */ var _html_offer_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../html/offer-page.html */ "./src/html/offer-page.html");
+/* harmony import */ var _controllers_OfferController__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../controllers/OfferController */ "./src/controllers/OfferController.ts");
 
 
 class OfferPage extends HTMLElement {
@@ -539,9 +539,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ OfferSearchPage)
 /* harmony export */ });
-/* harmony import */ var _html_offer_search_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @html/offer-search-page.html */ "./src/html/offer-search-page.html");
-/* harmony import */ var _controllers_SearchPageController__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @controllers/SearchPageController */ "./src/controllers/SearchPageController.ts");
-/* harmony import */ var _html_offer_card_html__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @html/offer-card.html */ "./src/html/offer-card.html");
+/* harmony import */ var _html_offer_search_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../html/offer-search-page.html */ "./src/html/offer-search-page.html");
+/* harmony import */ var _controllers_SearchPageController__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../controllers/SearchPageController */ "./src/controllers/SearchPageController.ts");
+/* harmony import */ var _html_offer_card_html__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../html/offer-card.html */ "./src/html/offer-card.html");
 
 
 
@@ -575,8 +575,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ RegisterPage)
 /* harmony export */ });
-/* harmony import */ var _controllers_RegisterController__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @controllers/RegisterController */ "./src/controllers/RegisterController.ts");
-/* harmony import */ var _html_register_page_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @html/register-page.html */ "./src/html/register-page.html");
+/* harmony import */ var _controllers_RegisterController__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../controllers/RegisterController */ "./src/controllers/RegisterController.ts");
+/* harmony import */ var _html_register_page_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../html/register-page.html */ "./src/html/register-page.html");
 
 
 class RegisterPage extends HTMLElement {
@@ -656,8 +656,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ UserPage)
 /* harmony export */ });
-/* harmony import */ var _html_user_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @html/user-page.html */ "./src/html/user-page.html");
-/* harmony import */ var _controllers_UserController__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @controllers/UserController */ "./src/controllers/UserController.ts");
+/* harmony import */ var _html_user_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../html/user-page.html */ "./src/html/user-page.html");
+/* harmony import */ var _controllers_UserController__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../controllers/UserController */ "./src/controllers/UserController.ts");
 
 
 class UserPage extends HTMLElement {
@@ -821,18 +821,18 @@ __webpack_require__.r(__webpack_exports__);
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _elements_OfferSearchPage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @elements/OfferSearchPage */ "./src/elements/OfferSearchPage.ts");
-/* harmony import */ var _elements_LoginPage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @elements/LoginPage */ "./src/elements/LoginPage.ts");
-/* harmony import */ var _elements_RegisterPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @elements/RegisterPage */ "./src/elements/RegisterPage.ts");
-/* harmony import */ var _elements_OfferPage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @elements/OfferPage */ "./src/elements/OfferPage.ts");
-/* harmony import */ var _elements_UserPage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @elements/UserPage */ "./src/elements/UserPage.ts");
-/* harmony import */ var _elements_CreateOfferPage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @elements/CreateOfferPage */ "./src/elements/CreateOfferPage.ts");
-/* harmony import */ var _elements_EditOfferPage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @elements/EditOfferPage */ "./src/elements/EditOfferPage.ts");
-/* harmony import */ var _elements_EditUserPage__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @elements/EditUserPage */ "./src/elements/EditUserPage.ts");
-/* harmony import */ var _elements_LoginElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @elements/LoginElement */ "./src/elements/LoginElement.ts");
-/* harmony import */ var _elements_NavbarElement__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @elements/NavbarElement */ "./src/elements/NavbarElement.ts");
-/* harmony import */ var _elements_OfferElement__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @elements/OfferElement */ "./src/elements/OfferElement.ts");
-/* harmony import */ var _elements_UserElement__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @elements/UserElement */ "./src/elements/UserElement.ts");
+/* harmony import */ var _elements_OfferSearchPage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./elements/OfferSearchPage */ "./src/elements/OfferSearchPage.ts");
+/* harmony import */ var _elements_LoginPage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./elements/LoginPage */ "./src/elements/LoginPage.ts");
+/* harmony import */ var _elements_RegisterPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./elements/RegisterPage */ "./src/elements/RegisterPage.ts");
+/* harmony import */ var _elements_OfferPage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./elements/OfferPage */ "./src/elements/OfferPage.ts");
+/* harmony import */ var _elements_UserPage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./elements/UserPage */ "./src/elements/UserPage.ts");
+/* harmony import */ var _elements_CreateOfferPage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./elements/CreateOfferPage */ "./src/elements/CreateOfferPage.ts");
+/* harmony import */ var _elements_EditOfferPage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./elements/EditOfferPage */ "./src/elements/EditOfferPage.ts");
+/* harmony import */ var _elements_EditUserPage__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./elements/EditUserPage */ "./src/elements/EditUserPage.ts");
+/* harmony import */ var _elements_LoginElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./elements/LoginElement */ "./src/elements/LoginElement.ts");
+/* harmony import */ var _elements_NavbarElement__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./elements/NavbarElement */ "./src/elements/NavbarElement.ts");
+/* harmony import */ var _elements_OfferElement__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./elements/OfferElement */ "./src/elements/OfferElement.ts");
+/* harmony import */ var _elements_UserElement__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./elements/UserElement */ "./src/elements/UserElement.ts");
 
 
 
