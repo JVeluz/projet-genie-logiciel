@@ -1,4 +1,4 @@
-import OfferSearchPage from "elements/OfferSearchPage";
+import OfferSearchPage from "@elements/OfferSearchPage";
 
 export default class SearchPageController {
 

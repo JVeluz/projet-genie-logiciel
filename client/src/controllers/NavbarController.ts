@@ -1,5 +1,5 @@
 import ApplicationModel from "@core/ApplicationModel";
-import NavbarElement from "elements/NavbarElement";
+import NavbarElement from "@elements/NavbarElement";
 import User from "@models/User";
 
 
