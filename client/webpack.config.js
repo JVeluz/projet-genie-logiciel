@@ -28,12 +28,12 @@ module.exports = {
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
     alias: {
-      "@controllers": path.resolve(__dirname, "src/controllers/"),
-      "@core": path.resolve(__dirname, "src/core/"),
-      "@elements": path.resolve(__dirname, "src/elements/"),
-      "@html": path.resolve(__dirname, "src/html/"),
-      "@models": path.resolve(__dirname, "src/models/"),
-      "@services": path.resolve(__dirname, "src/services/"),
+      "@controllers": path.resolve(__dirname, "./src/controllers/"),
+      "@core": path.resolve(__dirname, "./src/core/"),
+      "@elements": path.resolve(__dirname, "./src/elements/"),
+      "@html": path.resolve(__dirname, "./src/html/"),
+      "@models": path.resolve(__dirname, "./src/models/"),
+      "@services": path.resolve(__dirname, "./src/services/"),
     }
   },
 
