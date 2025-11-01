@@ -11,9 +11,8 @@ router.get("/users/:id", userController.getById);
 router.post("/users", userController.register);
 router.post("/login", userController.login);
 
-
 router.get("/offers", offerController.getAll);
-router.get("/offers/:terms", offerController.search);
+router.get("/offers/search/:terms", offerController.search);
 router.get("/offers/:id", offerController.getById);
 router.post("/offers", offerController.create);
 router.put("/offers/:id", offerController.update);

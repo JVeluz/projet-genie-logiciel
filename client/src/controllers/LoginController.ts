@@ -1,16 +1,17 @@
-import ApplicationModel from "../core/ApplicationModel";
-import UserService from "../services/UserService";
+import Application, { Item } from "../models/Application";
+import UserService from "../fetches/UserFetch";
 
 export default class LoginController {
 
-    private model: ApplicationModel = ApplicationModel.getInstance();
+    private form: HTMLFormElement;
+    private logoutButton?: HTMLButtonElement;
+    private model: Application = Application.getInstance();
 
-    public constructor(
-        private form: HTMLFormElement,
-        private logoutButton: HTMLButtonElement | null = null,
-    ) {
+    public constructor(form: HTMLFormElement, logoutButton?: HTMLButtonElement) {
+        this.form = form;
         this.form.onsubmit = (event: Event) => this.onSubmit(event);
-        if (this.logoutButton) {
+        if (logoutButton) {
+            this.logoutButton = logoutButton;
             this.logoutButton.onclick = (event: Event) => this.onLogout(event);
         }
     }
@@ -22,17 +23,18 @@ export default class LoginController {
         const password: string = formData.get("password") as string;
         try {
             const { token, user } = await UserService.login(email, password);
-            this.model.set("authToken", token);
-            this.model.set("currentUser", user);
+            this.model.set(Item.CurrentUser, user);
+            this.model.set(Item.AuthToken, token);
             window.location.href = "/";
-        } catch (error) {
-            alert("Mauvaise combinaison email/mot de passe.");
+        } catch (error: any) {
+            alert(error.message);
         }
     }
 
     public onLogout(event: Event): void {
         event.preventDefault();
-        this.model.set("currentUser", null);
+        this.model.set(Item.CurrentUser, null);
+        this.model.set(Item.AuthToken, null);
         window.location.href = "/";
     }
 }

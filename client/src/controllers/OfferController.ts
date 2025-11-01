@@ -1,6 +1,6 @@
 import Offer from "../models/Offer";
 import OfferElement from "../elements/OfferElement";
-
+import OfferFetch from "../fetches/OfferFetch";
 
 export default class OfferController {
 
@@ -10,9 +10,8 @@ export default class OfferController {
         this.view = view;
     }
 
-    public load(offerID: number): void {
-        // this.offerService.get(offerID).then((offer: Offer) => {
-        //     this.view.update(offer);
-        // });
+    public async load(offerID: string): Promise<void> {
+        const offer: Offer = await OfferFetch.get(offerID);
+        this.view.update(offer);
     }
 }

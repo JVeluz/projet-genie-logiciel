@@ -1,6 +1,5 @@
 import Offer from "./Offer";
 
-
 export default class User {
 
     public id!: string;

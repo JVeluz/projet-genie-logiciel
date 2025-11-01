@@ -1,20 +1,19 @@
-import ApplicationModel from "../core/ApplicationModel";
+import Application, { Item } from "../models/Application";
 import NavbarElement from "../elements/NavbarElement";
 import User from "../models/User";
 
-
 export default class NavbarController {
 
-    constructor(
-        private view: NavbarElement
-    ) {
-        const model = ApplicationModel.getInstance();
-        model.addListener("currentUser", this.onModelUpdated.bind(this));
-        const currentUser = model.get("currentUser") as User | null;
-        this.onModelUpdated(currentUser);
+    private model: Application = Application.getInstance();
+    private view: NavbarElement;
+
+    constructor(view: NavbarElement) {
+        this.view = view;
+        this.onUserUpdate(this.model.get(Item.CurrentUser));
+        this.model.addListener(Item.CurrentUser, this.onUserUpdate.bind(this));
     }
 
-    private onModelUpdated(value: User | null): void {
+    private onUserUpdate(value: User | null): void {
         this.view.update(value);
     }
 }

@@ -2,7 +2,6 @@ import Offer from "../models/Offer";
 import UserElement from "../elements/UserElement";
 import UserController from "../controllers/UserController";
 
-
 export default class OfferElement extends HTMLElement {
 
     public update(offer: Offer): void {
@@ -24,8 +23,8 @@ export default class OfferElement extends HTMLElement {
             categoryElement.textContent = offer.category;
         }
         if (sellerElement) {
-            // new UserController(sellerElement)
-            //     .load(offer.sellerID);
+            new UserController(sellerElement)
+                .load(offer.sellerID);
         }
         if (titleElement) {
             titleElement.textContent = offer.title;

@@ -1,30 +1,31 @@
-import OfferSearchPage from "./elements/OfferSearchPage";
-import LoginPage from "./elements/LoginPage";
-import RegisterPage from "./elements/RegisterPage";
-import OfferPage from "./elements/OfferPage";
-import UserPage from "./elements/UserPage";
-import CreateOfferPage from "./elements/CreateOfferPage";
-import EditOfferPage from "./elements/EditOfferPage";
-import EditUserPage from "./elements/EditUserPage";
+type CustomElement = {
+    tag: string;
+    module: Promise<any>;
+    options?: ElementDefinitionOptions;
+};
 
-import LoginElement from "./elements/LoginElement";
-import NavbarElement from "./elements/NavbarElement";
-import OfferElement from "./elements/OfferElement";
-import UserElement from "./elements/UserElement";
+const ELEMENTS: CustomElement[] = [
+    // Offer Pages
+    { tag: "offer-search-page", module: import("./elements/OfferSearchPage") },
+    { tag: "offer-page", module: import("./elements/OfferPage") },
+    { tag: "create-offer-page", module: import("./elements/CreateOfferPage") },
+    { tag: "edit-offer-page", module: import("./elements/EditOfferPage") },
+    // User Pages
+    { tag: "user-page", module: import("./elements/UserPage") },
+    { tag: "edit-user-page", module: import("./elements/EditUserPage") },
+    { tag: "login-page", module: import("./elements/LoginPage") },
+    { tag: "register-page", module: import("./elements/RegisterPage") },
+    // Elements
+    { tag: "offer-element", module: import("./elements/OfferElement") },
+    { tag: "user-element", module: import("./elements/UserElement") },
+    { tag: "navbar-element", module: import("./elements/NavbarElement") },
+    { tag: "login-element", module: import("./elements/LoginElement"), options: { extends: "form" } },
+];
 
-
-// Pages
-customElements.define("offer-search-page", OfferSearchPage);
-customElements.define("offer-page", OfferPage);
-customElements.define("edit-offer-page", EditOfferPage);
-customElements.define("login-page", LoginPage);
-customElements.define("register-page", RegisterPage);
-customElements.define("user-page", UserPage);
-customElements.define("edit-user-page", EditUserPage);
-customElements.define("create-offer-page", CreateOfferPage);
-
-// Elements
-customElements.define("navbar-element", NavbarElement);
-customElements.define("offer-element", OfferElement);
-customElements.define("user-element", UserElement);
-customElements.define("login-element", LoginElement, { extends: "form" });
+export default function initialize(): void {
+    for (const element of ELEMENTS) {
+        element.module.then((module: { default: CustomElementConstructor }) => {
+            customElements.define(element.tag, module.default, element.options);
+        });
+    }
+}

@@ -1,7 +1,6 @@
-import OfferEditorController from "../controllers/OfferEditorController";
+import OfferController from "../controllers/OfferController";
 import HTML from "../html/offer-edit-page.html";
 import Offer from "../models/Offer";
-
 
 export default class EditOfferPage extends HTMLElement {
 
@@ -10,7 +9,7 @@ export default class EditOfferPage extends HTMLElement {
         const urlParams = new URLSearchParams(window.location.search);
         const offerID = urlParams.get('id');
         if (offerID) {
-            new OfferEditorController(this, parseInt(offerID));
+            new OfferController(this);
         }
     }
 
