@@ -1,3 +1,4 @@
+import { IOffer } from "../models/Offer";
 import OfferRepository from "../repositories/OfferRepository";
 
 export default class OfferService {
@@ -17,10 +18,8 @@ export default class OfferService {
         return OfferRepository.findByTerms(terms);
     }
 
-    public static async create(data: any): Promise<any> {
-        if (!data.title || !data.description)
-            throw new Error("Title and description are required");
-        return OfferRepository.create(data);
+    public static async create(offer: IOffer): Promise<any> {
+        return OfferRepository.create(offer);
     }
 
     public static async update(id: string, data: any): Promise<any> {

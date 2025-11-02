@@ -10,34 +10,36 @@ const ROUTES_TO_PAGES: { [key: string]: string } = {
     "/user/edit": "edit-user-page",
 };
 
-function renderCurrentPage(): void {
-    const path: string = window.location.pathname;
-    const page: HTMLElement = document.createElement(ROUTES_TO_PAGES[path] || DEFAULT_PAGE);
-    document.body.innerHTML = "";
-    document.body.appendChild(page);
-}
+export default class Router {
 
-function onPopState(): void { renderCurrentPage(); }
+    public static initialize(): void {
+        const path: string = window.location.pathname + window.location.search;
+        history.replaceState(null, "", path);
+        Router.renderCurrentPage();
 
-function onClick(event: Event): void {
-    const target: HTMLElement = event.target as HTMLElement;
-    const anchor: HTMLAnchorElement | null = target.closest("a");
-    if (anchor === null) {
-        return;
+        window.onpopstate = () => Router.onPopState();
+        window.onclick = (event: Event) => Router.onClick(event);
     }
-    const href: string | null = anchor.getAttribute("href");
-    if (href && href.startsWith("/")) {
-        event.preventDefault();
-        history.pushState(null, "", href);
-        renderCurrentPage();
+
+    private static renderCurrentPage(): void {
+        const path: string = window.location.pathname;
+        const page: HTMLElement = document.createElement(ROUTES_TO_PAGES[path] || DEFAULT_PAGE);
+        document.body.innerHTML = "";
+        document.body.appendChild(page);
     }
-}
 
-export default function initialize(): void {
-    const initialPath: string = window.location.pathname + window.location.search;
-    history.replaceState(null, "", initialPath);
-    renderCurrentPage();
+    private static onPopState(): void { Router.renderCurrentPage(); }
 
-    window.onpopstate = () => onPopState();
-    window.onclick = (event: Event) => onClick(event);
+    private static onClick(event: Event): void {
+        const target: HTMLElement = event.target as HTMLElement;
+        const anchor: HTMLAnchorElement | null = target.closest("a");
+        if (anchor === null)
+            return;
+        const href: string | null = anchor.getAttribute("href");
+        if (href && href.startsWith("/")) {
+            event.preventDefault();
+            history.pushState(null, "", href);
+            Router.renderCurrentPage();
+        }
+    }
 }

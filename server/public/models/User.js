@@ -15,13 +15,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const mongoose_1 = require("mongoose");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
-const schema = new mongoose_1.Schema({
+const Offer_1 = require("./Offer");
+const userSchema = new mongoose_1.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
+    rating: { type: Number, default: 0 },
     password: { type: String, required: true, select: false },
-    createdAt: { type: Date, default: Date.now }
+    createdAt: { type: Date, default: Date.now },
+    bio: { type: String },
+    avatar: { type: String },
+    location: { type: String },
+    offers: [Offer_1.Offer.schema],
 });
-schema.pre("save", function (next) {
+userSchema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {
         const user = this;
         if (user.isModified("password") === false)
@@ -38,9 +44,9 @@ schema.pre("save", function (next) {
         }
     });
 });
-schema.methods.comparePassword = function (candidatePassword) {
+userSchema.methods.comparePassword = function (candidatePassword) {
     return __awaiter(this, void 0, void 0, function* () {
         return bcryptjs_1.default.compare(candidatePassword, this.password);
     });
 };
-exports.User = (0, mongoose_1.model)("User", schema);
+exports.User = (0, mongoose_1.model)("User", userSchema);

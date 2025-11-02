@@ -36,8 +36,8 @@ class OfferController {
     }
     create(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const offerData = request.body;
-            const result = yield OfferService_1.default.create(offerData);
+            const offer = request.body;
+            const result = yield OfferService_1.default.create(offer);
             return response.status(201).json(result);
         });
     }

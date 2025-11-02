@@ -44,17 +44,21 @@ class OfferElement extends HTMLElement {
         const titleElement = this.querySelector('.offer-title');
         const descriptionElement = this.querySelector('.offer-description');
         const categoryElement = this.querySelector('.offer-category');
-        const askExchangeElement = this.querySelector('.offer-ask-exchange');
+        const typeElement = this.querySelector('.offer-type');
+        const exchangeElement = this.querySelector('.offer-exchange');
         const locationElement = this.querySelector('.offer-location');
         const sellerElement = this.querySelector('.offer-seller');
         if (locationElement && offer.location) {
             locationElement.textContent = offer.location;
         }
-        if (askExchangeElement && offer.askExchange) {
-            askExchangeElement.textContent = offer.askExchange;
+        if (exchangeElement && offer.exchange) {
+            exchangeElement.textContent = offer.exchange;
         }
         if (categoryElement) {
             categoryElement.textContent = offer.category;
+        }
+        if (typeElement) {
+            typeElement.textContent = offer.type;
         }
         if (sellerElement) {
             new _controllers_UserController__WEBPACK_IMPORTED_MODULE_0__["default"](sellerElement)
@@ -67,7 +71,7 @@ class OfferElement extends HTMLElement {
             descriptionElement.textContent = offer.description;
         }
         if (lookupButton) {
-            lookupButton.href = `/offer?id=${offer.id}`;
+            lookupButton.href = `/offer?id=${offer._id}`;
         }
     }
 }

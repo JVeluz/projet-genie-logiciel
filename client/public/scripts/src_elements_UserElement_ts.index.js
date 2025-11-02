@@ -31,7 +31,7 @@ class UserElement extends HTMLElement {
         if (this.rateElement)
             this.rateElement.textContent = this.rateToStars(user.rating);
         if (this.profileButton)
-            this.profileButton.href = `/user?id=${user.id}`;
+            this.profileButton.href = `/user?id=${user._id}`;
         if (this.avatarElement)
             this.avatarElement.src = this.getAvatarUrl(user);
         if (this.offerContainer) {

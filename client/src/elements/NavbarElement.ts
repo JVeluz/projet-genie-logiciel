@@ -1,29 +1,32 @@
-import LoginController from "../controllers/LoginController";
 import NavbarController from "../controllers/NavbarController";
 import HTML from "../html/navbar-element.html";
 import User from "../models/User";
-import UserElement from "../elements/UserElement";
+import UserElement from "./UserElement";
+import LoginForm from "./LoginForm";
 
 export default class NavbarElement extends HTMLElement {
 
-    private loginForm!: HTMLFormElement;
     private loginDropdown!: HTMLElement;
     private logoutButton!: HTMLButtonElement;
     private newOfferButton!: HTMLButtonElement;
     private profileDropdown!: HTMLElement;
+    private loginForm!: LoginForm;
     private userElement!: UserElement;
 
     public connectedCallback(): void {
         this.innerHTML = HTML;
         this.loginDropdown = this.querySelector('.login-dropdown')! as HTMLElement;
-        this.loginForm = this.querySelector('.login-form')! as HTMLFormElement;
         this.logoutButton = this.querySelector('.logout-button')! as HTMLButtonElement;
         this.newOfferButton = this.querySelector('.new-offer-button')! as HTMLButtonElement;
         this.profileDropdown = this.querySelector('.profile-dropdown')! as HTMLElement;
         this.userElement = this.querySelector('.navbar-user')! as UserElement;
+        this.loginForm = this.querySelector('.login-form')! as LoginForm;
 
         new NavbarController(this);
-        new LoginController(this.loginForm, this.logoutButton);
+
+        customElements.whenDefined('login-form').then(() => {
+            this.loginForm.controller!.setLogoutButton(this.logoutButton);
+        });
     }
 
     public update(model: User | null): void {

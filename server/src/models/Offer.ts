@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { User } from "./User";
 
 export interface IOffer {
     _id: string;
@@ -7,9 +8,10 @@ export interface IOffer {
     price: number;
     available: boolean;
     category: string;
+    type: string;
     createdAt: Date;
 
-    askExchange?: string;
+    exchange?: string;
     location?: string;
     pictures?: string[];
     comments?: string[];
@@ -17,7 +19,7 @@ export interface IOffer {
     sellerID: Schema.Types.ObjectId;
 }
 
-const schema = new Schema<IOffer>({
+export const offerSchema = new Schema<IOffer>({
     title: { type: String, required: true },
     description: { type: String, required: true },
     price: { type: Number, required: true },
@@ -25,7 +27,7 @@ const schema = new Schema<IOffer>({
     category: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
 
-    askExchange: { type: String },
+    exchange: { type: String },
     location: { type: String },
     pictures: { type: [String], default: [] },
     comments: { type: [String], default: [] },
@@ -33,4 +35,16 @@ const schema = new Schema<IOffer>({
     sellerID: { type: Schema.Types.ObjectId, ref: "User", required: true },
 });
 
-export const Offer = model<IOffer>("Offer", schema);
+offerSchema.post('save', async function (offer, next) {
+    try {
+        await User.updateOne(
+            { _id: offer.sellerID },
+            { $push: { offers: offer } }
+        );
+        next();
+    } catch (error) {
+        throw Error("Error updating user offers");
+    }
+});
+
+export const Offer = model<IOffer>("Offer", offerSchema);

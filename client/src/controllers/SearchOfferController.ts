@@ -17,15 +17,11 @@ export default class SearchPageController {
 
     public async onSearchSubmit(event: Event): Promise<void> {
         event.preventDefault();
-
         const search: any = Object.fromEntries(new FormData(this.searchForm));
         const filter: Object = Object.fromEntries(new FormData(this.filterForm));
         const query: Object = { search, filter }
-
         console.log(`onSearchSubmit(${JSON.stringify(query)})`);
-
         const result = await OfferFetch.getAll();
-        console.log(result);
         this.view.update(result);
     }
 }

@@ -12,6 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const application_1 = __importDefault(require("./application"));
+const database_1 = __importDefault(require("./database"));
 if (process.env.MONGODB_URI === undefined) {
     console.error("❌ MONGODB_URI is not defined in environment variables");
     process.exit(1);
@@ -20,8 +22,6 @@ if (process.env.JWT_SECRET === undefined) {
     console.error("❌ JWT_SECRET is not defined in environment variables");
     process.exit(1);
 }
-const application_1 = __importDefault(require("./application"));
-const database_1 = __importDefault(require("./database"));
 const port = 3000;
 function start() {
     return __awaiter(this, void 0, void 0, function* () {

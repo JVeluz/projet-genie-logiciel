@@ -21,8 +21,8 @@ export default class OfferController {
     }
 
     public async create(request: Request, response: Response): Promise<Response> {
-        const offerData = request.body;
-        const result = await OfferService.create(offerData);
+        const offer = request.body;
+        const result = await OfferService.create(offer);
         return response.status(201).json(result);
     }
 

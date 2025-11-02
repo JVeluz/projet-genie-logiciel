@@ -32,11 +32,9 @@ class OfferService {
             return OfferRepository_1.default.findByTerms(terms);
         });
     }
-    static create(data) {
+    static create(offer) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!data.title || !data.description)
-                throw new Error("Title and description are required");
-            return OfferRepository_1.default.create(data);
+            return OfferRepository_1.default.create(offer);
         });
     }
     static update(id, data) {

@@ -4,6 +4,7 @@ import OfferFetch from "../fetches/OfferFetch";
 
 export default class OfferController {
 
+    private model?: Offer;
     private view: OfferElement;
 
     public constructor(view: OfferElement) {
@@ -12,6 +13,8 @@ export default class OfferController {
 
     public async load(offerID: string): Promise<void> {
         const offer: Offer = await OfferFetch.get(offerID);
+        console.log(offer);
         this.view.update(offer);
+        this.model = offer;
     }
 }

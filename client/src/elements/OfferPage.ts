@@ -1,5 +1,5 @@
 import HTML from "../html/offer-page.html";
-import OfferElement from "../elements/OfferElement";
+import OfferElement from "./OfferElement";
 import OfferController from "../controllers/OfferController";
 
 export default class OfferPage extends HTMLElement {

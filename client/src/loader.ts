@@ -8,7 +8,6 @@ const ELEMENTS: CustomElement[] = [
     // Offer Pages
     { tag: "offer-search-page", module: import("./elements/OfferSearchPage") },
     { tag: "offer-page", module: import("./elements/OfferPage") },
-    { tag: "create-offer-page", module: import("./elements/CreateOfferPage") },
     { tag: "edit-offer-page", module: import("./elements/EditOfferPage") },
     // User Pages
     { tag: "user-page", module: import("./elements/UserPage") },
@@ -19,13 +18,18 @@ const ELEMENTS: CustomElement[] = [
     { tag: "offer-element", module: import("./elements/OfferElement") },
     { tag: "user-element", module: import("./elements/UserElement") },
     { tag: "navbar-element", module: import("./elements/NavbarElement") },
-    { tag: "login-element", module: import("./elements/LoginElement"), options: { extends: "form" } },
+    // Forms
+    { tag: "login-form", module: import("./elements/LoginForm"), options: { extends: "form" } },
+    { tag: "offer-form", module: import("./elements/OfferForm"), options: { extends: "form" } },
 ];
 
-export default function initialize(): void {
-    for (const element of ELEMENTS) {
-        element.module.then((module: { default: CustomElementConstructor }) => {
-            customElements.define(element.tag, module.default, element.options);
-        });
+export default class Loader {
+
+    public static initialize(): void {
+        for (const element of ELEMENTS) {
+            element.module.then((module: { default: CustomElementConstructor }) => {
+                customElements.define(element.tag, module.default, element.options);
+            });
+        }
     }
 }

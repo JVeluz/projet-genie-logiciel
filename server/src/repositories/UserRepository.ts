@@ -1,3 +1,4 @@
+import { IOffer } from "../models/Offer";
 import { User, IUser } from "../models/User";
 
 export default class UserRepository {

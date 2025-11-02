@@ -1,10 +1,14 @@
+import Application, { Item } from "../models/Application";
+import Offer from "../models/Offer";
+
 export default class OfferFetch {
 
     private static async fetch(route: string, method: string, body?: any): Promise<Response> {
+        const token = Application.getInstance().get(Item.AuthToken);
+        const headers: HeadersInit = { "Content-Type": "application/json" };
+        if (token) { headers.Authorization = `Bearer ${token}`; }
         return await fetch(`${process.env.API_URL}${route}`, {
-            method,
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body)
+            method, headers, body: JSON.stringify(body)
         });
     }
 
@@ -22,15 +26,15 @@ export default class OfferFetch {
         return response.json();
     }
 
-    public static async create(offerData: any): Promise<any> {
-        const response = await this.fetch("/offers", "POST", offerData);
+    public static async create(offer: Offer): Promise<any> {
+        const response = await this.fetch("/offers", "POST", offer);
         if (response.ok === false)
             throw new Error("Failed to create offer");
         return response.json();
     }
 
-    public static async update(offerId: string, offerData: any): Promise<any> {
-        const response = await this.fetch(`/offers/${offerId}`, "PUT", offerData);
+    public static async update(offer: Offer): Promise<any> {
+        const response = await this.fetch(`/offers/${offer._id}`, "PUT", offer);
         if (response.ok === false)
             throw new Error("Failed to update offer");
         return response.json();

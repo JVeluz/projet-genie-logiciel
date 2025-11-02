@@ -10,13 +10,12 @@
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ initialize)
+/* harmony export */   "default": () => (/* binding */ Loader)
 /* harmony export */ });
 const ELEMENTS = [
     // Offer Pages
     { tag: "offer-search-page", module: __webpack_require__.e(/*! import() */ "src_elements_OfferSearchPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/OfferSearchPage */ "./src/elements/OfferSearchPage.ts")) },
     { tag: "offer-page", module: __webpack_require__.e(/*! import() */ "src_elements_OfferPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/OfferPage */ "./src/elements/OfferPage.ts")) },
-    { tag: "create-offer-page", module: __webpack_require__.e(/*! import() */ "src_elements_CreateOfferPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/CreateOfferPage */ "./src/elements/CreateOfferPage.ts")) },
     { tag: "edit-offer-page", module: __webpack_require__.e(/*! import() */ "src_elements_EditOfferPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/EditOfferPage */ "./src/elements/EditOfferPage.ts")) },
     // User Pages
     { tag: "user-page", module: __webpack_require__.e(/*! import() */ "src_elements_UserPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/UserPage */ "./src/elements/UserPage.ts")) },
@@ -27,13 +26,17 @@ const ELEMENTS = [
     { tag: "offer-element", module: __webpack_require__.e(/*! import() */ "src_elements_OfferElement_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/OfferElement */ "./src/elements/OfferElement.ts")) },
     { tag: "user-element", module: __webpack_require__.e(/*! import() */ "src_elements_UserElement_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/UserElement */ "./src/elements/UserElement.ts")) },
     { tag: "navbar-element", module: __webpack_require__.e(/*! import() */ "src_elements_NavbarElement_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/NavbarElement */ "./src/elements/NavbarElement.ts")) },
-    { tag: "login-element", module: __webpack_require__.e(/*! import() */ "src_elements_LoginElement_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/LoginElement */ "./src/elements/LoginElement.ts")), options: { extends: "form" } },
+    // Forms
+    { tag: "login-form", module: __webpack_require__.e(/*! import() */ "src_elements_LoginForm_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/LoginForm */ "./src/elements/LoginForm.ts")), options: { extends: "form" } },
+    { tag: "offer-form", module: __webpack_require__.e(/*! import() */ "src_elements_OfferForm_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/OfferForm */ "./src/elements/OfferForm.ts")), options: { extends: "form" } },
 ];
-function initialize() {
-    for (const element of ELEMENTS) {
-        element.module.then((module) => {
-            customElements.define(element.tag, module.default, element.options);
-        });
+class Loader {
+    static initialize() {
+        for (const element of ELEMENTS) {
+            element.module.then((module) => {
+                customElements.define(element.tag, module.default, element.options);
+            });
+        }
     }
 }
 
@@ -48,7 +51,7 @@ function initialize() {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ initialize)
+/* harmony export */   "default": () => (/* binding */ Router)
 /* harmony export */ });
 const DEFAULT_PAGE = "offer-search-page";
 const ROUTES_TO_PAGES = {
@@ -60,32 +63,33 @@ const ROUTES_TO_PAGES = {
     "/user": "user-page",
     "/user/edit": "edit-user-page",
 };
-function renderCurrentPage() {
-    const path = window.location.pathname;
-    const page = document.createElement(ROUTES_TO_PAGES[path] || DEFAULT_PAGE);
-    document.body.innerHTML = "";
-    document.body.appendChild(page);
-}
-function onPopState() { renderCurrentPage(); }
-function onClick(event) {
-    const target = event.target;
-    const anchor = target.closest("a");
-    if (anchor === null) {
-        return;
+class Router {
+    static initialize() {
+        const path = window.location.pathname + window.location.search;
+        history.replaceState(null, "", path);
+        Router.renderCurrentPage();
+        window.onpopstate = () => Router.onPopState();
+        window.onclick = (event) => Router.onClick(event);
     }
-    const href = anchor.getAttribute("href");
-    if (href && href.startsWith("/")) {
-        event.preventDefault();
-        history.pushState(null, "", href);
-        renderCurrentPage();
+    static renderCurrentPage() {
+        const path = window.location.pathname;
+        const page = document.createElement(ROUTES_TO_PAGES[path] || DEFAULT_PAGE);
+        document.body.innerHTML = "";
+        document.body.appendChild(page);
     }
-}
-function initialize() {
-    const initialPath = window.location.pathname + window.location.search;
-    history.replaceState(null, "", initialPath);
-    renderCurrentPage();
-    window.onpopstate = () => onPopState();
-    window.onclick = (event) => onClick(event);
+    static onPopState() { Router.renderCurrentPage(); }
+    static onClick(event) {
+        const target = event.target;
+        const anchor = target.closest("a");
+        if (anchor === null)
+            return;
+        const href = anchor.getAttribute("href");
+        if (href && href.startsWith("/")) {
+            event.preventDefault();
+            history.pushState(null, "", href);
+            Router.renderCurrentPage();
+        }
+    }
 }
 
 
@@ -353,8 +357,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./router */ "./src/router.ts");
 
 
-(0,_loader__WEBPACK_IMPORTED_MODULE_0__["default"])();
-(0,_router__WEBPACK_IMPORTED_MODULE_1__["default"])();
+_loader__WEBPACK_IMPORTED_MODULE_0__["default"].initialize();
+_router__WEBPACK_IMPORTED_MODULE_1__["default"].initialize();
 
 })();
 

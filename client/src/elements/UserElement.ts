@@ -1,5 +1,5 @@
 import User from "../models/User";
-import OfferElement from "../elements/OfferElement";
+import OfferElement from "./OfferElement";
 
 export default class UserElement extends HTMLElement {
 
@@ -26,7 +26,7 @@ export default class UserElement extends HTMLElement {
         if (this.bioElement) this.bioElement.textContent = user.bio || '?';
         if (this.locationElement) this.locationElement.textContent = user.location || '?';
         if (this.rateElement) this.rateElement.textContent = this.rateToStars(user.rating);
-        if (this.profileButton) this.profileButton.href = `/user?id=${user.id}`;
+        if (this.profileButton) this.profileButton.href = `/user?id=${user._id}`;
         if (this.avatarElement) this.avatarElement.src = this.getAvatarUrl(user);
         if (this.offerContainer) {
             this.offerContainer.innerHTML = '';

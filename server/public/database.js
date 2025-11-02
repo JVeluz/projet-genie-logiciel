@@ -14,18 +14,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = connectDB;
 const mongoose_1 = __importDefault(require("mongoose"));
-const clientOptions = {
-    serverApi: {
-        version: "1",
-        strict: true,
-        deprecationErrors: true,
-    }
-};
 function connectDB() {
     return __awaiter(this, void 0, void 0, function* () {
         var _a;
         try {
-            yield mongoose_1.default.connect(process.env.MONGODB_URI, clientOptions);
+            yield mongoose_1.default.connect(process.env.MONGODB_URI, {
+                serverApi: { version: "1", strict: true, deprecationErrors: true }
+            });
             yield ((_a = mongoose_1.default.connection.db) === null || _a === void 0 ? void 0 : _a.admin().command({ ping: 1 }));
             console.log("✅ Successfully connected to MongoDB!");
         }

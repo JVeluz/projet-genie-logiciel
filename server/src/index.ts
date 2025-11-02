@@ -1,3 +1,6 @@
+import application from "./application";
+import connectDB from "./database";
+
 if (process.env.MONGODB_URI === undefined) {
     console.error("❌ MONGODB_URI is not defined in environment variables");
     process.exit(1);
@@ -7,9 +10,6 @@ if (process.env.JWT_SECRET === undefined) {
     console.error("❌ JWT_SECRET is not defined in environment variables");
     process.exit(1);
 }
-
-import application from "./application";
-import connectDB from "./database";
 
 const port: number = 3000;
 

@@ -7,13 +7,14 @@ export default class LoginController {
     private logoutButton?: HTMLButtonElement;
     private model: Application = Application.getInstance();
 
-    public constructor(form: HTMLFormElement, logoutButton?: HTMLButtonElement) {
+    public constructor(form: HTMLFormElement) {
         this.form = form;
         this.form.onsubmit = (event: Event) => this.onSubmit(event);
-        if (logoutButton) {
-            this.logoutButton = logoutButton;
-            this.logoutButton.onclick = (event: Event) => this.onLogout(event);
-        }
+    }
+
+    public setLogoutButton(logoutButton: HTMLButtonElement): void {
+        this.logoutButton = logoutButton;
+        this.logoutButton.onclick = (event: Event) => this.onLogout(event);
     }
 
     public async onSubmit(event: Event): Promise<void> {
