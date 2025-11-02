@@ -1,5 +1,7 @@
 import User from "../models/User";
 import OfferElement from "./OfferElement";
+import OfferCardHTML from "../html/offer-card.html";
+import Application, { Item } from "../models/Application";
 
 export default class UserElement extends HTMLElement {
 
@@ -22,9 +24,20 @@ export default class UserElement extends HTMLElement {
     }
 
     public update(user: User): void {
+        const editButton = this.querySelector('.user-edit-button') as HTMLAnchorElement;
+        if (editButton) {
+            const currentUser = Application.getInstance().get(Item.CurrentUser);
+            if (user._id === currentUser?._id) {
+                editButton.style.display = 'inline-block';
+                editButton.href = `/user/edit?id=${user._id}`;
+            } else {
+                editButton.style.display = 'none';
+            }
+        }
+
         if (this.nameElement) this.nameElement.textContent = user.name;
-        if (this.bioElement) this.bioElement.textContent = user.bio || '?';
-        if (this.locationElement) this.locationElement.textContent = user.location || '?';
+        if (this.bioElement) this.bioElement.textContent = user.bio || '...';
+        if (this.locationElement) this.locationElement.textContent = user.location || '...';
         if (this.rateElement) this.rateElement.textContent = this.rateToStars(user.rating);
         if (this.profileButton) this.profileButton.href = `/user?id=${user._id}`;
         if (this.avatarElement) this.avatarElement.src = this.getAvatarUrl(user);
@@ -32,6 +45,7 @@ export default class UserElement extends HTMLElement {
             this.offerContainer.innerHTML = '';
             user.offers?.forEach(offer => {
                 const offerElement = document.createElement('offer-element') as OfferElement;
+                offerElement.innerHTML = OfferCardHTML;
                 offerElement.classList.add('col');
                 this.offerContainer!.appendChild(offerElement);
                 offerElement.update(offer);

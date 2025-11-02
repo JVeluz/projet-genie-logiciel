@@ -5,12 +5,13 @@ import Offer from "../models/Offer";
 import User from "../models/User";
 import OfferFetch from "../fetches/OfferFetch";
 
-export default class OfferFormController {
+export default class OfferEditorController {
 
     private offer: Offer;
     private form: OfferForm;
     private createButton?: HTMLButtonElement;
     private updateButton?: HTMLButtonElement;
+    private deleteButton?: HTMLButtonElement;
     private preview?: OfferElement;
 
     public constructor(form: OfferForm) {
@@ -40,6 +41,11 @@ export default class OfferFormController {
         this.updateButton.onclick = (event: Event) => this.onUpdateButton(event);
     }
 
+    public setDeleteButton(button: HTMLButtonElement): void {
+        this.deleteButton = button;
+        this.deleteButton.onclick = (event: Event) => this.onDeleteButton(event);
+    }
+
     public setPreview(element: OfferElement): void {
         this.preview = element;
         this.form.onchange = () => this.onChange();
@@ -64,6 +70,13 @@ export default class OfferFormController {
         this.parseFormData(formData);
         await OfferFetch.update(this.offer);
         window.location.href = `/offer?id=${this.offer._id}`;
+    }
+
+    private async onDeleteButton(event: Event): Promise<void> {
+        event.preventDefault();
+        console.log("Deleting offer:", this.offer);
+        await OfferFetch.delete(this.offer._id);
+        window.location.href = `/user?id=${this.offer.sellerID}`;
     }
 
     private onChange(): void {

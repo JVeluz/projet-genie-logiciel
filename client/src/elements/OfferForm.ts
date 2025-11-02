@@ -1,12 +1,12 @@
-import OfferFormController from "../controllers/OfferFormController";
+import OfferEditorController from "../controllers/OfferEditorController";
 import Offer from "../models/Offer";
 
 export default class OfferForm extends HTMLFormElement {
 
-    public controller?: OfferFormController;
+    public controller?: OfferEditorController;
 
     public connectedCallback(): void {
-        this.controller = new OfferFormController(this);
+        this.controller = new OfferEditorController(this);
     }
 
     public update(offer: Offer): void {

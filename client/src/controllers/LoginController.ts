@@ -26,7 +26,11 @@ export default class LoginController {
             const { token, user } = await UserService.login(email, password);
             this.model.set(Item.CurrentUser, user);
             this.model.set(Item.AuthToken, token);
-            window.location.href = "/";
+            if (window.location.pathname === "/login") {
+                window.location.href = "/";
+            } else {
+                window.location.reload();
+            }
         } catch (error: any) {
             alert(error.message);
         }
@@ -36,6 +40,6 @@ export default class LoginController {
         event.preventDefault();
         this.model.set(Item.CurrentUser, null);
         this.model.set(Item.AuthToken, null);
-        window.location.href = "/";
+        window.location.reload();
     }
 }

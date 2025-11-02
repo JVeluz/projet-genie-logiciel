@@ -35,13 +35,24 @@ export const offerSchema = new Schema<IOffer>({
     sellerID: { type: Schema.Types.ObjectId, ref: "User", required: true },
 });
 
-offerSchema.post('save', async function (offer, next) {
+offerSchema.post("save", async function (offer, next) {
     try {
         await User.updateOne(
             { _id: offer.sellerID },
             { $push: { offers: offer } }
         );
         next();
+    } catch (error) {
+        throw Error("Error updating user offers");
+    }
+});
+
+offerSchema.post("findOneAndDelete", async function (offer) {
+    try {
+        await User.updateOne(
+            { _id: offer.sellerID },
+            { $pull: { offers: { _id: offer._id } } }
+        );
     } catch (error) {
         throw Error("Error updating user offers");
     }

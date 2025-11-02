@@ -25,11 +25,21 @@ exports.offerSchema = new mongoose_1.Schema({
     comments: { type: [String], default: [] },
     sellerID: { type: mongoose_1.Schema.Types.ObjectId, ref: "User", required: true },
 });
-exports.offerSchema.post('save', function (offer, next) {
+exports.offerSchema.post("save", function (offer, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             yield User_1.User.updateOne({ _id: offer.sellerID }, { $push: { offers: offer } });
             next();
+        }
+        catch (error) {
+            throw Error("Error updating user offers");
+        }
+    });
+});
+exports.offerSchema.post("findOneAndDelete", function (offer) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            yield User_1.User.updateOne({ _id: offer.sellerID }, { $pull: { offers: { _id: offer._id } } });
         }
         catch (error) {
             throw Error("Error updating user offers");

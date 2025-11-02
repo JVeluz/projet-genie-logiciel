@@ -7,7 +7,7 @@
 <!-- Conteneur principal de la page -->
 <main class="container py-4">
 
-    <offer-element>
+    <offer-element class="offer-element">
 
         <!-- Grille Bootstrap principale. g-5 ajoute un large espacement (gutter) entre les colonnes -->
         <div class="row g-5">
@@ -15,8 +15,18 @@
             <!-- SECTION GAUCHE (Contenu principal de l'annonce) - 8 colonnes sur grand écran -->
             <section class="col-lg-8">
 
-                <!-- Titre de l'annonce -->
-                <h1 class="offer-title fw-bolder mb-2">Tondeuse à Gazon Thermique Puissante</h1>
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
+                    <!-- Titre de l'annonce -->
+                    <h1 class="offer-title fw-bolder mb-0">
+                        ?
+                    </h1>
+
+                    <!-- Bouton d'édition (lien vers la page d'édition) -->
+                    <a href="#" class="offer-edit-button btn btn-outline-primary">
+                        <i class="bi bi-pencil-fill me-2"></i>
+                        Modifier l'annonce
+                    </a>
+                </div>
 
                 <!-- Badges pour la catégorie et le type d'offre -->
                 <div class="mb-4">

@@ -9,7 +9,7 @@
         <!-- COLONNE 1: FORMULAIRE DE CRÉATION -->
         <div class="col-12 col-lg-7">
 
-            <h2 class="text-center fw-bold text-primary mb-4">Créer une nouvelle annonce</h2>
+            <h2 class="page-title text-center fw-bold text-primary mb-4">Créer une nouvelle annonce</h2>
 
             <!-- Carte principale contenant le formulaire -->
             <div class="card shadow-lg border-0">
@@ -92,9 +92,16 @@
 
                         <!-- Boutons d'action -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a href="/" class="btn btn-outline-secondary me-md-2">Annuler</a>
+                            <a href="/" class="btn btn-outline-secondary">
+                                Annuler
+                            </a>
+                            <button type="button" class="offer-delete-button btn btn-outline-danger"
+                                data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">
+                                <i class="bi bi-trash-fill me-2"></i>
+                                Supprimer l'annonce
+                            </button>
                             <button type="button" class="offer-update-button btn btn-primary btn-lg">
-                                <i class="bi bi-send-fill me-2"></i>
+                                <i class="bi bi-save-fill me-2"></i>
                                 Modifier l'annonce
                             </button>
                             <button type="button" class="offer-create-button btn btn-primary btn-lg">
@@ -166,3 +173,23 @@
         </div> <!-- Fin de la colonne aperçu -->
     </div>
 </main>
+
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="deleteModalLabel">Confirmer la suppression</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Êtes-vous sûr de vouloir supprimer cette annonce ? Cette action est irréversible.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <!-- Ce bouton devrait avoir sa propre logique de suppression -->
+                <button type="button" class="offer-confirm-delete-button btn btn-danger">Oui, supprimer</button>
+            </div>
+        </div>
+    </div>
+</div>

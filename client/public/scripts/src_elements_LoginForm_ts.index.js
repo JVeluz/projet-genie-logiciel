@@ -34,7 +34,12 @@ class LoginController {
             const { token, user } = await _fetches_UserFetch__WEBPACK_IMPORTED_MODULE_1__["default"].login(email, password);
             this.model.set(_models_Application__WEBPACK_IMPORTED_MODULE_0__.Item.CurrentUser, user);
             this.model.set(_models_Application__WEBPACK_IMPORTED_MODULE_0__.Item.AuthToken, token);
-            window.location.href = "/";
+            if (window.location.pathname === "/login") {
+                window.location.href = "/";
+            }
+            else {
+                window.location.reload();
+            }
         }
         catch (error) {
             alert(error.message);
@@ -44,7 +49,7 @@ class LoginController {
         event.preventDefault();
         this.model.set(_models_Application__WEBPACK_IMPORTED_MODULE_0__.Item.CurrentUser, null);
         this.model.set(_models_Application__WEBPACK_IMPORTED_MODULE_0__.Item.AuthToken, null);
-        window.location.href = "/";
+        window.location.reload();
     }
 }
 

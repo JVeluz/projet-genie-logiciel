@@ -1,15 +1,15 @@
 "use strict";
 (self["webpackChunkfront_end"] = self["webpackChunkfront_end"] || []).push([["src_elements_OfferForm_ts"],{
 
-/***/ "./src/controllers/OfferFormController.ts":
-/*!************************************************!*\
-  !*** ./src/controllers/OfferFormController.ts ***!
-  \************************************************/
+/***/ "./src/controllers/OfferEditorController.ts":
+/*!**************************************************!*\
+  !*** ./src/controllers/OfferEditorController.ts ***!
+  \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ OfferFormController)
+/* harmony export */   "default": () => (/* binding */ OfferEditorController)
 /* harmony export */ });
 /* harmony import */ var _models_Application__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../models/Application */ "./src/models/Application.ts");
 /* harmony import */ var _models_Offer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../models/Offer */ "./src/models/Offer.ts");
@@ -17,7 +17,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-class OfferFormController {
+class OfferEditorController {
     constructor(form) {
         this.offer = new _models_Offer__WEBPACK_IMPORTED_MODULE_1__["default"]();
         this.form = form;
@@ -41,6 +41,10 @@ class OfferFormController {
         this.updateButton = button;
         this.updateButton.onclick = (event) => this.onUpdateButton(event);
     }
+    setDeleteButton(button) {
+        this.deleteButton = button;
+        this.deleteButton.onclick = (event) => this.onDeleteButton(event);
+    }
     setPreview(element) {
         this.preview = element;
         this.form.onchange = () => this.onChange();
@@ -63,6 +67,12 @@ class OfferFormController {
         this.parseFormData(formData);
         await _fetches_OfferFetch__WEBPACK_IMPORTED_MODULE_2__["default"].update(this.offer);
         window.location.href = `/offer?id=${this.offer._id}`;
+    }
+    async onDeleteButton(event) {
+        event.preventDefault();
+        console.log("Deleting offer:", this.offer);
+        await _fetches_OfferFetch__WEBPACK_IMPORTED_MODULE_2__["default"].delete(this.offer._id);
+        window.location.href = `/user?id=${this.offer.sellerID}`;
     }
     onChange() {
         if (this.preview === undefined)
@@ -95,11 +105,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ OfferForm)
 /* harmony export */ });
-/* harmony import */ var _controllers_OfferFormController__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../controllers/OfferFormController */ "./src/controllers/OfferFormController.ts");
+/* harmony import */ var _controllers_OfferEditorController__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../controllers/OfferEditorController */ "./src/controllers/OfferEditorController.ts");
 
 class OfferForm extends HTMLFormElement {
     connectedCallback() {
-        this.controller = new _controllers_OfferFormController__WEBPACK_IMPORTED_MODULE_0__["default"](this);
+        this.controller = new _controllers_OfferEditorController__WEBPACK_IMPORTED_MODULE_0__["default"](this);
     }
     update(offer) {
         const title = this.querySelector('input[name="title"]');
