@@ -1,5 +1,6 @@
 import Application, { Item } from "../models/Application";
-import UserService from "../fetches/UserFetch";
+import UserFetch from "../fetches/UserFetch";
+import User from "../models/User";
 
 export default class LoginController {
 
@@ -19,11 +20,16 @@ export default class LoginController {
 
     public async onSubmit(event: Event): Promise<void> {
         event.preventDefault();
+        const loading: boolean = this.model.get(Item.Loading);
+        if (loading)
+            return;
+
         const formData: FormData = new FormData(this.form);
         const email: string = formData.get("email") as string;
         const password: string = formData.get("password") as string;
         try {
-            const { token, user } = await UserService.login(email, password);
+            this.model.set(Item.Loading, true);
+            const { token, user } = await UserFetch.login(email, password);
             this.model.set(Item.CurrentUser, user);
             this.model.set(Item.AuthToken, token);
             if (window.location.pathname === "/login") {
@@ -33,6 +39,8 @@ export default class LoginController {
             }
         } catch (error: any) {
             alert(error.message);
+        } finally {
+            this.model.set(Item.Loading, false);
         }
     }
 

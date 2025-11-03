@@ -27,10 +27,14 @@ class LoginController {
     }
     async onSubmit(event) {
         event.preventDefault();
+        const loading = this.model.get(_models_Application__WEBPACK_IMPORTED_MODULE_0__.Item.Loading);
+        if (loading)
+            return;
         const formData = new FormData(this.form);
         const email = formData.get("email");
         const password = formData.get("password");
         try {
+            this.model.set(_models_Application__WEBPACK_IMPORTED_MODULE_0__.Item.Loading, true);
             const { token, user } = await _fetches_UserFetch__WEBPACK_IMPORTED_MODULE_1__["default"].login(email, password);
             this.model.set(_models_Application__WEBPACK_IMPORTED_MODULE_0__.Item.CurrentUser, user);
             this.model.set(_models_Application__WEBPACK_IMPORTED_MODULE_0__.Item.AuthToken, token);
@@ -43,6 +47,9 @@ class LoginController {
         }
         catch (error) {
             alert(error.message);
+        }
+        finally {
+            this.model.set(_models_Application__WEBPACK_IMPORTED_MODULE_0__.Item.Loading, false);
         }
     }
     onLogout(event) {
@@ -133,10 +140,13 @@ var Item;
 (function (Item) {
     Item["AuthToken"] = "authToken";
     Item["CurrentUser"] = "currentUser";
+    Item["Loading"] = "false";
 })(Item || (Item = {}));
 class Application {
     constructor() {
         this.listeners = {};
+        for (const item in Item)
+            this.listeners[Item[item]] = [];
     }
     static getInstance() {
         if (this.instance === null)
@@ -144,8 +154,6 @@ class Application {
         return this.instance;
     }
     addListener(item, listener) {
-        if (this.listeners[item] === undefined)
-            this.listeners[item] = [];
         this.listeners[item].push(listener);
     }
     set(item, value) {
@@ -162,8 +170,6 @@ class Application {
         return JSON.parse(value);
     }
     notifyListeners(item) {
-        if (this.listeners[item] === undefined)
-            return;
         for (const listener of this.listeners[item])
             listener(this.get(item));
     }

@@ -12,9 +12,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ SearchPageController)
 /* harmony export */ });
 /* harmony import */ var _fetches_OfferFetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../fetches/OfferFetch */ "./src/fetches/OfferFetch.ts");
+/* harmony import */ var _models_Application__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../models/Application */ "./src/models/Application.ts");
+
 
 class SearchPageController {
     constructor(view, searchForm, filterForm) {
+        this.model = _models_Application__WEBPACK_IMPORTED_MODULE_1__["default"].getInstance();
         this.view = view;
         this.searchForm = searchForm;
         this.filterForm = filterForm;
@@ -23,12 +26,23 @@ class SearchPageController {
     }
     async onSearchSubmit(event) {
         event.preventDefault();
+        const loading = this.model.get(_models_Application__WEBPACK_IMPORTED_MODULE_1__.Item.Loading);
+        if (loading)
+            return;
         const search = Object.fromEntries(new FormData(this.searchForm));
         const filter = Object.fromEntries(new FormData(this.filterForm));
         const query = { search, filter };
-        console.log(`onSearchSubmit(${JSON.stringify(query)})`);
-        const result = await _fetches_OfferFetch__WEBPACK_IMPORTED_MODULE_0__["default"].getAll();
-        this.view.update(result);
+        try {
+            this.model.set(_models_Application__WEBPACK_IMPORTED_MODULE_1__.Item.Loading, true);
+            const result = await _fetches_OfferFetch__WEBPACK_IMPORTED_MODULE_0__["default"].getAll();
+            this.view.update(result);
+        }
+        catch (error) {
+            alert(error.message);
+        }
+        finally {
+            this.model.set(_models_Application__WEBPACK_IMPORTED_MODULE_1__.Item.Loading, false);
+        }
     }
 }
 
@@ -179,10 +193,13 @@ var Item;
 (function (Item) {
     Item["AuthToken"] = "authToken";
     Item["CurrentUser"] = "currentUser";
+    Item["Loading"] = "false";
 })(Item || (Item = {}));
 class Application {
     constructor() {
         this.listeners = {};
+        for (const item in Item)
+            this.listeners[Item[item]] = [];
     }
     static getInstance() {
         if (this.instance === null)
@@ -190,8 +207,6 @@ class Application {
         return this.instance;
     }
     addListener(item, listener) {
-        if (this.listeners[item] === undefined)
-            this.listeners[item] = [];
         this.listeners[item].push(listener);
     }
     set(item, value) {
@@ -208,8 +223,6 @@ class Application {
         return JSON.parse(value);
     }
     notifyListeners(item) {
-        if (this.listeners[item] === undefined)
-            return;
         for (const listener of this.listeners[item])
             listener(this.get(item));
     }

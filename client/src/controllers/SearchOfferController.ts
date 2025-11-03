@@ -1,9 +1,11 @@
 import OfferSearchPage from "../elements/OfferSearchPage";
 import OfferFetch from "../fetches/OfferFetch";
+import Application, { Item } from "../models/Application";
 
 export default class SearchPageController {
 
     private view: OfferSearchPage;
+    private model: Application = Application.getInstance();
     private searchForm: HTMLFormElement;
     private filterForm: HTMLFormElement;
 
@@ -17,11 +19,21 @@ export default class SearchPageController {
 
     public async onSearchSubmit(event: Event): Promise<void> {
         event.preventDefault();
-        const search: any = Object.fromEntries(new FormData(this.searchForm));
+        const loading: boolean = this.model.get(Item.Loading);
+        if (loading)
+            return;
+
+        const search: Object = Object.fromEntries(new FormData(this.searchForm));
         const filter: Object = Object.fromEntries(new FormData(this.filterForm));
         const query: Object = { search, filter }
-        console.log(`onSearchSubmit(${JSON.stringify(query)})`);
-        const result = await OfferFetch.getAll();
-        this.view.update(result);
+        try {
+            this.model.set(Item.Loading, true);
+            const result = await OfferFetch.getAll();
+            this.view.update(result);
+        } catch (error: any) {
+            alert(error.message);
+        } finally {
+            this.model.set(Item.Loading, false);
+        }
     }
 }

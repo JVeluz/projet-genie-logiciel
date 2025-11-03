@@ -1,6 +1,7 @@
 export enum Item {
     AuthToken = "authToken",
     CurrentUser = "currentUser",
+    Loading = "false",
 }
 
 export default class Application {
@@ -8,7 +9,10 @@ export default class Application {
     private static instance: Application | null = null;
     private listeners: { [item: string]: CallableFunction[] } = {};
 
-    private constructor() { }
+    private constructor() {
+        for (const item in Item)
+            this.listeners[Item[item as keyof typeof Item]] = [];
+    }
 
     public static getInstance(): Application {
         if (this.instance === null)
@@ -17,8 +21,6 @@ export default class Application {
     }
 
     public addListener(item: Item, listener: CallableFunction): void {
-        if (this.listeners[item] === undefined)
-            this.listeners[item] = [];
         this.listeners[item].push(listener);
     }
 
@@ -38,8 +40,6 @@ export default class Application {
     }
 
     private notifyListeners(item: Item): void {
-        if (this.listeners[item] === undefined)
-            return;
         for (const listener of this.listeners[item])
             listener(this.get(item));
     }

@@ -13,11 +13,16 @@ export default class RegisterController {
 
     private async onSubmit(event: Event): Promise<void> {
         event.preventDefault();
+        const loading: boolean = this.model.get(Item.Loading);
+        if (loading)
+            return;
+
         const formData: FormData = new FormData(this.form);
         const name: string = formData.get("name") as string;
         const email: string = formData.get("email") as string;
         const password: string = formData.get("password") as string;
         try {
+            this.model.set(Item.Loading, true);
             const response = await UserFetch.register(name, email, password);
             const { token, user } = response;
             this.model.set(Item.CurrentUser, user);
@@ -25,6 +30,8 @@ export default class RegisterController {
             window.location.href = "/";
         } catch (error: any) {
             alert(error.message);
+        } finally {
+            this.model.set(Item.Loading, false);
         }
     }
 }

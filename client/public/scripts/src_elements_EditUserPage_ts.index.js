@@ -60,10 +60,13 @@ var Item;
 (function (Item) {
     Item["AuthToken"] = "authToken";
     Item["CurrentUser"] = "currentUser";
+    Item["Loading"] = "false";
 })(Item || (Item = {}));
 class Application {
     constructor() {
         this.listeners = {};
+        for (const item in Item)
+            this.listeners[Item[item]] = [];
     }
     static getInstance() {
         if (this.instance === null)
@@ -71,8 +74,6 @@ class Application {
         return this.instance;
     }
     addListener(item, listener) {
-        if (this.listeners[item] === undefined)
-            this.listeners[item] = [];
         this.listeners[item].push(listener);
     }
     set(item, value) {
@@ -89,8 +90,6 @@ class Application {
         return JSON.parse(value);
     }
     notifyListeners(item) {
-        if (this.listeners[item] === undefined)
-            return;
         for (const listener of this.listeners[item])
             listener(this.get(item));
     }

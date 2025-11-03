@@ -44,4 +44,13 @@ export default class NavbarElement extends HTMLElement {
             });
         }
     }
+
+    public setLoading(isLoading: boolean): void {
+        const progressBar = this.querySelector('.navbar-progress-bar') as HTMLElement;
+        if (isLoading) {
+            progressBar.style.width = '100%';
+        } else {
+            progressBar.style.width = '0%';
+        }
+    }
 }
