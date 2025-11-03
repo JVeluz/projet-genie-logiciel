@@ -19,6 +19,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class OfferEditorController {
     constructor(form) {
+        this.application = _models_Application__WEBPACK_IMPORTED_MODULE_0__["default"].getInstance();
         this.offer = new _models_Offer__WEBPACK_IMPORTED_MODULE_1__["default"]();
         this.form = form;
     }
@@ -52,27 +53,61 @@ class OfferEditorController {
     }
     async onCreateButton(event) {
         event.preventDefault();
+        const loading = this.application.get(_models_Application__WEBPACK_IMPORTED_MODULE_0__.Item.Loading);
+        if (loading)
+            return;
         console.log("Creating offer:", this.offer);
         const formData = new FormData(this.form);
         const currentUser = _models_Application__WEBPACK_IMPORTED_MODULE_0__["default"].getInstance().get(_models_Application__WEBPACK_IMPORTED_MODULE_0__.Item.CurrentUser);
         this.parseFormData(formData);
         this.offer.sellerID = currentUser._id;
-        await _fetches_OfferFetch__WEBPACK_IMPORTED_MODULE_2__["default"].create(this.offer);
-        window.location.href = `/user?id=${currentUser._id}`;
+        try {
+            this.application.set(_models_Application__WEBPACK_IMPORTED_MODULE_0__.Item.Loading, true);
+            await _fetches_OfferFetch__WEBPACK_IMPORTED_MODULE_2__["default"].create(this.offer);
+        }
+        catch (error) {
+            alert(error.message);
+        }
+        finally {
+            this.application.set(_models_Application__WEBPACK_IMPORTED_MODULE_0__.Item.Loading, false);
+            window.location.href = `/user?id=${currentUser._id}`;
+        }
     }
     async onUpdateButton(event) {
         event.preventDefault();
-        console.log("Updating offer:", this.offer);
+        const loading = this.application.get(_models_Application__WEBPACK_IMPORTED_MODULE_0__.Item.Loading);
+        if (loading)
+            return;
         const formData = new FormData(this.form);
         this.parseFormData(formData);
-        await _fetches_OfferFetch__WEBPACK_IMPORTED_MODULE_2__["default"].update(this.offer);
-        window.location.href = `/offer?id=${this.offer._id}`;
+        try {
+            this.application.set(_models_Application__WEBPACK_IMPORTED_MODULE_0__.Item.Loading, true);
+            await _fetches_OfferFetch__WEBPACK_IMPORTED_MODULE_2__["default"].update(this.offer);
+        }
+        catch (error) {
+            alert(error.message);
+        }
+        finally {
+            this.application.set(_models_Application__WEBPACK_IMPORTED_MODULE_0__.Item.Loading, false);
+            window.location.href = `/offer?id=${this.offer._id}`;
+        }
     }
     async onDeleteButton(event) {
         event.preventDefault();
-        console.log("Deleting offer:", this.offer);
-        await _fetches_OfferFetch__WEBPACK_IMPORTED_MODULE_2__["default"].delete(this.offer._id);
-        window.location.href = `/user?id=${this.offer.sellerID}`;
+        const loading = this.application.get(_models_Application__WEBPACK_IMPORTED_MODULE_0__.Item.Loading);
+        if (loading)
+            return;
+        try {
+            this.application.set(_models_Application__WEBPACK_IMPORTED_MODULE_0__.Item.Loading, true);
+            await _fetches_OfferFetch__WEBPACK_IMPORTED_MODULE_2__["default"].delete(this.offer._id);
+        }
+        catch (error) {
+            alert(error.message);
+        }
+        finally {
+            this.application.set(_models_Application__WEBPACK_IMPORTED_MODULE_0__.Item.Loading, false);
+            window.location.href = `/user?id=${this.offer.sellerID}`;
+        }
     }
     onChange() {
         if (this.preview === undefined)

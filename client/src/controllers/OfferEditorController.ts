@@ -7,6 +7,7 @@ import OfferFetch from "../fetches/OfferFetch";
 
 export default class OfferEditorController {
 
+    private application: Application = Application.getInstance();
     private offer: Offer;
     private form: OfferForm;
     private createButton?: HTMLButtonElement;
@@ -54,29 +55,60 @@ export default class OfferEditorController {
 
     private async onCreateButton(event: Event): Promise<void> {
         event.preventDefault();
+        const loading: boolean = this.application.get(Item.Loading);
+        if (loading)
+            return;
+
         console.log("Creating offer:", this.offer);
         const formData: FormData = new FormData(this.form);
         const currentUser: User = Application.getInstance().get(Item.CurrentUser);
         this.parseFormData(formData);
         this.offer.sellerID = currentUser._id;
-        await OfferFetch.create(this.offer);
-        window.location.href = `/user?id=${currentUser._id}`;
+
+        try {
+            this.application.set(Item.Loading, true);
+            await OfferFetch.create(this.offer);
+        } catch (error: any) {
+            alert(error.message);
+        } finally {
+            this.application.set(Item.Loading, false);
+            window.location.href = `/user?id=${currentUser._id}`;
+        }
     }
 
     private async onUpdateButton(event: Event): Promise<void> {
         event.preventDefault();
-        console.log("Updating offer:", this.offer);
+        const loading: boolean = this.application.get(Item.Loading);
+        if (loading)
+            return;
+
         const formData: FormData = new FormData(this.form);
         this.parseFormData(formData);
-        await OfferFetch.update(this.offer);
-        window.location.href = `/offer?id=${this.offer._id}`;
+        try {
+            this.application.set(Item.Loading, true);
+            await OfferFetch.update(this.offer);
+        } catch (error: any) {
+            alert(error.message);
+        } finally {
+            this.application.set(Item.Loading, false);
+            window.location.href = `/offer?id=${this.offer._id}`;
+        }
     }
 
     private async onDeleteButton(event: Event): Promise<void> {
         event.preventDefault();
-        console.log("Deleting offer:", this.offer);
-        await OfferFetch.delete(this.offer._id);
-        window.location.href = `/user?id=${this.offer.sellerID}`;
+        const loading: boolean = this.application.get(Item.Loading);
+        if (loading)
+            return;
+        try {
+            this.application.set(Item.Loading, true);
+            await OfferFetch.delete(this.offer._id);
+        } catch (error: any) {
+            alert(error.message);
+        } finally {
+            this.application.set(Item.Loading, false);
+            window.location.href = `/user?id=${this.offer.sellerID}`;
+        }
     }
 
     private onChange(): void {
