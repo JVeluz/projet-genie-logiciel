@@ -8,6 +8,10 @@ export default class UserFetch {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
             });
+            if (response.ok === false) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response;
         } catch (error: any) {
             alert(error.message);
             if (response) {
@@ -15,6 +19,7 @@ export default class UserFetch {
                 alert(responseMessage);
             }
         }
+        throw new Error("Network error");
     }
 
     public static async get(userID: string): Promise<any> {

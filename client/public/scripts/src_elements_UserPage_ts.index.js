@@ -75,28 +75,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 class UserFetch {
     static async fetch(route, method, body) {
-        return await fetch(`${"http://localhost:3000"}${route}`, {
-            method,
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body)
-        });
+        let response = undefined;
+        try {
+            response = await fetch(`${"http://localhost:3000"}${route}`, {
+                method,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            });
+            if (response.ok === false) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response;
+        }
+        catch (error) {
+            alert(error.message);
+            if (response) {
+                const responseMessage = await response.text();
+                alert(responseMessage);
+            }
+        }
+        throw new Error("Network error");
     }
     static async get(userID) {
         const response = await this.fetch(`/users/${userID}`, "GET");
-        if (response.ok === false)
-            throw new Error(`Failed to fetch user with ID ${userID}: ${response.statusText}`);
         return response.json();
     }
     static async login(email, password) {
         const response = await this.fetch("/login", "POST", { email, password });
-        if (response.ok === false)
-            throw new Error(`Failed to login user with email ${email}: ${response.statusText}`);
         return response.json();
     }
     static async register(name, email, password) {
         const response = await this.fetch("/register", "POST", { name, email, password });
-        if (response.ok === false)
-            throw new Error(`Failed to register user with email ${email}: ${response.statusText}`);
         return response.json();
     }
 }
