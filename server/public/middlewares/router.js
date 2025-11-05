@@ -10,7 +10,7 @@ const router = (0, express_1.Router)();
 const userController = new UserController_1.default();
 const offerController = new OfferController_1.default();
 router.get("/users/:id", userController.getById);
-router.post("/users", userController.register);
+router.post("/register", userController.register);
 router.post("/login", userController.login);
 router.get("/offers", offerController.getAll);
 router.get("/offers/search/:terms", offerController.search);

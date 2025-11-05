@@ -17,10 +17,10 @@ const mongoose_1 = require("mongoose");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const Offer_1 = require("./Offer");
 const userSchema = new mongoose_1.Schema({
-    name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    rating: { type: Number, default: 0 },
+    name: { type: String, required: true },
     password: { type: String, required: true, select: false },
+    rating: { type: Number, default: 0 },
     createdAt: { type: Date, default: Date.now },
     bio: { type: String },
     avatar: { type: String },
