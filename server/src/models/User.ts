@@ -20,10 +20,10 @@ export interface IUser {
 }
 
 const userSchema = new Schema<IUser>({
-    name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    rating: { type: Number, default: 0 },
+    name: { type: String, required: true },
     password: { type: String, required: true, select: false },
+    rating: { type: Number, default: 0 },
     createdAt: { type: Date, default: Date.now },
 
     bio: { type: String },
