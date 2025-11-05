@@ -8,7 +8,7 @@ const userController = new UserController();
 const offerController = new OfferController();
 
 router.get("/users/:id", userController.getById);
-router.post("/users", userController.register);
+router.post("/register", userController.register);
 router.post("/login", userController.login);
 
 router.get("/offers", offerController.getAll);
