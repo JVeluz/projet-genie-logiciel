@@ -12,6 +12,7 @@ export default class Application {
     private constructor() {
         for (const item in Item)
             this.listeners[Item[item as keyof typeof Item]] = [];
+        this.set(Item.Loading, false);
     }
 
     public static getInstance(): Application {
