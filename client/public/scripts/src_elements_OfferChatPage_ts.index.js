@@ -466,8 +466,9 @@ class Offer {
         offer.available = data.available;
         offer.category = data.category;
         offer.type = data.type;
-        offer.sellerID = data.sellerID;
         offer.createdAt = new Date(data.createdAt);
+        offer.sellerID = data.sellerID;
+        offer.chatIDs = data.chatIDs;
         offer.exchange = data.exchange;
         offer.location = data.location;
         offer.pictures = data.pictures;
@@ -489,6 +490,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ User)
 /* harmony export */ });
+/* harmony import */ var _Offer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Offer */ "./src/models/Offer.ts");
+
 class User {
     static fromJSON(data) {
         const user = new User();
@@ -497,6 +500,7 @@ class User {
         user.email = data.email;
         user.rating = data.rating;
         user.createdAt = new Date(data.createdAt);
+        user.offers = data.offers.map((offer) => _Offer__WEBPACK_IMPORTED_MODULE_0__["default"].fromJSON(offer));
         return user;
     }
     getAvatar() {

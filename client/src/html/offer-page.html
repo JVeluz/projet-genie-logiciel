@@ -7,7 +7,7 @@
 <!-- Conteneur principal de la page -->
 <main class="container py-4">
 
-    <offer-element class="offer-element">
+    <offer-element id="offer-element">
 
         <!-- Grille Bootstrap principale. g-5 ajoute un large espacement (gutter) entre les colonnes -->
         <div class="row g-5">
@@ -22,7 +22,7 @@
                     </h1>
 
                     <!-- Bouton d'édition (lien vers la page d'édition) -->
-                    <a href="#" class="offer-edit-button btn btn-outline-primary">
+                    <a id="offer-edit-button" class="btn btn-outline-primary">
                         <i class="bi bi-pencil-fill me-2"></i>
                         Modifier l'annonce
                     </a>
@@ -129,8 +129,22 @@
                     </div>
                 </div>
 
+                <!-- Carte "Vos Conversations" (Pour le propriétaire) -->
+                <div id="chat-list-card" class="card shadow-lg border-info mb-4">
+                    <div class="card-header bg-info text-white fw-bold">
+                        <i class="bi bi-chat-dots-fill me-2"></i>
+                        Vos Conversations
+                    </div>
+                    <div class="card-body p-0">
+                        <!-- 'id="offer-chat-list"' pour y injecter vos chats -->
+                        <div id="offer-chat-list" class="list-group list-group-flush"
+                            style="max-height: 300px; overflow-y: auto;">
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Carte "Proposer un Échange" (Formulaire) -->
-                <div class="card shadow-lg border-success">
+                <div id="trade-card" class="card shadow-lg border-success">
                     <div class="card-header bg-success text-white fw-bold">
                         Proposer un échange
                     </div>

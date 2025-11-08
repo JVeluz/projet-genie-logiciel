@@ -7,8 +7,9 @@ export default class Offer {
     public available!: boolean;
     public category!: string;
     public type!: string;
-    public sellerID!: string;
     public createdAt!: Date;
+    public sellerID!: string;
+    public chatIDs!: string[];
 
     public exchange?: string;
     public location?: string;
@@ -24,8 +25,9 @@ export default class Offer {
         offer.available = data.available;
         offer.category = data.category;
         offer.type = data.type;
-        offer.sellerID = data.sellerID;
         offer.createdAt = new Date(data.createdAt);
+        offer.sellerID = data.sellerID;
+        offer.chatIDs = data.chatIDs;
 
         offer.exchange = data.exchange;
         offer.location = data.location;

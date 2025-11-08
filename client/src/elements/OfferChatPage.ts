@@ -12,7 +12,7 @@ import UserElement from "./UserElement";
 
 const UPDATE_WAIT_TIME: number = 10000; // 10 seconds
 
-const MESSAGE_TEMPLATE = `
+const MESSAGE = `
 <div class="d-flex justify-content-start mb-3">
     <div class="bg-secondary rounded-3 p-2">
         <p></p>
@@ -21,7 +21,7 @@ const MESSAGE_TEMPLATE = `
 </div>
 `;
 
-const MESSAGE_TEMPLATE_SELF = `
+const MESSAGE_SELF = `
 <div class="d-flex justify-content-end mb-3">
     <div class="bg-primary text-white rounded-3 p-2">
         <p></p>
@@ -119,8 +119,8 @@ export default class OfferChatPage extends HTMLElement {
         for (const message of this.chat!.messages) {
             const isSelf: boolean = message.senderID === this.currentUser!._id;
             const messageElement: HTMLElement = (isSelf) ?
-                HTMLLoader.createElement(MESSAGE_TEMPLATE_SELF) :
-                HTMLLoader.createElement(MESSAGE_TEMPLATE);
+                HTMLLoader.createElement(MESSAGE_SELF) :
+                HTMLLoader.createElement(MESSAGE);
 
             const messageContent: HTMLDivElement = messageElement.querySelector("div")!;
             const messageText: HTMLParagraphElement = messageContent.querySelector("p")!;

@@ -1,8 +1,24 @@
 import Offer from "../models/Offer";
 import UserElement from "./UserElement";
 import UserController from "../controllers/UserController";
+import OfferFetch from "../fetches/OfferFetch";
 
 export default class OfferElement extends HTMLElement {
+
+    // Attributes to inject
+    private offerID: string | null = null;
+
+    public async connectedCallback(): Promise<void> {
+        await customElements.whenDefined("offer-element");
+
+        this.offerID = this.getAttribute("offer-id");
+        if (!this.offerID) {
+            console.error("Missing required attributes.");
+            return;
+        }
+        const offer = await OfferFetch.get(this.offerID);
+        this.update(offer);
+    }
 
     public update(offer: Offer): void {
         const lookupButton = this.querySelector('.offer-lookup-button') as HTMLAnchorElement;

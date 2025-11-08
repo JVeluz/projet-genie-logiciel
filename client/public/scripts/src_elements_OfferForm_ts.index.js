@@ -313,8 +313,9 @@ class Offer {
         offer.available = data.available;
         offer.category = data.category;
         offer.type = data.type;
-        offer.sellerID = data.sellerID;
         offer.createdAt = new Date(data.createdAt);
+        offer.sellerID = data.sellerID;
+        offer.chatIDs = data.chatIDs;
         offer.exchange = data.exchange;
         offer.location = data.location;
         offer.pictures = data.pictures;
