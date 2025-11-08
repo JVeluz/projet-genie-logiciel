@@ -5,6 +5,8 @@ import Application, { Item } from "../models/Application";
 
 export default class UserElement extends HTMLElement {
 
+    user: User | null = null;
+
     private nameElement?: HTMLElement;
     private bioElement?: HTMLElement;
     private locationElement?: HTMLElement;
@@ -21,6 +23,10 @@ export default class UserElement extends HTMLElement {
         this.profileButton = this.querySelector('.user-profile-button') as HTMLAnchorElement;
         this.avatarElement = this.querySelector('.user-avatar') as HTMLImageElement;
         this.offerContainer = this.querySelector('.user-offers') as HTMLElement;
+
+        if (this.user) {
+            this.update(this.user);
+        }
     }
 
     public update(user: User): void {

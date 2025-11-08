@@ -156,6 +156,7 @@ class Application {
         this.listeners = {};
         for (const item in Item)
             this.listeners[Item[item]] = [];
+        this.set(Item.Loading, false);
     }
     static getInstance() {
         if (this.instance === null)

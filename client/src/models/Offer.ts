@@ -14,4 +14,24 @@ export default class Offer {
     public location?: string;
     public pictures?: string[];
     public comments?: string[];
+
+    public static fromJSON(data: any): Offer {
+        const offer = new Offer();
+        offer._id = data._id;
+        offer.title = data.title;
+        offer.description = data.description;
+        offer.price = data.price;
+        offer.available = data.available;
+        offer.category = data.category;
+        offer.type = data.type;
+        offer.sellerID = data.sellerID;
+        offer.createdAt = new Date(data.createdAt);
+
+        offer.exchange = data.exchange;
+        offer.location = data.location;
+        offer.pictures = data.pictures;
+        offer.comments = data.comments;
+
+        return offer;
+    }
 }

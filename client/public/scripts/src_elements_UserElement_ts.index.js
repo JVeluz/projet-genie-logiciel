@@ -16,6 +16,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class UserElement extends HTMLElement {
+    constructor() {
+        super(...arguments);
+        this.user = null;
+    }
     connectedCallback() {
         this.nameElement = this.querySelector('.user-name');
         this.bioElement = this.querySelector('.user-bio');
@@ -24,6 +28,9 @@ class UserElement extends HTMLElement {
         this.profileButton = this.querySelector('.user-profile-button');
         this.avatarElement = this.querySelector('.user-avatar');
         this.offerContainer = this.querySelector('.user-offers');
+        if (this.user) {
+            this.update(this.user);
+        }
     }
     update(user) {
         const editButton = this.querySelector('.user-edit-button');
@@ -84,7 +91,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<a class=\"offer-lookup-button card shadow-sm\">\r\n    <img src=\"https://placehold.co/600x400\" class=\"card-img-top\" alt=\"Titre de l'objet\">\r\n    <div class=\"card-body\">\r\n        <h5 class=\"offer-title card-title text-primary\">\r\n            ?\r\n        </h5>\r\n        <p class=\"offer-description card-text\">\r\n            ?\r\n        </p>\r\n    </div>\r\n</a>");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<a class=\"offer-lookup-button card shadow-sm text-decoration-none\">\r\n    <img src=\"https://placehold.co/600x400\" class=\"card-img-top\" alt=\"Titre de l'objet\">\r\n    <div class=\"card-body\">\r\n        <h5 class=\"offer-title card-title text-primary\">\r\n            ?\r\n        </h5>\r\n        <p class=\"offer-description card-text text-truncate\">\r\n            ?\r\n        </p>\r\n    </div>\r\n</a>");
 
 /***/ }),
 
@@ -110,6 +117,7 @@ class Application {
         this.listeners = {};
         for (const item in Item)
             this.listeners[Item[item]] = [];
+        this.set(Item.Loading, false);
     }
     static getInstance() {
         if (this.instance === null)

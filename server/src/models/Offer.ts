@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { ObjectId, Schema, model } from "mongoose";
 import { User } from "./User";
 
 export interface IOffer {
@@ -16,7 +16,7 @@ export interface IOffer {
     pictures?: string[];
     comments?: string[];
 
-    sellerID: Schema.Types.ObjectId;
+    sellerID: ObjectId;
 }
 
 export const offerSchema = new Schema<IOffer>({

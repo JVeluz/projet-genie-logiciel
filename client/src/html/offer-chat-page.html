@@ -21,11 +21,6 @@
                                 <h5 class="offer-title card-title text-primary fw-bold">
                                     ?
                                 </h5>
-                                <p class="card-text text-muted mb-1">
-                                    Vous discutez de cette annonce avec <strong class="offer-seller-name text-dark">
-                                        ?
-                                    </strong>.
-                                </p>
                                 <span class="offer-category badge bg-primary text-uppercase me-2">
                                     Jardinage
                                 </span>
@@ -41,17 +36,21 @@
             <!-- 2. FENÊTRE DE CHAT PRINCIPALE -->
             <div class="card shadow-lg border-0">
                 <!-- En-tête de la conversation -->
-                <div class="card-header bg-white border-bottom-0 p-3">
-                    <h5 class="mb-0 fw-bold text-dark">Conversation avec Alice Dubois</h5>
+                <div class="card-header border-bottom-0 p-3">
+                    <user-element class="offer-seller">
+                        <h5 class="user-name mb-0 fw-bold">
+                            Conversation avec Alice Dubois
+                        </h5>
+                    </user-element>
                 </div>
 
                 <!-- Historique des messages (avec scroll) -->
-                <div class="card-body p-4" style="height: 50vh; overflow-y: auto;">
+                <div class="chat-box card-body p-4" style="height: 50vh; overflow-y: auto;">
 
                     <!-- Message Reçu (Aligné à gauche) -->
                     <div class="d-flex justify-content-start mb-3">
-                        <div class="bg-light rounded-3 chat-bubble">
-                            <p class="mb-0">
+                        <div class="bg-secondary rounded-3 p-2">
+                            <p>
                                 Bonjour ! Votre tondeuse est-elle toujours disponible ce weekend ?
                             </p>
                             <small class="text-muted" style="font-size: 0.75rem;">Aujourd'hui, 10:30</small>
@@ -60,8 +59,8 @@
 
                     <!-- Message Envoyé (Aligné à droite) -->
                     <div class="d-flex justify-content-end mb-3">
-                        <div class="bg-primary text-white rounded-3 chat-bubble">
-                            <p class="mb-0">
+                        <div class="bg-primary text-white rounded-3 p-2">
+                            <p>
                                 Bonjour Alice ! Oui, tout à fait. Samedi matin vous irait ?
                             </p>
                             <small class="text-white-50" style="font-size: 0.75rem;">Aujourd'hui, 10:31</small>
@@ -70,8 +69,8 @@
 
                     <!-- Message Reçu -->
                     <div class="d-flex justify-content-start mb-3">
-                        <div class="bg-light rounded-3 chat-bubble">
-                            <p class="mb-0">
+                        <div class="bg-secondary rounded-3 p-2">
+                            <p>
                                 Parfait ! J'ai bien un cours de programmation web à vous proposer en échange, comme
                                 demandé.
                             </p>
@@ -82,12 +81,12 @@
                 </div>
 
                 <!-- Pied de carte (Zone de saisie) -->
-                <div class="card-footer bg-light p-3 border-0">
+                <div class="card-footer p-3 border-0">
                     <!-- Formulaire d'envoi de message -->
                     <form class="message-form">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Écrivez votre message..."
-                                aria-label="Écrivez votre message" required>
+                            <input name="message" type="text" class="form-control"
+                                placeholder="Écrivez votre message..." aria-label="Écrivez votre message" required>
                             <button class="btn btn-success" type="submit" aria-label="Envoyer">
                                 <i class="bi bi-send-fill"></i>
                             </button>

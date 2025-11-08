@@ -9,28 +9,34 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const UserService_1 = require("../services/UserService");
-class UserController {
-    static getById(request, response) {
+const Chat_1 = require("../models/Chat");
+class ChatRepository {
+    static get(chatID) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { id } = request.params;
-            const result = yield UserService_1.UserService.getById(id);
-            return response.status(200).json(result);
+            return Chat_1.Chat.findById(chatID);
         });
     }
-    static register(request, response) {
+    static getByOfferAndBuyer(offerID, buyerID) {
         return __awaiter(this, void 0, void 0, function* () {
-            const userData = request.body;
-            const result = yield UserService_1.UserService.register(userData);
-            return response.status(201).json(result);
+            return Chat_1.Chat.findOne({ offerID, buyerID });
         });
     }
-    static login(request, response) {
+    static create(offerID, buyerID) {
         return __awaiter(this, void 0, void 0, function* () {
-            const userData = request.body;
-            const result = yield UserService_1.UserService.login(userData);
-            return response.status(200).json(result);
+            return Chat_1.Chat.create({ offerID, buyerID });
+        });
+    }
+    static getMessages(chatID) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return Chat_1.Chat.findById(chatID).populate("messages");
+        });
+    }
+    static sendMessage(chatID, senderID, content) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield Chat_1.Chat.findByIdAndUpdate(chatID, {
+                $push: { messages: { senderID, content } }
+            });
         });
     }
 }
-exports.default = UserController;
+exports.default = ChatRepository;

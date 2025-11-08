@@ -4,6 +4,7 @@ const ROUTES_TO_PAGES: { [key: string]: string } = {
     "/login": "login-page",
     "/register": "register-page",
     "/offer": "offer-page",
+    "/offer/chat": "offer-chat-page",
     "/offer/create": "create-offer-page",
     "/offer/edit": "edit-offer-page",
     "/user": "user-page",

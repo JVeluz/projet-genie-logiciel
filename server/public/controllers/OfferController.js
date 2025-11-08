@@ -14,34 +14,34 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const OfferService_1 = __importDefault(require("../services/OfferService"));
 class OfferController {
-    getAll(request, response) {
+    static getAll(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const result = yield OfferService_1.default.getAll();
             return response.status(200).json(result);
         });
     }
-    getById(request, response) {
+    static getById(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const id = request.params.id;
             const result = yield OfferService_1.default.getById(id);
             return response.status(200).json(result);
         });
     }
-    search(request, response) {
+    static search(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const terms = request.params.terms;
             const result = yield OfferService_1.default.getByTerms(terms);
             return response.status(200).json(result);
         });
     }
-    create(request, response) {
+    static create(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const offer = request.body;
             const result = yield OfferService_1.default.create(offer);
             return response.status(201).json(result);
         });
     }
-    update(request, response) {
+    static update(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const id = request.params.id;
             const offerData = request.body;
@@ -49,7 +49,7 @@ class OfferController {
             return response.status(200).json(result);
         });
     }
-    delete(request, response) {
+    static delete(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const id = request.params.id;
             yield OfferService_1.default.delete(id);

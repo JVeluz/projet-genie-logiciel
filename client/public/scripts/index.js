@@ -17,6 +17,7 @@ const ELEMENTS = [
     { tag: "offer-search-page", module: __webpack_require__.e(/*! import() */ "src_elements_OfferSearchPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/OfferSearchPage */ "./src/elements/OfferSearchPage.ts")) },
     { tag: "offer-page", module: __webpack_require__.e(/*! import() */ "src_elements_OfferPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/OfferPage */ "./src/elements/OfferPage.ts")) },
     { tag: "edit-offer-page", module: __webpack_require__.e(/*! import() */ "src_elements_EditOfferPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/EditOfferPage */ "./src/elements/EditOfferPage.ts")) },
+    { tag: "offer-chat-page", module: __webpack_require__.e(/*! import() */ "src_elements_OfferChatPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/OfferChatPage */ "./src/elements/OfferChatPage.ts")) },
     // User Pages
     { tag: "user-page", module: __webpack_require__.e(/*! import() */ "src_elements_UserPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/UserPage */ "./src/elements/UserPage.ts")) },
     { tag: "edit-user-page", module: __webpack_require__.e(/*! import() */ "src_elements_EditUserPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/EditUserPage */ "./src/elements/EditUserPage.ts")) },
@@ -58,6 +59,7 @@ const ROUTES_TO_PAGES = {
     "/login": "login-page",
     "/register": "register-page",
     "/offer": "offer-page",
+    "/offer/chat": "offer-chat-page",
     "/offer/create": "create-offer-page",
     "/offer/edit": "edit-offer-page",
     "/user": "user-page",

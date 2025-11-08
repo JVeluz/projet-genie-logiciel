@@ -259,6 +259,7 @@ class Application {
         this.listeners = {};
         for (const item in Item)
             this.listeners[Item[item]] = [];
+        this.set(Item.Loading, false);
     }
     static getInstance() {
         if (this.instance === null)
@@ -303,6 +304,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ Offer)
 /* harmony export */ });
 class Offer {
+    static fromJSON(data) {
+        const offer = new Offer();
+        offer._id = data._id;
+        offer.title = data.title;
+        offer.description = data.description;
+        offer.price = data.price;
+        offer.available = data.available;
+        offer.category = data.category;
+        offer.type = data.type;
+        offer.sellerID = data.sellerID;
+        offer.createdAt = new Date(data.createdAt);
+        offer.exchange = data.exchange;
+        offer.location = data.location;
+        offer.pictures = data.pictures;
+        offer.comments = data.comments;
+        return offer;
+    }
 }
 
 

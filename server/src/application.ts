@@ -1,5 +1,5 @@
 import express, { Express } from "express";
-import router from "./middlewares/router";
+import router from "./router";
 import errorHandler from "./middlewares/errorHandler";
 import cors from "cors";
 

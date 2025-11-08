@@ -9,6 +9,7 @@ const ELEMENTS: CustomElement[] = [
     { tag: "offer-search-page", module: import("./elements/OfferSearchPage") },
     { tag: "offer-page", module: import("./elements/OfferPage") },
     { tag: "edit-offer-page", module: import("./elements/EditOfferPage") },
+    { tag: "offer-chat-page", module: import("./elements/OfferChatPage") },
     // User Pages
     { tag: "user-page", module: import("./elements/UserPage") },
     { tag: "edit-user-page", module: import("./elements/EditUserPage") },
