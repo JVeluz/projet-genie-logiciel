@@ -99,14 +99,13 @@ export default class OfferChatPage extends HTMLElement {
 
         const offerElement: OfferElement = this.querySelector("offer-element") as OfferElement;
         const sellerElement: UserElement = this.querySelector(".offer-seller") as UserElement;
-        customElements.whenDefined("offer-element").then(() => {
-            offerElement.update(this.offer!);
-        });
-        customElements.whenDefined("user-element").then(() => {
-            sellerElement.update(
-                this.isCurrentUserSeller ? this.currentUser! : this.otherUser!
-            );
-        });
+
+        const sellerID = this.isCurrentUserSeller ?
+            this.currentUser!._id : this.otherUser!._id;
+
+        offerElement.setAttribute("offer-id", this.offer!._id);
+        sellerElement.setAttribute("user-id", sellerID);
+
         console.log(this.chat);
 
         const chatBox: HTMLDivElement = this.querySelector(".chat-box")!;

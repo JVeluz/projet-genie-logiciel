@@ -1,23 +1,33 @@
 import HTML from "../html/user-page.html";
-import UserElement from "./UserElement";
-import UserController from "../controllers/UserController";
 import Application, { Item } from "../models/Application";
+import User from "../models/User";
 
 export default class UserPage extends HTMLElement {
 
-    public connectedCallback(): void {
-        this.innerHTML = HTML;
-        const urlParams: any = new URLSearchParams(window.location.search);
-        const userID: string | null = urlParams.get("id");
-        if (userID === null) {
-            const currentUser = Application.getInstance().get(Item.CurrentUser);
-            if (currentUser) {
-                window.location.href = `/user?id=${currentUser._id}`;
-                return;
-            }
+    // URLSearchParams
+    private urlParams: URLSearchParams = new URLSearchParams(window.location.search);
+    private userID: string | null = this.urlParams.get("id");
+
+    // Models
+    private application: Application = Application.getInstance();
+    private currentUser: User | null = this.application.get(Item.CurrentUser);
+
+    public async connectedCallback(): Promise<void> {
+        await customElements.whenDefined("user-page");
+
+        if (!this.userID) {
+            console.error("UserPage: missing user ID");
+            return;
         }
-        const userElement = this.querySelector(".page-user") as UserElement;
-        new UserController(userElement)
-            .load(userID!);
+
+        this.innerHTML = HTML;
+
+        const editButton = this.querySelector("#user-edit-button") as HTMLAnchorElement;
+        const userElement = this.querySelector("#user-element") as HTMLElement;
+
+        editButton.href = `/user/edit?id=${this.userID}`;
+        userElement.setAttribute("user-id", this.userID);
+
+        editButton.style.display = (this.currentUser?._id === this.userID) ? "block" : "none";
     }
 }

@@ -1,31 +1,6 @@
 "use strict";
 (self["webpackChunkfront_end"] = self["webpackChunkfront_end"] || []).push([["src_elements_OfferElement_ts"],{
 
-/***/ "./src/controllers/UserController.ts":
-/*!*******************************************!*\
-  !*** ./src/controllers/UserController.ts ***!
-  \*******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ UserController)
-/* harmony export */ });
-/* harmony import */ var _fetches_UserFetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../fetches/UserFetch */ "./src/fetches/UserFetch.ts");
-
-class UserController {
-    constructor(view) {
-        this.view = view;
-    }
-    async load(userID) {
-        const user = await _fetches_UserFetch__WEBPACK_IMPORTED_MODULE_0__["default"].get(userID);
-        this.view.update(user);
-    }
-}
-
-
-/***/ }),
-
 /***/ "./src/elements/OfferElement.ts":
 /*!**************************************!*\
   !*** ./src/elements/OfferElement.ts ***!
@@ -36,9 +11,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ OfferElement)
 /* harmony export */ });
-/* harmony import */ var _controllers_UserController__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../controllers/UserController */ "./src/controllers/UserController.ts");
-/* harmony import */ var _fetches_OfferFetch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../fetches/OfferFetch */ "./src/fetches/OfferFetch.ts");
-
+/* harmony import */ var _fetches_OfferFetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../fetches/OfferFetch */ "./src/fetches/OfferFetch.ts");
 
 class OfferElement extends HTMLElement {
     constructor() {
@@ -53,7 +26,7 @@ class OfferElement extends HTMLElement {
             console.error("Missing required attributes.");
             return;
         }
-        const offer = await _fetches_OfferFetch__WEBPACK_IMPORTED_MODULE_1__["default"].get(this.offerID);
+        const offer = await _fetches_OfferFetch__WEBPACK_IMPORTED_MODULE_0__["default"].get(this.offerID);
         this.update(offer);
     }
     update(offer) {
@@ -64,7 +37,6 @@ class OfferElement extends HTMLElement {
         const typeElement = this.querySelector('.offer-type');
         const exchangeElement = this.querySelector('.offer-exchange');
         const locationElement = this.querySelector('.offer-location');
-        const sellerElement = this.querySelector('.offer-seller');
         if (locationElement && offer.location) {
             locationElement.textContent = offer.location;
         }
@@ -76,10 +48,6 @@ class OfferElement extends HTMLElement {
         }
         if (typeElement) {
             typeElement.textContent = offer.type;
-        }
-        if (sellerElement) {
-            new _controllers_UserController__WEBPACK_IMPORTED_MODULE_0__["default"](sellerElement)
-                .load(offer.sellerID);
         }
         if (titleElement) {
             titleElement.textContent = offer.title;
@@ -152,56 +120,6 @@ class OfferFetch {
         const response = await this.fetch(`/offers/search/${terms}`, "GET");
         if (response.ok === false)
             throw new Error("Failed to search offers");
-        return response.json();
-    }
-}
-
-
-/***/ }),
-
-/***/ "./src/fetches/UserFetch.ts":
-/*!**********************************!*\
-  !*** ./src/fetches/UserFetch.ts ***!
-  \**********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ UserFetch)
-/* harmony export */ });
-class UserFetch {
-    static async fetch(route, method, body) {
-        let response = undefined;
-        try {
-            response = await fetch(`${"http://localhost:3000"}${route}`, {
-                method,
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body)
-            });
-            if (response.ok === false) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response;
-        }
-        catch (error) {
-            alert(error.message);
-            if (response) {
-                const responseMessage = await response.text();
-                alert(responseMessage);
-            }
-        }
-        throw new Error("Network error");
-    }
-    static async get(userID) {
-        const response = await this.fetch(`/users/${userID}`, "GET");
-        return response.json();
-    }
-    static async login(email, password) {
-        const response = await this.fetch("/login", "POST", { email, password });
-        return response.json();
-    }
-    static async register(name, email, password) {
-        const response = await this.fetch("/register", "POST", { name, email, password });
         return response.json();
     }
 }

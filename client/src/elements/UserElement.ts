@@ -2,10 +2,11 @@ import User from "../models/User";
 import OfferElement from "./OfferElement";
 import OfferCardHTML from "../html/offer-card.html";
 import Application, { Item } from "../models/Application";
+import UserFetch from "../fetches/UserFetch";
 
 export default class UserElement extends HTMLElement {
 
-    user: User | null = null;
+    public user: User | null = null;
 
     private nameElement?: HTMLElement;
     private bioElement?: HTMLElement;
@@ -15,7 +16,22 @@ export default class UserElement extends HTMLElement {
     private offerContainer?: HTMLElement;
     private avatarElement?: HTMLImageElement;
 
-    public connectedCallback(): void {
+    public async connectedCallback(): Promise<void> {
+        await customElements.whenDefined('user-element');
+
+        const userID: string | null = this.getAttribute('user-id');
+        if (!userID) {
+            console.error("UserElement: missing user-id attribute");
+            return;
+        }
+
+        const result = await UserFetch.get(userID);
+        this.user = result ? User.fromJSON(result) : null;
+        if (!this.user) {
+            console.error("UserElement: user not found");
+            return;
+        }
+
         this.nameElement = this.querySelector('.user-name') as HTMLElement;
         this.bioElement = this.querySelector('.user-bio') as HTMLElement;
         this.locationElement = this.querySelector('.user-location') as HTMLElement;
@@ -24,9 +40,7 @@ export default class UserElement extends HTMLElement {
         this.avatarElement = this.querySelector('.user-avatar') as HTMLImageElement;
         this.offerContainer = this.querySelector('.user-offers') as HTMLElement;
 
-        if (this.user) {
-            this.update(this.user);
-        }
+        this.update(this.user!);
     }
 
     public update(user: User): void {
@@ -54,7 +68,7 @@ export default class UserElement extends HTMLElement {
                 offerElement.innerHTML = OfferCardHTML;
                 offerElement.classList.add('col');
                 this.offerContainer!.appendChild(offerElement);
-                offerElement.update(offer);
+                offerElement.setAttribute('offer-id', offer._id);
             });
         }
     }

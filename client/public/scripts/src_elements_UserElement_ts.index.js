@@ -11,8 +11,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ UserElement)
 /* harmony export */ });
-/* harmony import */ var _html_offer_card_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../html/offer-card.html */ "./src/html/offer-card.html");
-/* harmony import */ var _models_Application__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../models/Application */ "./src/models/Application.ts");
+/* harmony import */ var _models_User__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../models/User */ "./src/models/User.ts");
+/* harmony import */ var _html_offer_card_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../html/offer-card.html */ "./src/html/offer-card.html");
+/* harmony import */ var _models_Application__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../models/Application */ "./src/models/Application.ts");
+/* harmony import */ var _fetches_UserFetch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../fetches/UserFetch */ "./src/fetches/UserFetch.ts");
+
+
 
 
 class UserElement extends HTMLElement {
@@ -20,7 +24,19 @@ class UserElement extends HTMLElement {
         super(...arguments);
         this.user = null;
     }
-    connectedCallback() {
+    async connectedCallback() {
+        await customElements.whenDefined('user-element');
+        const userID = this.getAttribute('user-id');
+        if (!userID) {
+            console.error("UserElement: missing user-id attribute");
+            return;
+        }
+        const result = await _fetches_UserFetch__WEBPACK_IMPORTED_MODULE_3__["default"].get(userID);
+        this.user = result ? _models_User__WEBPACK_IMPORTED_MODULE_0__["default"].fromJSON(result) : null;
+        if (!this.user) {
+            console.error("UserElement: user not found");
+            return;
+        }
         this.nameElement = this.querySelector('.user-name');
         this.bioElement = this.querySelector('.user-bio');
         this.locationElement = this.querySelector('.user-location');
@@ -28,14 +44,12 @@ class UserElement extends HTMLElement {
         this.profileButton = this.querySelector('.user-profile-button');
         this.avatarElement = this.querySelector('.user-avatar');
         this.offerContainer = this.querySelector('.user-offers');
-        if (this.user) {
-            this.update(this.user);
-        }
+        this.update(this.user);
     }
     update(user) {
         const editButton = this.querySelector('.user-edit-button');
         if (editButton) {
-            const currentUser = _models_Application__WEBPACK_IMPORTED_MODULE_1__["default"].getInstance().get(_models_Application__WEBPACK_IMPORTED_MODULE_1__.Item.CurrentUser);
+            const currentUser = _models_Application__WEBPACK_IMPORTED_MODULE_2__["default"].getInstance().get(_models_Application__WEBPACK_IMPORTED_MODULE_2__.Item.CurrentUser);
             if (user._id === currentUser?._id) {
                 editButton.style.display = 'inline-block';
                 editButton.href = `/user/edit?id=${user._id}`;
@@ -60,10 +74,10 @@ class UserElement extends HTMLElement {
             this.offerContainer.innerHTML = '';
             user.offers?.forEach(offer => {
                 const offerElement = document.createElement('offer-element');
-                offerElement.innerHTML = _html_offer_card_html__WEBPACK_IMPORTED_MODULE_0__["default"];
+                offerElement.innerHTML = _html_offer_card_html__WEBPACK_IMPORTED_MODULE_1__["default"];
                 offerElement.classList.add('col');
                 this.offerContainer.appendChild(offerElement);
-                offerElement.update(offer);
+                offerElement.setAttribute('offer-id', offer._id);
             });
         }
     }
@@ -75,6 +89,56 @@ class UserElement extends HTMLElement {
         const halfStar = rate % 1 >= 0.5 ? 1 : 0;
         const emptyStars = 5 - fullStars - halfStar;
         return '⭐'.repeat(fullStars) + (halfStar ? '⭐️' : '') + '☆'.repeat(emptyStars);
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/fetches/UserFetch.ts":
+/*!**********************************!*\
+  !*** ./src/fetches/UserFetch.ts ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ UserFetch)
+/* harmony export */ });
+class UserFetch {
+    static async fetch(route, method, body) {
+        let response = undefined;
+        try {
+            response = await fetch(`${"http://localhost:3000"}${route}`, {
+                method,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            });
+            if (response.ok === false) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response;
+        }
+        catch (error) {
+            alert(error.message);
+            if (response) {
+                const responseMessage = await response.text();
+                alert(responseMessage);
+            }
+        }
+        throw new Error("Network error");
+    }
+    static async get(userID) {
+        const response = await this.fetch(`/users/${userID}`, "GET");
+        return response.json();
+    }
+    static async login(email, password) {
+        const response = await this.fetch("/login", "POST", { email, password });
+        return response.json();
+    }
+    static async register(name, email, password) {
+        const response = await this.fetch("/register", "POST", { name, email, password });
+        return response.json();
     }
 }
 
@@ -147,6 +211,71 @@ class Application {
 }
 Application.instance = null;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Application);
+
+
+/***/ }),
+
+/***/ "./src/models/Offer.ts":
+/*!*****************************!*\
+  !*** ./src/models/Offer.ts ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Offer)
+/* harmony export */ });
+class Offer {
+    static fromJSON(data) {
+        const offer = new Offer();
+        offer._id = data._id;
+        offer.title = data.title;
+        offer.description = data.description;
+        offer.price = data.price;
+        offer.available = data.available;
+        offer.category = data.category;
+        offer.type = data.type;
+        offer.createdAt = new Date(data.createdAt);
+        offer.sellerID = data.sellerID;
+        offer.chatIDs = data.chatIDs;
+        offer.exchange = data.exchange;
+        offer.location = data.location;
+        offer.pictures = data.pictures;
+        offer.comments = data.comments;
+        return offer;
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/models/User.ts":
+/*!****************************!*\
+  !*** ./src/models/User.ts ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ User)
+/* harmony export */ });
+/* harmony import */ var _Offer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Offer */ "./src/models/Offer.ts");
+
+class User {
+    static fromJSON(data) {
+        const user = new User();
+        user._id = data._id;
+        user.name = data.name;
+        user.email = data.email;
+        user.rating = data.rating;
+        user.createdAt = new Date(data.createdAt);
+        user.offers = data.offers.map((offer) => _Offer__WEBPACK_IMPORTED_MODULE_0__["default"].fromJSON(offer));
+        return user;
+    }
+    getAvatar() {
+        return this.avatar || `https://placehold.co/120x120/17A2B8/ffffff?text=${this.name[0]}`;
+    }
+}
 
 
 /***/ })

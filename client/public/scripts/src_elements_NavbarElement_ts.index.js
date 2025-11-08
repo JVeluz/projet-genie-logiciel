@@ -45,10 +45,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _controllers_NavbarController__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../controllers/NavbarController */ "./src/controllers/NavbarController.ts");
 /* harmony import */ var _html_navbar_element_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../html/navbar-element.html */ "./src/html/navbar-element.html");
+/* harmony import */ var _models_Application__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../models/Application */ "./src/models/Application.ts");
+
 
 
 class NavbarElement extends HTMLElement {
-    connectedCallback() {
+    constructor() {
+        super(...arguments);
+        this.application = _models_Application__WEBPACK_IMPORTED_MODULE_2__["default"].getInstance();
+        this.currentUser = this.application.get(_models_Application__WEBPACK_IMPORTED_MODULE_2__.Item.CurrentUser);
+    }
+    async connectedCallback() {
+        await customElements.whenDefined('user-element');
         this.innerHTML = _html_navbar_element_html__WEBPACK_IMPORTED_MODULE_1__["default"];
         this.loginDropdown = this.querySelector('.login-dropdown');
         this.logoutButton = this.querySelector('.logout-button');
@@ -56,6 +64,9 @@ class NavbarElement extends HTMLElement {
         this.profileDropdown = this.querySelector('.profile-dropdown');
         this.userElement = this.querySelector('.navbar-user');
         this.loginForm = this.querySelector('.login-form');
+        if (this.currentUser) {
+            this.userElement.setAttribute('user-id', this.currentUser._id);
+        }
         new _controllers_NavbarController__WEBPACK_IMPORTED_MODULE_0__["default"](this);
         customElements.whenDefined('login-form').then(() => {
             this.loginForm.controller.setLogoutButton(this.logoutButton);

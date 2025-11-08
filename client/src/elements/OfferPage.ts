@@ -65,6 +65,7 @@ export default class OfferPage extends HTMLElement {
         this.innerHTML = HTML;
 
         const offerElement = this.querySelector("#offer-element") as HTMLElement;
+        const userElement = this.querySelector("#offer-seller") as HTMLElement;
         const chatForm = this.querySelector("#new-chat-form") as HTMLElement;
         const editButton = this.querySelector("#offer-edit-button") as HTMLAnchorElement;
         const tradeCard = this.querySelector("#trade-card") as HTMLElement;
@@ -72,6 +73,7 @@ export default class OfferPage extends HTMLElement {
         const chatList = chatListCard.querySelector("#offer-chat-list") as HTMLElement;
 
         offerElement.setAttribute("offer-id", this.offerID!);
+        userElement.setAttribute("user-id", this.offer!.sellerID);
         chatForm.setAttribute("offer-id", this.offerID!);
         editButton.href = `/offer/edit?id=${this.offerID!}`;
 

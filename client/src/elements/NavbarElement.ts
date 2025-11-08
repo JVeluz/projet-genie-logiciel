@@ -3,8 +3,12 @@ import HTML from "../html/navbar-element.html";
 import User from "../models/User";
 import UserElement from "./UserElement";
 import LoginForm from "./LoginForm";
+import Application, { Item } from "../models/Application";
 
 export default class NavbarElement extends HTMLElement {
+
+    private application: Application = Application.getInstance();
+    private currentUser: User | null = this.application.get(Item.CurrentUser);
 
     private loginDropdown!: HTMLElement;
     private logoutButton!: HTMLButtonElement;
@@ -13,14 +17,21 @@ export default class NavbarElement extends HTMLElement {
     private loginForm!: LoginForm;
     private userElement!: UserElement;
 
-    public connectedCallback(): void {
+    public async connectedCallback(): Promise<void> {
+        await customElements.whenDefined('user-element');
+
         this.innerHTML = HTML;
+
         this.loginDropdown = this.querySelector('.login-dropdown')! as HTMLElement;
         this.logoutButton = this.querySelector('.logout-button')! as HTMLButtonElement;
         this.newOfferButton = this.querySelector('.new-offer-button')! as HTMLButtonElement;
         this.profileDropdown = this.querySelector('.profile-dropdown')! as HTMLElement;
         this.userElement = this.querySelector('.navbar-user')! as UserElement;
         this.loginForm = this.querySelector('.login-form')! as LoginForm;
+
+        if (this.currentUser) {
+            this.userElement.setAttribute('user-id', this.currentUser._id);
+        }
 
         new NavbarController(this);
 

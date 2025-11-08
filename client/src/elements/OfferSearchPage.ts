@@ -1,7 +1,6 @@
 import HTML from "../html/offer-search-page.html";
 import SearchOfferController from "../controllers/SearchOfferController";
 import OfferCardHTML from "../html/offer-card.html";
-import OfferElement from "./OfferElement";
 
 export default class OfferSearchPage extends HTMLElement {
 
@@ -20,12 +19,10 @@ export default class OfferSearchPage extends HTMLElement {
     public update(offers: any[]): void {
         this.offerContainer.innerHTML = "";
         for (const offer of offers) {
-            const offerElement: OfferElement = document.createElement("offer-element") as OfferElement;
+            const offerElement = document.createElement("offer-element");
             offerElement.innerHTML = OfferCardHTML;
-            customElements.whenDefined("offer-element").then(() => {
-                offerElement.update(offer);
-                this.offerContainer.appendChild(offerElement);
-            });
+            offerElement.setAttribute("offer-id", offer._id);
+            this.offerContainer.appendChild(offerElement);
         }
     }
 }

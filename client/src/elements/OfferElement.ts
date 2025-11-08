@@ -28,7 +28,6 @@ export default class OfferElement extends HTMLElement {
         const typeElement = this.querySelector('.offer-type') as HTMLElement;
         const exchangeElement = this.querySelector('.offer-exchange') as HTMLElement;
         const locationElement = this.querySelector('.offer-location') as HTMLElement;
-        const sellerElement = this.querySelector('.offer-seller') as UserElement;
 
         if (locationElement && offer.location) {
             locationElement.textContent = offer.location;
@@ -41,10 +40,6 @@ export default class OfferElement extends HTMLElement {
         }
         if (typeElement) {
             typeElement.textContent = offer.type;
-        }
-        if (sellerElement) {
-            new UserController(sellerElement)
-                .load(offer.sellerID);
         }
         if (titleElement) {
             titleElement.textContent = offer.title;

@@ -76,10 +76,8 @@ class OfferSearchPage extends HTMLElement {
         for (const offer of offers) {
             const offerElement = document.createElement("offer-element");
             offerElement.innerHTML = _html_offer_card_html__WEBPACK_IMPORTED_MODULE_2__["default"];
-            customElements.whenDefined("offer-element").then(() => {
-                offerElement.update(offer);
-                this.offerContainer.appendChild(offerElement);
-            });
+            offerElement.setAttribute("offer-id", offer._id);
+            this.offerContainer.appendChild(offerElement);
         }
     }
 }
