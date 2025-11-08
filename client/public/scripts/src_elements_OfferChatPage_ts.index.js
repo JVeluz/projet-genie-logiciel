@@ -30,7 +30,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const UPDATE_WAIT_TIME = 10000; // 10 seconds
-const MESSAGE_TEMPLATE = `
+const MESSAGE = `
 <div class="d-flex justify-content-start mb-3">
     <div class="bg-secondary rounded-3 p-2">
         <p></p>
@@ -38,7 +38,7 @@ const MESSAGE_TEMPLATE = `
     </div>
 </div>
 `;
-const MESSAGE_TEMPLATE_SELF = `
+const MESSAGE_SELF = `
 <div class="d-flex justify-content-end mb-3">
     <div class="bg-primary text-white rounded-3 p-2">
         <p></p>
@@ -65,7 +65,6 @@ class OfferChatPage extends HTMLElement {
     async connectedCallback() {
         await this.initialize();
         this.create();
-        this.update();
         this.connectEvents();
         this.updateInterval = setInterval(() => this.keepUpdated(), UPDATE_WAIT_TIME);
     }
@@ -112,16 +111,12 @@ class OfferChatPage extends HTMLElement {
             sellerElement.update(this.isCurrentUserSeller ? this.currentUser : this.otherUser);
         });
         console.log(this.chat);
-    }
-    update() {
-        console.log("update()");
         const chatBox = this.querySelector(".chat-box");
-        chatBox.innerHTML = "";
         for (const message of this.chat.messages) {
             const isSelf = message.senderID === this.currentUser._id;
             const messageElement = (isSelf) ?
-                _html_HTMLLoader__WEBPACK_IMPORTED_MODULE_1__["default"].createElement(MESSAGE_TEMPLATE_SELF) :
-                _html_HTMLLoader__WEBPACK_IMPORTED_MODULE_1__["default"].createElement(MESSAGE_TEMPLATE);
+                _html_HTMLLoader__WEBPACK_IMPORTED_MODULE_1__["default"].createElement(MESSAGE_SELF) :
+                _html_HTMLLoader__WEBPACK_IMPORTED_MODULE_1__["default"].createElement(MESSAGE);
             const messageContent = messageElement.querySelector("div");
             const messageText = messageContent.querySelector("p");
             const messageTime = messageContent.querySelector("small");
@@ -143,14 +138,35 @@ class OfferChatPage extends HTMLElement {
         form.reset();
     }
     async keepUpdated() {
-        await _fetches_ChatFetch__WEBPACK_IMPORTED_MODULE_6__["default"].get(this.chat._id, this.token).then(result => {
-            this.chat = result ? _models_Chat__WEBPACK_IMPORTED_MODULE_3__["default"].fromJSON(result) : null;
-        });
-        if (!this.chat) {
-            // window.location.href = "/404";
+        const result = await _fetches_ChatFetch__WEBPACK_IMPORTED_MODULE_6__["default"].get(this.chat._id, this.token);
+        if (!result) {
+            console.error("Failed to fetch updated chat data");
             return;
         }
-        this.update();
+        const newChat = _models_Chat__WEBPACK_IMPORTED_MODULE_3__["default"].fromJSON(result);
+        const oldMessagesCount = this.chat.messages.length;
+        const newMessagesCount = newChat.messages.length;
+        if (newMessagesCount > oldMessagesCount) {
+            const messagesToAdd = newChat.messages.slice(oldMessagesCount);
+            this.appendMessages(messagesToAdd);
+            this.chat = newChat;
+        }
+    }
+    appendMessages(messages) {
+        const chatBox = this.querySelector(".chat-box");
+        for (const message of messages) {
+            const isSelf = message.senderID === this.currentUser._id;
+            const messageElement = (isSelf) ?
+                _html_HTMLLoader__WEBPACK_IMPORTED_MODULE_1__["default"].createElement(MESSAGE_SELF) :
+                _html_HTMLLoader__WEBPACK_IMPORTED_MODULE_1__["default"].createElement(MESSAGE);
+            const messageContent = messageElement.querySelector("div");
+            const messageText = messageContent.querySelector("p");
+            const messageTime = messageContent.querySelector("small");
+            messageText.textContent = message.content;
+            messageTime.textContent = message.timestamp.toLocaleString();
+            chatBox.appendChild(messageElement);
+        }
+        chatBox.scrollTop = chatBox.scrollHeight;
     }
 }
 

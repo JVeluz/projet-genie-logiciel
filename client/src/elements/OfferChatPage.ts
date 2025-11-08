@@ -51,7 +51,6 @@ export default class OfferChatPage extends HTMLElement {
     public async connectedCallback(): Promise<void> {
         await this.initialize();
         this.create();
-        this.update();
         this.connectEvents();
         this.updateInterval = setInterval(() => this.keepUpdated(), UPDATE_WAIT_TIME);
     }
@@ -97,6 +96,7 @@ export default class OfferChatPage extends HTMLElement {
 
     public create(): void {
         this.innerHTML = HTML;
+
         const offerElement: OfferElement = this.querySelector("offer-element") as OfferElement;
         const sellerElement: UserElement = this.querySelector(".offer-seller") as UserElement;
         customElements.whenDefined("offer-element").then(() => {
@@ -108,14 +108,8 @@ export default class OfferChatPage extends HTMLElement {
             );
         });
         console.log(this.chat);
-    }
-
-    public update(): void {
-        console.log("update()");
 
         const chatBox: HTMLDivElement = this.querySelector(".chat-box")!;
-        chatBox.innerHTML = "";
-
         for (const message of this.chat!.messages) {
             const isSelf: boolean = message.senderID === this.currentUser!._id;
             const messageElement: HTMLElement = (isSelf) ?
@@ -145,14 +139,42 @@ export default class OfferChatPage extends HTMLElement {
         form.reset();
     }
 
-    public async keepUpdated(): Promise<void> {
-        await ChatFetch.get(this.chat!._id, this.token!).then(result => {
-            this.chat = result ? Chat.fromJSON(result) : null;
-        });
-        if (!this.chat) {
-            // window.location.href = "/404";
+    private async keepUpdated(): Promise<void> {
+        const result = await ChatFetch.get(this.chat!._id, this.token!);
+        if (!result) {
+            console.error("Failed to fetch updated chat data");
             return;
         }
-        this.update();
+
+        const newChat = Chat.fromJSON(result);
+        const oldMessagesCount = this.chat!.messages.length;
+        const newMessagesCount = newChat.messages.length;
+
+        if (newMessagesCount > oldMessagesCount) {
+            const messagesToAdd = newChat.messages.slice(oldMessagesCount);
+            this.appendMessages(messagesToAdd);
+            this.chat = newChat;
+        }
+    }
+
+    private appendMessages(messages: any[]): void {
+        const chatBox: HTMLDivElement = this.querySelector(".chat-box")!;
+
+        for (const message of messages) {
+            const isSelf: boolean = message.senderID === this.currentUser!._id;
+            const messageElement: HTMLElement = (isSelf) ?
+                HTMLLoader.createElement(MESSAGE_SELF) :
+                HTMLLoader.createElement(MESSAGE);
+
+            const messageContent: HTMLDivElement = messageElement.querySelector("div")!;
+            const messageText: HTMLParagraphElement = messageContent.querySelector("p")!;
+            const messageTime: HTMLElement = messageContent.querySelector("small")!;
+            messageText.textContent = message.content;
+            messageTime.textContent = message.timestamp.toLocaleString();
+
+            chatBox.appendChild(messageElement);
+        }
+
+        chatBox.scrollTop = chatBox.scrollHeight;
     }
 }
