@@ -30,12 +30,15 @@ class ChatService {
             return chat;
         });
     }
-    static getOrCreate(offerID, buyerID) {
+    static getOrCreateWithMessage(offerID, buyerID, message) {
         return __awaiter(this, void 0, void 0, function* () {
             const chat = yield ChatRepository_1.default.getByOfferAndBuyer(offerID, buyerID);
-            if (chat !== null)
+            if (chat !== null) {
+                yield ChatRepository_1.default.sendMessage(chat._id, buyerID, message);
                 return chat;
+            }
             const newChat = yield ChatRepository_1.default.create(offerID, buyerID);
+            yield ChatRepository_1.default.sendMessage(newChat._id, buyerID, message);
             return newChat;
         });
     }

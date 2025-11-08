@@ -37,8 +37,8 @@ export default class ChatFetch {
         return this.request(`/chats/${chatID}`, "GET", undefined, token);
     }
 
-    public static async getOrCreate(offerID: string, buyerID: string, token: string): Promise<any> {
-        const body = { offerID, buyerID };
+    public static async getOrCreateWithMessage(offerID: string, buyerID: string, message: string, token: string): Promise<any> {
+        const body = { offerID, buyerID, message };
         return this.request("/chats", "POST", body, token);
     }
 

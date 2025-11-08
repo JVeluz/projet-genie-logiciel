@@ -1,0 +1,1 @@
+{"version":3,"file":"src_controllers_ChatController_ts.index.js","mappings":";;;;;;;;;;;;;AAAe;AACf;AACA;AACA;AACA","sources":["webpack://front-end/./src/controllers/ChatController.ts"],"sourcesContent":["export default class ChatController {\n    constructor(view) {\n        this.view = view;\n    }\n}\n"],"names":[],"sourceRoot":""}

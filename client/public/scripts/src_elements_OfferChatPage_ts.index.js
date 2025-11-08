@@ -29,9 +29,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// TEMP
-const DELKEZ = "6904cae927f49f3ff13346ea";
-const UPDATE_WAIT_TIME = 2000; // 10 seconds
+const UPDATE_WAIT_TIME = 10000; // 10 seconds
 const MESSAGE_TEMPLATE = `
 <div class="d-flex justify-content-start mb-3">
     <div class="bg-secondary rounded-3 p-2">
@@ -197,8 +195,8 @@ class ChatFetch {
     static async get(chatID, token) {
         return this.request(`/chats/${chatID}`, "GET", undefined, token);
     }
-    static async getOrCreate(offerID, buyerID, token) {
-        const body = { offerID, buyerID };
+    static async getOrCreateWithMessage(offerID, buyerID, message, token) {
+        const body = { offerID, buyerID, message };
         return this.request("/chats", "POST", body, token);
     }
     static async sendMessage(chatID, currentUserID, content, token) {

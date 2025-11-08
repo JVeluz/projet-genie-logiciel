@@ -132,28 +132,19 @@
                 <!-- Carte "Proposer un Échange" (Formulaire) -->
                 <div class="card shadow-lg border-success">
                     <div class="card-header bg-success text-white fw-bold">
-                        Proposer un Échange
+                        Proposer un échange
                     </div>
                     <div class="card-body">
-                        <form>
+                        <form id="new-chat-form" is="new-chat-form">
                             <!-- Champ: Contre-proposition -->
                             <div class="mb-3">
-                                <label for="proposition-text" class="form-label fw-bold">Votre Contre-Proposition <span
-                                        class="text-danger">*</span></label>
-                                <textarea id="proposition-text" class="form-control" rows="3" required
+                                <textarea name="message" class="form-control" rows="3" required
                                     placeholder="Ex: Je vous offre une heure de cours de cuisine..."></textarea>
                             </div>
-                            <!-- Champ: Disponibilité -->
-                            <div class="mb-3">
-                                <label for="disponibility-input" class="form-label fw-bold">Votre Disponibilité <span
-                                        class="text-danger">*</span></label>
-                                <input id="disponibility-input" type="text" class="form-control" required
-                                    placeholder="Ex: Disponible le 15/11 ou tous les weekends.">
-                            </div>
                             <!-- Bouton d'envoi -->
-                            <button type="submit" class="btn btn-success w-100 btn-lg mt-2">Envoyer la Demande</button>
-                            <p class="mt-3 text-center"><small class="text-muted">Vous recevrez une notification après
-                                    acceptation.</small></p>
+                            <button type="submit" class="btn btn-success w-100 btn-lg mt-2">
+                                Envoyer un message
+                            </button>
                         </form>
                     </div>
                 </div>

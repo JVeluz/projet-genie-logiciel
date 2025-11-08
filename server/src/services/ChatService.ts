@@ -17,11 +17,14 @@ export default class ChatService {
         return chat;
     }
 
-    public static async getOrCreate(offerID: string, buyerID: string): Promise<IChat> {
+    public static async getOrCreateWithMessage(offerID: string, buyerID: string, message: string): Promise<IChat> {
         const chat: IChat | null = await ChatRepository.getByOfferAndBuyer(offerID, buyerID);
-        if (chat !== null)
+        if (chat !== null) {
+            await ChatRepository.sendMessage(chat._id, buyerID, message);
             return chat;
+        }
         const newChat: IChat = await ChatRepository.create(offerID, buyerID);
+        await ChatRepository.sendMessage(newChat._id, buyerID, message);
         return newChat;
     }
 

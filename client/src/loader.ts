@@ -22,6 +22,7 @@ const ELEMENTS: CustomElement[] = [
     // Forms
     { tag: "login-form", module: import("./elements/LoginForm"), options: { extends: "form" } },
     { tag: "offer-form", module: import("./elements/OfferForm"), options: { extends: "form" } },
+    { tag: "new-chat-form", module: import("./elements/NewChatForm"), options: { extends: "form" } },
 ];
 
 export default class Loader {

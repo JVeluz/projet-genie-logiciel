@@ -17,7 +17,7 @@ router.get("/offers/:id", OfferController_1.default.getById);
 router.post("/offers", OfferController_1.default.create);
 router.put("/offers/:id", OfferController_1.default.update);
 router.delete("/offers/:id", OfferController_1.default.delete);
-router.post("/chats", ChatController_1.default.getOrCreate);
+router.post("/chats", ChatController_1.default.getOrCreateWithMessage);
 router.get("/chats/:id", ChatController_1.default.getById);
 router.post("/chats/:id", ChatController_1.default.sendMessage);
 exports.default = router;

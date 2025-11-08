@@ -15,9 +15,9 @@ export default class ChatController {
         return response.status(200).json(chat);
     }
 
-    public static async getOrCreate(request: Request, response: Response): Promise<Response> {
-        const { offerID, buyerID } = request.body;
-        const chat = await ChatService.getOrCreate(offerID, buyerID);
+    public static async getOrCreateWithMessage(request: Request, response: Response): Promise<Response> {
+        const { offerID, buyerID, message } = request.body;
+        const chat = await ChatService.getOrCreateWithMessage(offerID, buyerID, message);
         return response.status(201).json(chat);
     }
 

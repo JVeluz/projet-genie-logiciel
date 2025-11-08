@@ -1,4 +1,5 @@
 import { model, ObjectId, Schema } from "mongoose";
+import { Offer } from "./Offer";
 
 export interface IChat {
     _id: string;
@@ -22,5 +23,28 @@ export const chatSchema = new Schema<IChat>({
         timestamp: { type: Date, default: Date.now }
     }]
 })
+
+chatSchema.post("save", async function (chat, next) {
+    try {
+        await Offer.updateOne(
+            { _id: chat.offerID },
+            { $push: { chatIDs: chat._id } }
+        );
+        next();
+    } catch (error) {
+        throw Error("Error updating user offers");
+    }
+});
+
+chatSchema.post("findOneAndDelete", async function (chat) {
+    try {
+        await Offer.updateOne(
+            { _id: chat.offerID },
+            { $pull: { chatIDs: chat._id } }
+        );
+    } catch (error) {
+        throw Error("Error updating user offers");
+    }
+});
 
 export const Chat = model<IChat>("Chat", chatSchema);

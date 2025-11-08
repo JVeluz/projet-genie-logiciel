@@ -28,10 +28,10 @@ class ChatController {
             return response.status(200).json(chat);
         });
     }
-    static getOrCreate(request, response) {
+    static getOrCreateWithMessage(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { offerID, buyerID } = request.body;
-            const chat = yield ChatService_1.default.getOrCreate(offerID, buyerID);
+            const { offerID, buyerID, message } = request.body;
+            const chat = yield ChatService_1.default.getOrCreateWithMessage(offerID, buyerID, message);
             return response.status(201).json(chat);
         });
     }

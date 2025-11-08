@@ -24,6 +24,7 @@ exports.offerSchema = new mongoose_1.Schema({
     pictures: { type: [String], default: [] },
     comments: { type: [String], default: [] },
     sellerID: { type: mongoose_1.Schema.Types.ObjectId, ref: "User", required: true },
+    chatIDs: { type: [mongoose_1.Schema.Types.ObjectId], ref: "Chat", default: [] },
 });
 exports.offerSchema.post("save", function (offer, next) {
     return __awaiter(this, void 0, void 0, function* () {

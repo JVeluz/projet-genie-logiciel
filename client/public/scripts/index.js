@@ -30,6 +30,7 @@ const ELEMENTS = [
     // Forms
     { tag: "login-form", module: __webpack_require__.e(/*! import() */ "src_elements_LoginForm_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/LoginForm */ "./src/elements/LoginForm.ts")), options: { extends: "form" } },
     { tag: "offer-form", module: __webpack_require__.e(/*! import() */ "src_elements_OfferForm_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/OfferForm */ "./src/elements/OfferForm.ts")), options: { extends: "form" } },
+    { tag: "new-chat-form", module: __webpack_require__.e(/*! import() */ "src_elements_NewChatForm_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/NewChatForm */ "./src/elements/NewChatForm.ts")), options: { extends: "form" } },
 ];
 class Loader {
     static initialize() {

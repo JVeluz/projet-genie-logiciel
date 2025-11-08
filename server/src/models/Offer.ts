@@ -17,6 +17,7 @@ export interface IOffer {
     comments?: string[];
 
     sellerID: ObjectId;
+    chatIDs: ObjectId[];
 }
 
 export const offerSchema = new Schema<IOffer>({
@@ -33,6 +34,7 @@ export const offerSchema = new Schema<IOffer>({
     comments: { type: [String], default: [] },
 
     sellerID: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    chatIDs: { type: [Schema.Types.ObjectId], ref: "Chat", default: [] },
 });
 
 offerSchema.post("save", async function (offer, next) {
