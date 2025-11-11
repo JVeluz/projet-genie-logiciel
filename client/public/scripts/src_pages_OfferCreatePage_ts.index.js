@@ -1,0 +1,340 @@
+"use strict";
+(self["webpackChunkfront_end"] = self["webpackChunkfront_end"] || []).push([["src_pages_OfferCreatePage_ts"],{
+
+/***/ "./src/ServerAPI.ts":
+/*!**************************!*\
+  !*** ./src/ServerAPI.ts ***!
+  \**************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _models_Application__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./models/Application */ "./src/models/Application.ts");
+
+class ServerAPI {
+    static request(route, method, body) {
+        const key = `${method}::${route}::${JSON.stringify(body)}`;
+        if (this.pendingRequests.has(key)) {
+            return this.pendingRequests.get(key);
+        }
+        const fetchPromise = this.fetch(route, method, body);
+        const promiseToReturn = fetchPromise.finally(() => {
+            this.pendingRequests.delete(key);
+        });
+        this.pendingRequests.set(key, promiseToReturn);
+        return promiseToReturn;
+    }
+    static async fetch(route, method, body) {
+        const token = _models_Application__WEBPACK_IMPORTED_MODULE_0__["default"].getInstance().get(_models_Application__WEBPACK_IMPORTED_MODULE_0__.Item.AuthToken);
+        const headers = { "Content-Type": "application/json" };
+        if (token) {
+            headers.Authorization = `Bearer ${token}`;
+        }
+        let response;
+        try {
+            response = await fetch(`${"http://localhost:3000"}${route}`, {
+                method, headers, body
+            });
+        }
+        catch (networkError) {
+            console.error("Fetch network error:", networkError);
+            throw new Error("Network error: Failed to connect to API.");
+        }
+        if (response.ok === false) {
+            const errorBody = await response.text();
+            console.error(`API Error: ${response.status} ${response.statusText}`, errorBody);
+            throw new Error(`API request failed with status ${response.status}`);
+        }
+        // (204 No Content)
+        if (response.status === 204) {
+            return null;
+        }
+        return response.json();
+    }
+    static get(route) {
+        return this.request(route, "GET");
+    }
+    static post(route, body) {
+        return this.request(route, "POST", body);
+    }
+    static put(route, body) {
+        return this.request(route, "PUT", body);
+    }
+    static delete(route) {
+        return this.request(route, "DELETE");
+    }
+}
+ServerAPI.pendingRequests = new Map();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ServerAPI);
+
+
+/***/ }),
+
+/***/ "./src/controllers/OfferCreatePageController.ts":
+/*!******************************************************!*\
+  !*** ./src/controllers/OfferCreatePageController.ts ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ OfferCreatePageController)
+/* harmony export */ });
+/* harmony import */ var _models_Application__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../models/Application */ "./src/models/Application.ts");
+/* harmony import */ var _models_Offer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../models/Offer */ "./src/models/Offer.ts");
+/* harmony import */ var _services_OfferService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/OfferService */ "./src/services/OfferService.ts");
+
+
+
+class OfferCreatePageController {
+    constructor(
+    // View
+    page, form, createButton) {
+        this.page = page;
+        this.form = form;
+        this.createButton = createButton;
+        // Models
+        this.application = _models_Application__WEBPACK_IMPORTED_MODULE_0__["default"].getInstance();
+        this.offer = new _models_Offer__WEBPACK_IMPORTED_MODULE_1__["default"]();
+        this.createButton.onclick = (event) => this.onCreateButton(event);
+        this.form.oninput = () => this.onChange();
+    }
+    async onCreateButton(event) {
+        event.preventDefault();
+        const currentUser = this.application.get(_models_Application__WEBPACK_IMPORTED_MODULE_0__.Item.CurrentUser);
+        if (!currentUser) {
+            alert("You must be logged in to create an offer.");
+            return;
+        }
+        let newOffer;
+        try {
+            newOffer = await _services_OfferService__WEBPACK_IMPORTED_MODULE_2__["default"].create(this.offer, currentUser);
+        }
+        catch (error) {
+            alert(error.message);
+            return;
+        }
+        window.location.href = `/offer?id=${newOffer._id}`;
+    }
+    onChange() {
+        this.offer = this.form.getEntries();
+        this.page.update(this.offer);
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/html/offer-create-page.html":
+/*!*****************************************!*\
+  !*** ./src/html/offer-create-page.html ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<!-- La navbar est incluse ici (composant personnalisé) -->\r\n<navbar-element></navbar-element>\r\n\r\n<!-- Contenu Principal -->\r\n<main class=\"container py-5\">\r\n    <!-- Passage à une structure en 2 colonnes avec espacement g-5 -->\r\n    <div class=\"row g-5 justify-content-center\">\r\n\r\n        <!-- COLONNE 1: FORMULAIRE DE CRÉATION -->\r\n        <div class=\"col-12 col-lg-7\">\r\n\r\n            <h2 class=\"page-title text-center fw-bold text-primary mb-4\">Créer une nouvelle annonce</h2>\r\n\r\n            <!-- Carte principale contenant le formulaire -->\r\n            <div class=\"card shadow-lg border-0\">\r\n                <div class=\"card-body p-4 p-md-5\">\r\n\r\n                    <!-- Formulaire de création d'annonce -->\r\n                    <form id=\"offer-form\" is=\"offer-form\">\r\n\r\n                        <!-- Champ Titre -->\r\n                        <div class=\"mb-3\">\r\n                            <label class=\"form-label fw-bold\">Titre de l'annonce</label>\r\n                            <input name=\"title\" type=\"text\" class=\"form-control\" placeholder=\"Ex: Tondeuse à gazon\"\r\n                                required>\r\n                        </div>\r\n\r\n                        <div class=\"row\">\r\n                            <!-- Champ Catégorie -->\r\n                            <div class=\"col-md-6 mb-3\">\r\n                                <label class=\"form-label fw-bold\">Catégorie</label>\r\n                                <select name=\"category\" class=\"form-select\" required>\r\n                                    <option value=\"\" selected disabled>Choisir...</option>\r\n                                    <option value=\"Jardinage\">Jardinage</option>\r\n                                    <option value=\"Informatique\">Informatique</option>\r\n                                    <option value=\"Bricolage\">Bricolage</option>\r\n                                    <option value=\"Services\">Services</option>\r\n                                    <option value=\"Autre\">Autre</option>\r\n                                </select>\r\n                            </div>\r\n                            <!-- Champ Type d'offre -->\r\n                            <div class=\"col-md-6 mb-3\">\r\n                                <label class=\"form-label fw-bold\">Type d'offre</label>\r\n                                <select name=\"type\" class=\"form-select\" required>\r\n                                    <option value=\"\" selected disabled>Choisir...</option>\r\n                                    <option value=\"Prêt d'Objet\">Prêt d'Objet</option>\r\n                                    <option value=\"Offre de Compétence\">Offre de Compétence</option>\r\n                                </select>\r\n                            </div>\r\n                        </div>\r\n\r\n                        <!-- Champ Description -->\r\n                        <div class=\"mb-3\">\r\n                            <label class=\"form-label fw-bold\">Description</label>\r\n                            <textarea name=\"description\" class=\"form-control\" rows=\"5\"\r\n                                placeholder=\"Décrivez ce que vous proposez...\" required></textarea>\r\n                        </div>\r\n\r\n                        <!-- Champ \"En échange de...\" -->\r\n                        <div class=\"mb-3\">\r\n                            <label class=\"form-label fw-bold\">Ce que vous recherchez en échange</label>\r\n                            <textarea name=\"exchange\" class=\"form-control\" rows=\"3\"\r\n                                placeholder=\"Ex: Un cours de cuisine...\" required></textarea>\r\n                        </div>\r\n\r\n                        <!-- Champ Localisation -->\r\n                        <div class=\"mb-3\">\r\n                            <label class=\"form-label fw-bold\">Localisation</label>\r\n                            <input name=\"location\" type=\"text\" class=\"form-control\" placeholder=\"Ex: Pau, 64000\"\r\n                                required>\r\n                        </div>\r\n\r\n                        <!-- Champ Images -->\r\n                        <div class=\"mb-3\">\r\n                            <label class=\"form-label fw-bold\">Ajouter des photos</label>\r\n                            <input name=\"pictures\" class=\"form-control\" type=\"file\" accept=\"image/*\">\r\n                            <div class=\"form-text\">La première image sera utilisée pour l'aperçu.</div>\r\n                        </div>\r\n\r\n                        <hr class=\"my-4\">\r\n\r\n                        <!-- Boutons d'action (Mode Création) -->\r\n                        <div class=\"d-grid gap-2 d-md-flex justify-content-md-end\">\r\n                            <a href=\"/\" class=\"btn btn-outline-secondary\">\r\n                                Annuler\r\n                            </a>\r\n                            <button id=\"create-button\" type=\"button\" class=\"btn btn-primary btn-lg\">\r\n                                <i class=\"bi bi-send-fill me-2\"></i>\r\n                                Publier l'annonce\r\n                            </button>\r\n                        </div>\r\n\r\n                    </form>\r\n                </div>\r\n            </div>\r\n        </div> <!-- Fin de la colonne formulaire -->\r\n\r\n        <!-- COLONNE 2: APERÇU DE L'OFFRE (Statique) -->\r\n        <div class=\"col-12 col-lg-5\">\r\n            <div class=\"sticky-top\" style=\"top: 2rem;\">\r\n                <h4 class=\"text-center text-primary mb-4\">Aperçu de l'annonce</h4>\r\n                <!-- Carte d'aperçu (style inspiré de la page de détail) -->\r\n                <div class=\"card shadow-lg border-0\">\r\n                    <offer-element id=\"offer-preview\">\r\n                        <!-- Image d'aperçu -->\r\n                        <img src=\"https://placehold.co/800x450/eee/ccc?text=Image+de+l'annonce\"\r\n                            class=\"card-img-top preview-card-image\" alt=\"Aperçu\">\r\n\r\n                        <div class=\"card-body p-4\">\r\n                            <!-- Titre -->\r\n                            <h3 class=\"offer-title card-title fw-bolder preview-title\">\r\n                                Titre de votre annonce\r\n                            </h3>\r\n\r\n                            <!-- Badges -->\r\n                            <div>\r\n                                <span class=\"offer-category badge bg-primary text-uppercase me-2\">\r\n                                    Catégorie\r\n                                </span>\r\n                                <span class=\"offer-type badge bg-warning text-dark text-uppercase\">\r\n                                    Type\r\n                                </span>\r\n                            </div>\r\n\r\n                            <hr>\r\n\r\n                            <!-- Description -->\r\n                            <p class=\"offer-description card-text text-muted preview-description\">\r\n                                Votre description apparaîtra ici...\r\n                            </p>\r\n\r\n                            <h6 class=\"text-secondary mt-4\">Échange souhaité :</h6>\r\n                            <!-- Échange -->\r\n                            <p class=\"offer-exchange card-text fst-italic preview-exchange\">\r\n                                Ce que vous recherchez en échange...\r\n                            </p>\r\n\r\n                            <h6 class=\"text-secondary mt-4\">Localisation :</h6>\r\n                            <!-- Localisation -->\r\n                            <p class=\"offer-location card-text fw-bold preview-location\">\r\n                                <i class=\"bi bi-geo-alt-fill text-danger me-2\"></i>\r\n                                Votre localisation...\r\n                            </p>\r\n                        </div>\r\n                    </offer-element>\r\n                </div>\r\n            </div>\r\n        </div> <!-- Fin de la colonne aperçu -->\r\n    </div>\r\n</main>");
+
+/***/ }),
+
+/***/ "./src/models/Application.ts":
+/*!***********************************!*\
+  !*** ./src/models/Application.ts ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Item: () => (/* binding */ Item),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var Item;
+(function (Item) {
+    Item["AuthToken"] = "authToken";
+    Item["CurrentUser"] = "currentUser";
+})(Item || (Item = {}));
+class Application {
+    constructor() {
+        this.loading = false;
+        this.listeners = {};
+        for (const item in Item)
+            this.listeners[Item[item]] = [];
+        console.log(localStorage);
+    }
+    static getInstance() {
+        if (this.instance === null)
+            this.instance = new Application();
+        return this.instance;
+    }
+    addListener(item, listener) {
+        this.listeners[item].push(listener);
+    }
+    set(item, value) {
+        if (value === null)
+            localStorage.removeItem(item);
+        else
+            localStorage.setItem(item, JSON.stringify(value));
+        this.notifyListeners(item);
+    }
+    get(item) {
+        const value = localStorage.getItem(item);
+        if (value === null)
+            return null;
+        return JSON.parse(value);
+    }
+    notifyListeners(item) {
+        for (const listener of this.listeners[item])
+            listener(this.get(item));
+    }
+}
+Application.instance = null;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Application);
+
+
+/***/ }),
+
+/***/ "./src/models/Offer.ts":
+/*!*****************************!*\
+  !*** ./src/models/Offer.ts ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Offer)
+/* harmony export */ });
+class Offer {
+    static fromJSON(data) {
+        const offer = new Offer();
+        offer._id = data._id;
+        offer.title = data.title;
+        offer.description = data.description;
+        offer.price = data.price;
+        offer.available = data.available;
+        offer.category = data.category;
+        offer.type = data.type;
+        offer.createdAt = new Date(data.createdAt);
+        offer.sellerID = data.sellerID;
+        offer.chatIDs = data.chatIDs;
+        offer.exchange = data.exchange;
+        offer.location = data.location;
+        offer.pictures = data.pictures;
+        offer.comments = data.comments;
+        return offer;
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/pages/OfferCreatePage.ts":
+/*!**************************************!*\
+  !*** ./src/pages/OfferCreatePage.ts ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ OfferCreatePage)
+/* harmony export */ });
+/* harmony import */ var _controllers_OfferCreatePageController__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../controllers/OfferCreatePageController */ "./src/controllers/OfferCreatePageController.ts");
+/* harmony import */ var _html_offer_create_page_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../html/offer-create-page.html */ "./src/html/offer-create-page.html");
+
+
+class OfferCreatePage extends HTMLElement {
+    async connectedCallback() {
+        this.innerHTML = _html_offer_create_page_html__WEBPACK_IMPORTED_MODULE_1__["default"];
+        this.form = this.querySelector("#offer-form");
+        this.createButton = this.querySelector("#create-button");
+        this.preview = this.querySelector("#offer-preview");
+        new _controllers_OfferCreatePageController__WEBPACK_IMPORTED_MODULE_0__["default"](this, this.form, this.createButton);
+    }
+    update(offer) {
+        this.preview.update(offer);
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/repositories/OfferRepository.ts":
+/*!*********************************************!*\
+  !*** ./src/repositories/OfferRepository.ts ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ OfferRepository)
+/* harmony export */ });
+/* harmony import */ var _ServerAPI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../ServerAPI */ "./src/ServerAPI.ts");
+/* harmony import */ var _models_Offer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../models/Offer */ "./src/models/Offer.ts");
+
+
+class OfferRepository {
+    static async getAll() {
+        return (await _ServerAPI__WEBPACK_IMPORTED_MODULE_0__["default"].get("/offers")).map(_models_Offer__WEBPACK_IMPORTED_MODULE_1__["default"].fromJSON);
+    }
+    static async getByID(offerID) {
+        return _models_Offer__WEBPACK_IMPORTED_MODULE_1__["default"].fromJSON(await _ServerAPI__WEBPACK_IMPORTED_MODULE_0__["default"].get(`/offers/${offerID}`));
+    }
+    static async create(offer) {
+        return _models_Offer__WEBPACK_IMPORTED_MODULE_1__["default"].fromJSON(await _ServerAPI__WEBPACK_IMPORTED_MODULE_0__["default"].post("/offers", JSON.stringify(offer)));
+    }
+    static async update(offer) {
+        await _ServerAPI__WEBPACK_IMPORTED_MODULE_0__["default"].put(`/offers/${offer._id}`, JSON.stringify(offer));
+    }
+    static async delete(offerID) {
+        await _ServerAPI__WEBPACK_IMPORTED_MODULE_0__["default"].delete(`/offers/${offerID}`);
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/services/OfferService.ts":
+/*!**************************************!*\
+  !*** ./src/services/OfferService.ts ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ OfferService)
+/* harmony export */ });
+/* harmony import */ var _repositories_OfferRepository__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../repositories/OfferRepository */ "./src/repositories/OfferRepository.ts");
+
+class OfferService {
+    static async getAll() {
+        return await _repositories_OfferRepository__WEBPACK_IMPORTED_MODULE_0__["default"].getAll();
+    }
+    static async getByID(offerID) {
+        return await _repositories_OfferRepository__WEBPACK_IMPORTED_MODULE_0__["default"].getByID(offerID);
+    }
+    static async create(offer, currentUser) {
+        if (!currentUser)
+            throw new Error("Unauthorized: You must be logged in to create an offer.");
+        offer.sellerID = currentUser._id;
+        return await _repositories_OfferRepository__WEBPACK_IMPORTED_MODULE_0__["default"].create(offer);
+    }
+    static async update(offer, currentUser) {
+        if (currentUser?._id !== offer.sellerID)
+            throw new Error("Unauthorized: You can only update your own offers.");
+        return await _repositories_OfferRepository__WEBPACK_IMPORTED_MODULE_0__["default"].update(offer);
+    }
+    static async delete(offer, currentUser) {
+        if (currentUser?._id !== offer.sellerID)
+            throw new Error("Unauthorized: You can only delete your own offers.");
+        return await _repositories_OfferRepository__WEBPACK_IMPORTED_MODULE_0__["default"].delete(offer._id);
+    }
+}
+
+
+/***/ })
+
+}]);
+//# sourceMappingURL=src_pages_OfferCreatePage_ts.index.js.map

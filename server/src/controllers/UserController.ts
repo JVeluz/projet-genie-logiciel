@@ -20,4 +20,11 @@ export default class UserController {
         const result = await UserService.login(userData);
         return response.status(200).json(result);
     }
+
+    public static async update(request: Request, response: Response): Promise<Response> {
+        const { id } = request.params;
+        const userData = request.body;
+        const result = await UserService.update(id, userData);
+        return response.status(200).json(result);
+    }
 }

@@ -1,29 +1,40 @@
-import OfferEditorController from "../controllers/OfferEditorController";
 import Offer from "../models/Offer";
 
 export default class OfferForm extends HTMLFormElement {
 
-    public controller?: OfferEditorController;
+    private titleInput!: HTMLInputElement;
+    private descriptionInput!: HTMLTextAreaElement
+    private locationInput!: HTMLInputElement;
+    private categoryInput!: HTMLSelectElement;
+    private typeInput!: HTMLSelectElement
+    private exchangeInput!: HTMLTextAreaElement;
 
     public connectedCallback(): void {
-        this.controller = new OfferEditorController(this);
+        this.titleInput = this.querySelector('input[name="title"]') as HTMLInputElement;
+        this.descriptionInput = this.querySelector('textarea[name="description"]') as HTMLTextAreaElement;
+        this.locationInput = this.querySelector('input[name="location"]') as HTMLInputElement;
+        this.categoryInput = this.querySelector('select[name="category"]') as HTMLSelectElement;
+        this.typeInput = this.querySelector('select[name="type"]') as HTMLSelectElement;
+        this.exchangeInput = this.querySelector('textarea[name="exchange"]') as HTMLTextAreaElement;
     }
 
     public update(offer: Offer): void {
-        const title: HTMLInputElement = this.querySelector('input[name="title"]') as HTMLInputElement;
-        const description: HTMLTextAreaElement = this.querySelector('textarea[name="description"]') as HTMLTextAreaElement;
-        const price: HTMLInputElement = this.querySelector('input[name="price"]') as HTMLInputElement;
-        const location: HTMLInputElement = this.querySelector('input[name="location"]') as HTMLInputElement;
-        const category: HTMLSelectElement = this.querySelector('select[name="category"]') as HTMLSelectElement;
-        const type: HTMLSelectElement = this.querySelector('select[name="type"]') as HTMLSelectElement;
-        const exchange: HTMLTextAreaElement = this.querySelector('textarea[name="exchange"]') as HTMLTextAreaElement;
+        this.titleInput.value = offer.title;
+        this.descriptionInput.value = offer.description;
+        this.categoryInput.value = offer.category;
+        this.typeInput.value = offer.type;
+        this.exchangeInput.value = offer.exchange || '';
+        this.locationInput.value = offer.location || '';
+    }
 
-        if (title) title.value = offer.title;
-        if (description) description.value = offer.description;
-        if (price) price.value = offer.price.toString();
-        if (category) category.value = offer.category;
-        if (type) type.value = offer.type;
-        if (exchange) exchange.value = offer.exchange || '';
-        if (location) location.value = offer.location || '';
+    public getEntries(): any {
+        return {
+            title: this.titleInput.value,
+            description: this.descriptionInput.value,
+            category: this.categoryInput.value,
+            type: this.typeInput.value,
+            exchange: this.exchangeInput.value,
+            location: this.locationInput.value
+        }
     }
 }

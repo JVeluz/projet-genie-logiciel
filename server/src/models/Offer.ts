@@ -1,5 +1,6 @@
 import { ObjectId, Schema, model } from "mongoose";
 import { User } from "./User";
+import { Chat } from "./Chat";
 
 export interface IOffer {
     _id: string;
@@ -23,7 +24,6 @@ export interface IOffer {
 export const offerSchema = new Schema<IOffer>({
     title: { type: String, required: true },
     description: { type: String, required: true },
-    price: { type: Number, required: true },
     available: { type: Boolean, default: true },
     category: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
@@ -45,18 +45,19 @@ offerSchema.post("save", async function (offer, next) {
         );
         next();
     } catch (error) {
-        throw Error("Error updating user offers");
+        throw Error("Error saving offer to user offers");
     }
 });
 
 offerSchema.post("findOneAndDelete", async function (offer) {
     try {
+        await Chat.deleteMany({ _id: { $in: offer.chatIDs } });
         await User.updateOne(
             { _id: offer.sellerID },
             { $pull: { offers: { _id: offer._id } } }
         );
     } catch (error) {
-        throw Error("Error updating user offers");
+        throw Error("Error deleting offer from user offers");
     }
 });
 

@@ -1,37 +1,45 @@
 import Application, { Item } from "../models/Application";
-import UserFetch from "../fetches/UserFetch";
+import User from "../models/User";
+import UserService from "../services/UserService";
 
 export default class RegisterController {
 
+    // Models
+    private application: Application = Application.getInstance();
+    // Views
     private form: HTMLFormElement;
-    private model: Application = Application.getInstance();
 
     constructor(form: HTMLFormElement) {
         this.form = form;
-        this.form.onsubmit = (event: Event) => this.onSubmit(event);
+        // Connect events
+        this.form.onsubmit = (event: SubmitEvent) => this.onSubmit(event);
     }
 
-    private async onSubmit(event: Event): Promise<void> {
+    private async onSubmit(event: SubmitEvent): Promise<void> {
         event.preventDefault();
-        const loading: boolean = this.model.get(Item.Loading);
-        if (loading)
-            return;
-
         const formData: FormData = new FormData(this.form);
-        const name: string = formData.get("name") as string;
-        const email: string = formData.get("email") as string;
         const password: string = formData.get("password") as string;
+        const user: User = new User();
+        user.name = formData.get("name") as string;
+        user.email = formData.get("email") as string;
+
+        let response;
         try {
-            this.model.set(Item.Loading, true);
-            const response = await UserFetch.register(name, email, password);
-            const { token, user } = response;
-            this.model.set(Item.CurrentUser, user);
-            this.model.set(Item.AuthToken, token);
-            window.location.href = "/";
-        } catch (error: any) {
-            alert(error.message);
+            this.application.loading = true;
+            response = await UserService.register(user, password);
+        } catch (error) {
+            console.error("Registration failed:", error);
+            return;
         } finally {
-            this.model.set(Item.Loading, false);
+            this.application.loading = false;
         }
+
+        const newUser: User = response.user;
+        const token: string = response.token;
+
+        this.application.set(Item.CurrentUser, newUser);
+        this.application.set(Item.AuthToken, token);
+
+        window.location.href = "/";
     }
 }

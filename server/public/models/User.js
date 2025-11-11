@@ -44,6 +44,18 @@ userSchema.pre("save", function (next) {
         }
     });
 });
+userSchema.post("findOneAndDelete", function (user) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            for (const offer of user.offers) {
+                yield Offer_1.Offer.deleteOne({ _id: offer._id });
+            }
+        }
+        catch (error) {
+            throw Error("Error updating user offers");
+        }
+    });
+});
 userSchema.methods.comparePassword = function (candidatePassword) {
     return __awaiter(this, void 0, void 0, function* () {
         return bcryptjs_1.default.compare(candidatePassword, this.password);

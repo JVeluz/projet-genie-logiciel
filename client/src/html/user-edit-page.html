@@ -15,41 +15,29 @@
             <div class="card shadow-lg border-0">
                 <div class="card-body p-4 p-md-5">
 
-                    <form>
+                    <form id="user-edit-form" is="user-edit-form">
 
                         <!-- Champ Avatar -->
-                        <div class="mb-3 text-center">
+                        <div class="mb-3">
                             <label for="edit-avatar" class="form-label fw-bold">Photo de profil</label>
-                            <div>
-                                <img src="https://placehold.co/120x120/17A2B8/ffffff?text=U"
-                                    class="img-thumbnail rounded-circle mb-3" alt="Avatar actuel" width="120"
-                                    height="120">
-                            </div>
-                            <!-- ID ajouté pour le script -->
-                            <input class="form-control" type="file" accept="image/*" id="edit-avatar">
+                            <input name="avatar" class="form-control" type="file" accept="image/*">
                         </div>
 
                         <!-- Champ Nom -->
                         <div class="mb-3">
-                            <label for="edit-name" class="form-label fw-bold">Votre Nom</label>
-                            <!-- ID ajouté pour le script -->
-                            <input type="text" class="form-control" value="Alice Dubois" required id="edit-name">
-                        </div>
-
-                        <!-- Champ Email -->
-                        <div class="mb-3">
-                            <label for="edit-email" class="form-label fw-bold">Adresse Email</label>
-                            <!-- ID ajouté pour le script -->
-                            <input type="email" class="form-control" value="alice.dubois@exemple.com" required
-                                id="edit-email">
+                            <label for="edit-name" class="form-label fw-bold">
+                                Votre Nom
+                            </label>
+                            <input name="name" type="text" class="form-control" required>
                         </div>
 
                         <!-- Champ Biographie -->
                         <div class="mb-3">
-                            <label for="edit-bio" class="form-label fw-bold">Ma biographie</label>
-                            <!-- ID ajouté pour le script -->
-                            <textarea class="form-control" rows="4"
-                                id="edit-bio">J'aime le jardinage et les échanges de services.</textarea>
+                            <label for="edit-bio" class="form-label fw-bold">
+                                Ma biographie
+                            </label>
+                            <textarea name="bio" class="form-control" rows="4">
+                            </textarea>
                         </div>
 
                         <hr class="my-4">
@@ -83,7 +71,7 @@
                 <div class="card shadow-lg text-center p-3">
                     <div class="card-body">
 
-                        <user-element>
+                        <user-element id="user-preview">
                             <img src="https://placehold.co/120x120/17A2B8/ffffff?text=U" alt="Aperçu Avatar" width="120"
                                 height="120"
                                 class="user-avatar rounded-circle mb-3 border border-3 border-primary shadow">

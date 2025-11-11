@@ -1,18 +1,19 @@
 export enum Item {
     AuthToken = "authToken",
     CurrentUser = "currentUser",
-    Loading = "false",
 }
 
 export default class Application {
 
     private static instance: Application | null = null;
+
+    public loading: boolean = false;
     private listeners: { [item: string]: CallableFunction[] } = {};
 
     private constructor() {
         for (const item in Item)
             this.listeners[Item[item as keyof typeof Item]] = [];
-        this.set(Item.Loading, false);
+        console.log(localStorage);
     }
 
     public static getInstance(): Application {

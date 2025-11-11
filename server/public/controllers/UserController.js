@@ -32,5 +32,13 @@ class UserController {
             return response.status(200).json(result);
         });
     }
+    static update(request, response) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = request.params;
+            const userData = request.body;
+            const result = yield UserService_1.UserService.update(id, userData);
+            return response.status(200).json(result);
+        });
+    }
 }
 exports.default = UserController;

@@ -9,8 +9,9 @@ const OfferController_1 = __importDefault(require("./controllers/OfferController
 const ChatController_1 = __importDefault(require("./controllers/ChatController"));
 const router = (0, express_1.Router)();
 router.get("/users/:id", UserController_1.default.getById);
-router.post("/register", UserController_1.default.register);
-router.post("/login", UserController_1.default.login);
+router.post("/users/register", UserController_1.default.register);
+router.post("/users/login", UserController_1.default.login);
+router.put("/users/:id", UserController_1.default.update);
 router.get("/offers", OfferController_1.default.getAll);
 router.get("/offers/search/:terms", OfferController_1.default.search);
 router.get("/offers/:id", OfferController_1.default.getById);

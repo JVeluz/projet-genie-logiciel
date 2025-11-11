@@ -23,4 +23,8 @@ export default class UserRepository {
         const newUser = new User(userData);
         return newUser.save();
     }
+
+    public static async update(user: Partial<IUser>): Promise<IUser | null> {
+        return User.findByIdAndUpdate(user._id, user, { new: true }).exec();
+    }
 }

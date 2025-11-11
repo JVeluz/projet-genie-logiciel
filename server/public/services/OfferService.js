@@ -37,12 +37,12 @@ class OfferService {
             return OfferRepository_1.default.create(offer);
         });
     }
-    static update(id, data) {
+    static update(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const offer = yield OfferRepository_1.default.findById(id);
+            const offer = yield OfferRepository_1.default.findById(data._id);
             if (!offer)
                 throw new Error("Offer not found");
-            return OfferRepository_1.default.update(id, data);
+            return OfferRepository_1.default.update(data);
         });
     }
     static delete(id) {

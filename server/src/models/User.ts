@@ -50,6 +50,14 @@ userSchema.pre("save", async function (next) {
     }
 });
 
+userSchema.post("findOneAndDelete", async function (user: IUser) {
+    try {
+        await Offer.deleteMany({ sellerID: user._id });
+    } catch (error) {
+        throw Error("Error deleting user offers");
+    }
+});
+
 userSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
     return bcrypt.compare(candidatePassword, this.password);
 };

@@ -17,12 +17,10 @@
 
                 <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
                     <!-- Titre de l'annonce -->
-                    <h1 class="offer-title fw-bolder mb-0">
-                        ?
-                    </h1>
+                    <h1 class="offer-title fw-bolder mb-0"></h1>
 
                     <!-- Bouton d'édition (lien vers la page d'édition) -->
-                    <a id="offer-edit-button" class="btn btn-outline-primary">
+                    <a id="offer-edit-button" class="btn btn-outline-primary" style="display: none;">
                         <i class="bi bi-pencil-fill me-2"></i>
                         Modifier l'annonce
                     </a>
@@ -31,10 +29,8 @@
                 <!-- Badges pour la catégorie et le type d'offre -->
                 <div class="mb-4">
                     <span class="offer-category badge bg-primary text-uppercase me-2">
-                        ?
                     </span>
                     <span class="offer-type badge bg-warning text-dark text-uppercase">
-                        ?
                     </span>
                 </div>
 
@@ -79,7 +75,6 @@
                 <h3 class="border-bottom pb-2 mb-3 text-secondary">Description de l'Offre</h3>
                 <p class="offer-description lead text-muted">
                     <!-- ? = Emplacement pour la description dynamique -->
-                    ?
                 </p>
 
                 <!-- Section "En échange de" -->
@@ -116,11 +111,9 @@
 
                             <!-- Nom (dynamique) -->
                             <h5 class="user-name fw-bold mb-1">
-                                ?
                             </h5>
                             <!-- Note (dynamique) -->
                             <p class="user-rating mb-3 text-warning">
-                                ?
                             </p>
                             <!-- Lien vers le profil -->
                             <a class="user-profile-button btn btn-outline-primary w-100 mt-2">Voir le Profil</a>
@@ -130,7 +123,7 @@
                 </div>
 
                 <!-- Carte "Vos Conversations" (Pour le propriétaire) -->
-                <div id="chat-list-card" class="card shadow-lg border-info mb-4">
+                <div id="chat-list-card" style="display: none;" class="card shadow-lg border-info mb-4">
                     <div class="card-header bg-info text-white fw-bold">
                         <i class="bi bi-chat-dots-fill me-2"></i>
                         Vos Conversations
@@ -144,7 +137,7 @@
                 </div>
 
                 <!-- Carte "Proposer un Échange" (Formulaire) -->
-                <div id="trade-card" class="card shadow-lg border-success">
+                <div id="trade-card" style="display: none;" class="card shadow-lg border-success">
                     <div class="card-header bg-success text-white fw-bold">
                         Proposer un échange
                     </div>

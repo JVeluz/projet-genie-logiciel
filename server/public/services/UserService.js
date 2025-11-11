@@ -77,5 +77,17 @@ class UserService {
             return { user: userWithoutPassword, token };
         });
     }
+    static update(id, data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = yield UserRepository_1.default.findById(id);
+            if (!user)
+                throw new Error("User not found");
+            Object.assign(user, data);
+            yield UserRepository_1.default.update(user);
+            const plainUser = user.toObject ? user.toObject() : user;
+            const { password: passwordHash } = plainUser, userWithoutPassword = __rest(plainUser, ["password"]);
+            return userWithoutPassword;
+        });
+    }
 }
 exports.UserService = UserService;

@@ -1,25 +1,26 @@
 import Application, { Item } from "../models/Application";
-import NavbarElement from "../elements/NavbarElement";
+import NavbarElement, { NavbarModel } from "../elements/NavbarElement";
 import User from "../models/User";
 
 export default class NavbarController {
 
-    private model: Application = Application.getInstance();
-    private view: NavbarElement;
+    // Models
+    private application: Application = Application.getInstance();
+    private navbarModel: NavbarModel = new NavbarModel();
 
-    constructor(view: NavbarElement) {
-        this.view = view;
-        this.onUserUpdate(this.model.get(Item.CurrentUser));
-        this.onLoadingUpdate(this.model.get(Item.Loading));
-        this.model.addListener(Item.CurrentUser, this.onUserUpdate.bind(this));
-        this.model.addListener(Item.Loading, this.onLoadingUpdate.bind(this));
+    constructor(
+        // Views
+        private navbarElement: NavbarElement,
+    ) {
+        const currentUser: User | null = this.application.get(Item.CurrentUser)
+        this.navbarModel.displayLogin = currentUser ? false : true;
+        this.navbarModel.displayProfile = currentUser ? true : false;
+        this.navbarModel.displayNewOfferButton = currentUser ? true : false;
+        this.navbarModel.currentUser = currentUser;
+        navbarElement.update(this.navbarModel);
     }
 
-    private onUserUpdate(value: User | null): void {
-        this.view.update(value);
-    }
-
-    private onLoadingUpdate(value: boolean): void {
-        this.view.setLoading(value);
+    private onUserUpdate(): void {
+        this.navbarElement.update(this.navbarModel);
     }
 }

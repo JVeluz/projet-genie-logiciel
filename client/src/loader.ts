@@ -1,4 +1,4 @@
-type CustomElement = {
+interface CustomElement {
     tag: string;
     module: Promise<any>;
     options?: ElementDefinitionOptions;
@@ -6,21 +6,22 @@ type CustomElement = {
 
 const ELEMENTS: CustomElement[] = [
     // Offer Pages
-    { tag: "offer-search-page", module: import("./elements/OfferSearchPage") },
-    { tag: "offer-page", module: import("./elements/OfferPage") },
-    { tag: "edit-offer-page", module: import("./elements/EditOfferPage") },
-    { tag: "offer-chat-page", module: import("./elements/OfferChatPage") },
+    { tag: "offer-search-page", module: import("./pages/OfferSearchPage") },
+    { tag: "offer-page", module: import("./pages/OfferPage") },
+    { tag: "offer-create-page", module: import("./pages/OfferCreatePage") },
+    { tag: "offer-edit-page", module: import("./pages/OfferEditPage") },
+    { tag: "offer-chat-page", module: import("./pages/OfferChatPage") },
     // User Pages
-    { tag: "user-page", module: import("./elements/UserPage") },
-    { tag: "edit-user-page", module: import("./elements/EditUserPage") },
-    { tag: "login-page", module: import("./elements/LoginPage") },
-    { tag: "register-page", module: import("./elements/RegisterPage") },
+    { tag: "user-page", module: import("./pages/UserPage") },
+    { tag: "user-edit-page", module: import("./pages/UserEditPage") },
+    { tag: "login-page", module: import("./pages/LoginPage") },
+    { tag: "register-page", module: import("./pages/RegisterPage") },
     // Elements
     { tag: "offer-element", module: import("./elements/OfferElement") },
     { tag: "user-element", module: import("./elements/UserElement") },
     { tag: "navbar-element", module: import("./elements/NavbarElement") },
     // Forms
-    { tag: "login-form", module: import("./elements/LoginForm"), options: { extends: "form" } },
+    { tag: "user-edit-form", module: import("./elements/UserEditForm"), options: { extends: "form" } },
     { tag: "offer-form", module: import("./elements/OfferForm"), options: { extends: "form" } },
     { tag: "new-chat-form", module: import("./elements/NewChatForm"), options: { extends: "form" } },
 ];

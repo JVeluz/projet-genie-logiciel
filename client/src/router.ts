@@ -5,10 +5,10 @@ const ROUTES_TO_PAGES: { [key: string]: string } = {
     "/register": "register-page",
     "/offer": "offer-page",
     "/offer/chat": "offer-chat-page",
-    "/offer/create": "create-offer-page",
-    "/offer/edit": "edit-offer-page",
+    "/offer/new": "offer-create-page",
+    "/offer/edit": "offer-edit-page",
     "/user": "user-page",
-    "/user/edit": "edit-user-page",
+    "/user/edit": "user-edit-page",
 };
 
 export default class Router {

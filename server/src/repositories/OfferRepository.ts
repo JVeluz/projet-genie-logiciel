@@ -28,7 +28,7 @@ export default class OfferRepository {
         return Offer.findByIdAndDelete(id).exec();
     }
 
-    public static async update(id: string, updateData: any): Promise<any | null> {
-        return Offer.findByIdAndUpdate(id, updateData, { new: true }).exec();
+    public static async update(updateData: any): Promise<any | null> {
+        return Offer.findByIdAndUpdate(updateData._id, updateData, { new: true }).exec();
     }
 }   

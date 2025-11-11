@@ -27,9 +27,8 @@ export default class OfferController {
     }
 
     public static async update(request: Request, response: Response): Promise<Response> {
-        const id = request.params.id;
-        const offerData = request.body;
-        const result = await OfferService.update(id, offerData);
+        const offer = request.body;
+        const result = await OfferService.update(offer);
         return response.status(200).json(result);
     }
 

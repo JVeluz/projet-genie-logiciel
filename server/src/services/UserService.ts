@@ -60,4 +60,18 @@ export class UserService {
 
         return { user: userWithoutPassword, token };
     }
+
+    public static async update(id: string, data: Partial<IUser>): Promise<any> {
+        const user = await UserRepository.findById(id);
+        if (!user)
+            throw new Error("User not found");
+
+        Object.assign(user, data);
+        await UserRepository.update(user);
+
+        const plainUser = (user as any).toObject ? (user as any).toObject() : (user as any);
+        const { password: passwordHash, ...userWithoutPassword } = plainUser;
+
+        return userWithoutPassword;
+    }
 }

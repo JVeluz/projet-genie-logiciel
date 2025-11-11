@@ -42,9 +42,9 @@ class OfferRepository {
             return Offer_1.Offer.findByIdAndDelete(id).exec();
         });
     }
-    static update(id, updateData) {
+    static update(updateData) {
         return __awaiter(this, void 0, void 0, function* () {
-            return Offer_1.Offer.findByIdAndUpdate(id, updateData, { new: true }).exec();
+            return Offer_1.Offer.findByIdAndUpdate(updateData._id, updateData, { new: true }).exec();
         });
     }
 }

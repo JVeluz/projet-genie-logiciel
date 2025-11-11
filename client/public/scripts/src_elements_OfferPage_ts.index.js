@@ -51,11 +51,10 @@ class OfferPage extends HTMLElement {
         this.currentUser = this.application.get(_models_Application__WEBPACK_IMPORTED_MODULE_4__.Item.CurrentUser);
         this.token = this.application.get(_models_Application__WEBPACK_IMPORTED_MODULE_4__.Item.AuthToken);
         this.offer = null;
-        // Computed
         this.isOfferMine = false;
     }
     async connectedCallback() {
-        await customElements.whenDefined("offer-page");
+        // await customElements.whenDefined("offer-page");
         await this.ready();
         await this.create();
     }

@@ -22,11 +22,11 @@ export default class OfferService {
         return OfferRepository.create(offer);
     }
 
-    public static async update(id: string, data: any): Promise<any> {
-        const offer = await OfferRepository.findById(id);
+    public static async update(data: any): Promise<any> {
+        const offer = await OfferRepository.findById(data._id);
         if (!offer)
             throw new Error("Offer not found");
-        return OfferRepository.update(id, data);
+        return OfferRepository.update(data);
     }
 
     public static async delete(id: string): Promise<void> {

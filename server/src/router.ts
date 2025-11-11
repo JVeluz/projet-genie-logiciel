@@ -6,8 +6,9 @@ import ChatController from "./controllers/ChatController";
 const router: Router = Router();
 
 router.get("/users/:id", UserController.getById);
-router.post("/register", UserController.register);
-router.post("/login", UserController.login);
+router.post("/users/register", UserController.register);
+router.post("/users/login", UserController.login);
+router.put("/users/:id", UserController.update);
 
 router.get("/offers", OfferController.getAll);
 router.get("/offers/search/:terms", OfferController.search);

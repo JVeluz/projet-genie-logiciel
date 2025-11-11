@@ -20,6 +20,7 @@ export default class User {
         user.rating = data.rating;
         user.createdAt = new Date(data.createdAt);
         user.offers = data.offers.map((offer: any) => Offer.fromJSON(offer));
+        user.bio = data.bio || "";
         return user;
     }
 

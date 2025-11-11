@@ -1,4 +1,3 @@
-import ChatFetch from "../fetches/ChatFetch";
 
 export default class ChatController {
 

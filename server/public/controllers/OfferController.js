@@ -43,9 +43,8 @@ class OfferController {
     }
     static update(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const id = request.params.id;
-            const offerData = request.body;
-            const result = yield OfferService_1.default.update(id, offerData);
+            const offer = request.body;
+            const result = yield OfferService_1.default.update(offer);
             return response.status(200).json(result);
         });
     }

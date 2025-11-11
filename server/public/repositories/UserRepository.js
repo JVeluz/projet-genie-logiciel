@@ -37,5 +37,10 @@ class UserRepository {
             return newUser.save();
         });
     }
+    static update(user) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return User_1.User.findByIdAndUpdate(user._id, user, { new: true }).exec();
+        });
+    }
 }
 exports.default = UserRepository;

@@ -1,0 +1,150 @@
+<!-- La navbar est incluse ici (composant personnalisé) -->
+<navbar-element></navbar-element>
+
+<!-- Contenu Principal -->
+<main class="container py-5">
+    <!-- Passage à une structure en 2 colonnes avec espacement g-5 -->
+    <div class="row g-5 justify-content-center">
+
+        <!-- COLONNE 1: FORMULAIRE DE CRÉATION -->
+        <div class="col-12 col-lg-7">
+
+            <h2 class="page-title text-center fw-bold text-primary mb-4">Créer une nouvelle annonce</h2>
+
+            <!-- Carte principale contenant le formulaire -->
+            <div class="card shadow-lg border-0">
+                <div class="card-body p-4 p-md-5">
+
+                    <!-- Formulaire de création d'annonce -->
+                    <form id="offer-form" is="offer-form">
+
+                        <!-- Champ Titre -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Titre de l'annonce</label>
+                            <input name="title" type="text" class="form-control" placeholder="Ex: Tondeuse à gazon"
+                                required>
+                        </div>
+
+                        <div class="row">
+                            <!-- Champ Catégorie -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Catégorie</label>
+                                <select name="category" class="form-select" required>
+                                    <option value="" selected disabled>Choisir...</option>
+                                    <option value="Jardinage">Jardinage</option>
+                                    <option value="Informatique">Informatique</option>
+                                    <option value="Bricolage">Bricolage</option>
+                                    <option value="Services">Services</option>
+                                    <option value="Autre">Autre</option>
+                                </select>
+                            </div>
+                            <!-- Champ Type d'offre -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Type d'offre</label>
+                                <select name="type" class="form-select" required>
+                                    <option value="" selected disabled>Choisir...</option>
+                                    <option value="Prêt d'Objet">Prêt d'Objet</option>
+                                    <option value="Offre de Compétence">Offre de Compétence</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Champ Description -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Description</label>
+                            <textarea name="description" class="form-control" rows="5"
+                                placeholder="Décrivez ce que vous proposez..." required></textarea>
+                        </div>
+
+                        <!-- Champ "En échange de..." -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Ce que vous recherchez en échange</label>
+                            <textarea name="exchange" class="form-control" rows="3"
+                                placeholder="Ex: Un cours de cuisine..." required></textarea>
+                        </div>
+
+                        <!-- Champ Localisation -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Localisation</label>
+                            <input name="location" type="text" class="form-control" placeholder="Ex: Pau, 64000"
+                                required>
+                        </div>
+
+                        <!-- Champ Images -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Ajouter des photos</label>
+                            <input name="pictures" class="form-control" type="file" accept="image/*">
+                            <div class="form-text">La première image sera utilisée pour l'aperçu.</div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <!-- Boutons d'action (Mode Création) -->
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="/" class="btn btn-outline-secondary">
+                                Annuler
+                            </a>
+                            <button id="create-button" type="button" class="btn btn-primary btn-lg">
+                                <i class="bi bi-send-fill me-2"></i>
+                                Publier l'annonce
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div> <!-- Fin de la colonne formulaire -->
+
+        <!-- COLONNE 2: APERÇU DE L'OFFRE (Statique) -->
+        <div class="col-12 col-lg-5">
+            <div class="sticky-top" style="top: 2rem;">
+                <h4 class="text-center text-primary mb-4">Aperçu de l'annonce</h4>
+                <!-- Carte d'aperçu (style inspiré de la page de détail) -->
+                <div class="card shadow-lg border-0">
+                    <offer-element id="offer-preview">
+                        <!-- Image d'aperçu -->
+                        <img src="https://placehold.co/800x450/eee/ccc?text=Image+de+l'annonce"
+                            class="card-img-top preview-card-image" alt="Aperçu">
+
+                        <div class="card-body p-4">
+                            <!-- Titre -->
+                            <h3 class="offer-title card-title fw-bolder preview-title">
+                                Titre de votre annonce
+                            </h3>
+
+                            <!-- Badges -->
+                            <div>
+                                <span class="offer-category badge bg-primary text-uppercase me-2">
+                                    Catégorie
+                                </span>
+                                <span class="offer-type badge bg-warning text-dark text-uppercase">
+                                    Type
+                                </span>
+                            </div>
+
+                            <hr>
+
+                            <!-- Description -->
+                            <p class="offer-description card-text text-muted preview-description">
+                                Votre description apparaîtra ici...
+                            </p>
+
+                            <h6 class="text-secondary mt-4">Échange souhaité :</h6>
+                            <!-- Échange -->
+                            <p class="offer-exchange card-text fst-italic preview-exchange">
+                                Ce que vous recherchez en échange...
+                            </p>
+
+                            <h6 class="text-secondary mt-4">Localisation :</h6>
+                            <!-- Localisation -->
+                            <p class="offer-location card-text fw-bold preview-location">
+                                <i class="bi bi-geo-alt-fill text-danger me-2"></i>
+                                Votre localisation...
+                            </p>
+                        </div>
+                    </offer-element>
+                </div>
+            </div>
+        </div> <!-- Fin de la colonne aperçu -->
+    </div>
+</main>

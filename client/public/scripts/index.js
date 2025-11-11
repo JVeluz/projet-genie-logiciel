@@ -12,23 +12,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Loader)
 /* harmony export */ });
+;
 const ELEMENTS = [
     // Offer Pages
-    { tag: "offer-search-page", module: __webpack_require__.e(/*! import() */ "src_elements_OfferSearchPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/OfferSearchPage */ "./src/elements/OfferSearchPage.ts")) },
-    { tag: "offer-page", module: __webpack_require__.e(/*! import() */ "src_elements_OfferPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/OfferPage */ "./src/elements/OfferPage.ts")) },
-    { tag: "edit-offer-page", module: __webpack_require__.e(/*! import() */ "src_elements_EditOfferPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/EditOfferPage */ "./src/elements/EditOfferPage.ts")) },
-    { tag: "offer-chat-page", module: __webpack_require__.e(/*! import() */ "src_elements_OfferChatPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/OfferChatPage */ "./src/elements/OfferChatPage.ts")) },
+    { tag: "offer-search-page", module: __webpack_require__.e(/*! import() */ "src_pages_OfferSearchPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/OfferSearchPage */ "./src/pages/OfferSearchPage.ts")) },
+    { tag: "offer-page", module: __webpack_require__.e(/*! import() */ "src_pages_OfferPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/OfferPage */ "./src/pages/OfferPage.ts")) },
+    { tag: "offer-create-page", module: __webpack_require__.e(/*! import() */ "src_pages_OfferCreatePage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/OfferCreatePage */ "./src/pages/OfferCreatePage.ts")) },
+    { tag: "offer-edit-page", module: __webpack_require__.e(/*! import() */ "src_pages_OfferEditPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/OfferEditPage */ "./src/pages/OfferEditPage.ts")) },
+    { tag: "offer-chat-page", module: __webpack_require__.e(/*! import() */ "src_controllers_OfferChatPageController_ts-src_pages_OfferChatPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/OfferChatPage */ "./src/pages/OfferChatPage.ts")) },
     // User Pages
-    { tag: "user-page", module: __webpack_require__.e(/*! import() */ "src_elements_UserPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/UserPage */ "./src/elements/UserPage.ts")) },
-    { tag: "edit-user-page", module: __webpack_require__.e(/*! import() */ "src_elements_EditUserPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/EditUserPage */ "./src/elements/EditUserPage.ts")) },
-    { tag: "login-page", module: __webpack_require__.e(/*! import() */ "src_elements_LoginPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/LoginPage */ "./src/elements/LoginPage.ts")) },
-    { tag: "register-page", module: __webpack_require__.e(/*! import() */ "src_elements_RegisterPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/RegisterPage */ "./src/elements/RegisterPage.ts")) },
+    { tag: "user-page", module: __webpack_require__.e(/*! import() */ "src_pages_UserPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/UserPage */ "./src/pages/UserPage.ts")) },
+    { tag: "user-edit-page", module: __webpack_require__.e(/*! import() */ "src_pages_UserEditPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/UserEditPage */ "./src/pages/UserEditPage.ts")) },
+    { tag: "login-page", module: __webpack_require__.e(/*! import() */ "src_pages_LoginPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/LoginPage */ "./src/pages/LoginPage.ts")) },
+    { tag: "register-page", module: __webpack_require__.e(/*! import() */ "src_pages_RegisterPage_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/RegisterPage */ "./src/pages/RegisterPage.ts")) },
     // Elements
     { tag: "offer-element", module: __webpack_require__.e(/*! import() */ "src_elements_OfferElement_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/OfferElement */ "./src/elements/OfferElement.ts")) },
     { tag: "user-element", module: __webpack_require__.e(/*! import() */ "src_elements_UserElement_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/UserElement */ "./src/elements/UserElement.ts")) },
-    { tag: "navbar-element", module: __webpack_require__.e(/*! import() */ "src_elements_NavbarElement_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/NavbarElement */ "./src/elements/NavbarElement.ts")) },
+    { tag: "navbar-element", module: __webpack_require__.e(/*! import() */ "src_controllers_NavbarController_ts-src_elements_NavbarElement_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/NavbarElement */ "./src/elements/NavbarElement.ts")) },
     // Forms
-    { tag: "login-form", module: __webpack_require__.e(/*! import() */ "src_elements_LoginForm_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/LoginForm */ "./src/elements/LoginForm.ts")), options: { extends: "form" } },
+    { tag: "user-edit-form", module: __webpack_require__.e(/*! import() */ "src_elements_UserEditForm_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/UserEditForm */ "./src/elements/UserEditForm.ts")), options: { extends: "form" } },
     { tag: "offer-form", module: __webpack_require__.e(/*! import() */ "src_elements_OfferForm_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/OfferForm */ "./src/elements/OfferForm.ts")), options: { extends: "form" } },
     { tag: "new-chat-form", module: __webpack_require__.e(/*! import() */ "src_elements_NewChatForm_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./elements/NewChatForm */ "./src/elements/NewChatForm.ts")), options: { extends: "form" } },
 ];
@@ -61,10 +63,10 @@ const ROUTES_TO_PAGES = {
     "/register": "register-page",
     "/offer": "offer-page",
     "/offer/chat": "offer-chat-page",
-    "/offer/create": "create-offer-page",
-    "/offer/edit": "edit-offer-page",
+    "/offer/new": "offer-create-page",
+    "/offer/edit": "offer-edit-page",
     "/user": "user-page",
-    "/user/edit": "edit-user-page",
+    "/user/edit": "user-edit-page",
 };
 class Router {
     static initialize() {

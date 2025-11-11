@@ -1,76 +1,37 @@
 import User from "../models/User";
-import OfferElement from "./OfferElement";
-import OfferCardHTML from "../html/offer-card.html";
-import Application, { Item } from "../models/Application";
-import UserFetch from "../fetches/UserFetch";
 
 export default class UserElement extends HTMLElement {
 
-    public user: User | null = null;
+    public update(user: User): void {
+        const profileButton = this.querySelector(".user-profile-button") as HTMLAnchorElement;
+        const nameElement = this.querySelector(".user-name") as HTMLElement;
+        const bioElement = this.querySelector(".user-bio") as HTMLElement;
+        const locationElement = this.querySelector(".user-location") as HTMLElement;
+        const rateElement = this.querySelector(".user-rating") as HTMLElement;
+        const avatarElement = this.querySelector(".user-avatar") as HTMLImageElement;
+        const memberSinceElement = this.querySelector(".user-member-since") as HTMLElement;
 
-    private nameElement?: HTMLElement;
-    private bioElement?: HTMLElement;
-    private locationElement?: HTMLElement;
-    private rateElement?: HTMLElement;
-    private profileButton?: HTMLAnchorElement;
-    private offerContainer?: HTMLElement;
-    private avatarElement?: HTMLImageElement;
+        if (profileButton) profileButton.href = `/user?id=${user._id}`;
+        if (nameElement) nameElement.textContent = user.name;
 
-    public async connectedCallback(): Promise<void> {
-        await customElements.whenDefined('user-element');
 
-        const userID: string | null = this.getAttribute('user-id');
-        if (!userID) {
-            console.error("UserElement: missing user-id attribute");
-            return;
-        }
-
-        const result = await UserFetch.get(userID);
-        this.user = result ? User.fromJSON(result) : null;
-        if (!this.user) {
-            console.error("UserElement: user not found");
-            return;
-        }
-
-        this.nameElement = this.querySelector('.user-name') as HTMLElement;
-        this.bioElement = this.querySelector('.user-bio') as HTMLElement;
-        this.locationElement = this.querySelector('.user-location') as HTMLElement;
-        this.rateElement = this.querySelector('.user-rating') as HTMLElement;
-        this.profileButton = this.querySelector('.user-profile-button') as HTMLAnchorElement;
-        this.avatarElement = this.querySelector('.user-avatar') as HTMLImageElement;
-        this.offerContainer = this.querySelector('.user-offers') as HTMLElement;
-
-        this.update(this.user!);
+        if (bioElement) bioElement.textContent = this.getBio(user);
+        if (locationElement) locationElement.textContent = this.getLocation(user);
+        if (rateElement) rateElement.textContent = this.rateToStars(user.rating);
+        if (avatarElement) avatarElement.src = this.getAvatarUrl(user);
+        if (memberSinceElement) memberSinceElement.textContent = this.getMemberSince(user);
     }
 
-    public update(user: User): void {
-        const editButton = this.querySelector('.user-edit-button') as HTMLAnchorElement;
-        if (editButton) {
-            const currentUser = Application.getInstance().get(Item.CurrentUser);
-            if (user._id === currentUser?._id) {
-                editButton.style.display = 'inline-block';
-                editButton.href = `/user/edit?id=${user._id}`;
-            } else {
-                editButton.style.display = 'none';
-            }
-        }
+    private getMemberSince(user: User): string {
+        return `Membre depuis le ${user.createdAt.toLocaleDateString()}`;
+    }
 
-        if (this.nameElement) this.nameElement.textContent = user.name;
-        if (this.bioElement) this.bioElement.textContent = user.bio || '...';
-        if (this.locationElement) this.locationElement.textContent = user.location || '...';
-        if (this.rateElement) this.rateElement.textContent = this.rateToStars(user.rating);
-        if (this.profileButton) this.profileButton.href = `/user?id=${user._id}`;
-        if (this.avatarElement) this.avatarElement.src = this.getAvatarUrl(user);
-        if (this.offerContainer) {
-            this.offerContainer.innerHTML = '';
-            user.offers?.forEach(offer => {
-                const offerElement = document.createElement('offer-element') as OfferElement;
-                offerElement.innerHTML = OfferCardHTML;
-                offerElement.classList.add('col');
-                this.offerContainer!.appendChild(offerElement);
-                offerElement.setAttribute('offer-id', offer._id);
-            });
-        }
+    private getBio(user: User): string {
+        return user.bio || "Aucune bio disponible.";
+    }
+
+    private getLocation(user: User): string {
+        return user.location || "Non spécifiée";
     }
 
     private getAvatarUrl(user: User): string {
@@ -81,6 +42,6 @@ export default class UserElement extends HTMLElement {
         const fullStars = Math.floor(rate);
         const halfStar = rate % 1 >= 0.5 ? 1 : 0;
         const emptyStars = 5 - fullStars - halfStar;
-        return '⭐'.repeat(fullStars) + (halfStar ? '⭐️' : '') + '☆'.repeat(emptyStars);
+        return "⭐".repeat(fullStars) + (halfStar ? "⭐️" : "") + "☆".repeat(emptyStars);
     }
 }
