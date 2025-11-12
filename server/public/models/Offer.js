@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Offer = exports.offerSchema = void 0;
 const mongoose_1 = require("mongoose");
 const User_1 = require("./User");
+const Chat_1 = require("./Chat");
 exports.offerSchema = new mongoose_1.Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
@@ -32,17 +33,18 @@ exports.offerSchema.post("save", function (offer, next) {
             next();
         }
         catch (error) {
-            throw Error("Error updating user offers");
+            throw Error("Error saving offer to user offers");
         }
     });
 });
 exports.offerSchema.post("findOneAndDelete", function (offer) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            yield Chat_1.Chat.deleteMany({ _id: { $in: offer.chatIDs } });
             yield User_1.User.updateOne({ _id: offer.sellerID }, { $pull: { offers: { _id: offer._id } } });
         }
         catch (error) {
-            throw Error("Error updating user offers");
+            throw Error("Error deleting offer from user offers");
         }
     });
 });

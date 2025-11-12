@@ -1,4 +1,4 @@
-import Application, { Item } from "../models/Application";
+import Application from "../models/Application";
 import User from "../models/User";
 import UserPage, { Model } from "../pages/UserPage";
 import UserService from "../services/UserService";
@@ -39,7 +39,7 @@ export default class UserPageController {
         }
 
         // Check Current User
-        const currentUser = this.application.get(Item.CurrentUser) as User | null;
+        const currentUser: User | null = this.application.user.get();
         this.model.isCurrentUser = currentUser ?
             (currentUser._id === this.model.user._id) : false;
 

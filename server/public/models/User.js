@@ -47,12 +47,10 @@ userSchema.pre("save", function (next) {
 userSchema.post("findOneAndDelete", function (user) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            for (const offer of user.offers) {
-                yield Offer_1.Offer.deleteOne({ _id: offer._id });
-            }
+            yield Offer_1.Offer.deleteMany({ sellerID: user._id });
         }
         catch (error) {
-            throw Error("Error updating user offers");
+            throw Error("Error deleting user offers");
         }
     });
 });

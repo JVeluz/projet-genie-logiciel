@@ -1,5 +1,5 @@
 import OfferForm from "../elements/OfferForm";
-import Application, { Item } from "../models/Application";
+import Application from "../models/Application";
 import Offer from "../models/Offer";
 import User from "../models/User";
 import OfferCreatePage from "../pages/OfferCreatePage";
@@ -23,7 +23,7 @@ export default class OfferCreatePageController {
 
     private async onCreateButton(event: Event): Promise<void> {
         event.preventDefault();
-        const currentUser: User | null = this.application.get(Item.CurrentUser);
+        const currentUser: User | null = this.application.user.get();
         if (!currentUser) {
             alert("You must be logged in to create an offer.");
             return;

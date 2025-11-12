@@ -1,4 +1,4 @@
-import Application, { Item } from "../models/Application";
+import Application from "../models/Application";
 import Chat from "../models/Chat";
 import Offer from "../models/Offer";
 import User from "../models/User";
@@ -8,6 +8,7 @@ import UserElement from "../elements/UserElement";
 import OfferService from "../services/OfferService";
 import UserService from "../services/UserService";
 import ChatService from "../services/ChatService";
+import { WithLoading } from "./decorators";
 
 export default class OfferPageController {
 
@@ -34,6 +35,7 @@ export default class OfferPageController {
         this.initialize();
     }
 
+    @WithLoading()
     public async initialize(): Promise<void> {
         // URL Parameters
         if (!this.offerID) {
@@ -73,7 +75,7 @@ export default class OfferPageController {
 
         // Updating Model
         this.model.offerID = this.offerID;
-        const currentUser: User | null = this.application.get(Item.CurrentUser);
+        const currentUser: User | null = this.application.user.get();
         this.model.isUserLoggedIn = currentUser !== null;
         if (currentUser) {
             this.model.isOfferMine = currentUser.offers.some(offer => offer._id === this.offerID);

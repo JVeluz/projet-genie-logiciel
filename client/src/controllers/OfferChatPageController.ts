@@ -1,4 +1,4 @@
-import Application, { Item } from "../models/Application";
+import Application from "../models/Application";
 import Chat from "../models/Chat";
 import OfferChatPage, { OfferChatPageModel } from "../pages/OfferChatPage";
 import ChatService from "../services/ChatService";
@@ -15,7 +15,7 @@ export default class OfferChatPageController {
 
     // Models
     private application: Application = Application.getInstance();
-    private currentUser: any = this.application.get(Item.CurrentUser);
+    private currentUser: any = this.application.user.get();
     private model: OfferChatPageModel = new OfferChatPageModel();
 
     // view

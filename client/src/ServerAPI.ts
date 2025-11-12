@@ -1,4 +1,4 @@
-import Application, { Item } from "./models/Application";
+import Application from "./models/Application"; // To remove
 
 export default class ServerAPI {
 
@@ -18,7 +18,7 @@ export default class ServerAPI {
     }
 
     private static async fetch(route: string, method: string, body?: BodyInit): Promise<any> {
-        const token: string | null = Application.getInstance().get(Item.AuthToken);
+        const token: string | null = Application.getInstance().token.get();
         const headers: HeadersInit = { "Content-Type": "application/json" };
         if (token) {
             headers.Authorization = `Bearer ${token}`;

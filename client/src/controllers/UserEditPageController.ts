@@ -1,4 +1,4 @@
-import Application, { Item } from "../models/Application";
+import Application from "../models/Application";
 import User from "../models/User";
 import UserService from "../services/UserService";
 import UserEditForm from "../elements/UserEditForm";
@@ -8,7 +8,7 @@ export default class UserEditPageController {
 
     // Models
     private application: Application = Application.getInstance();
-    private user: User | null = this.application.get(Item.CurrentUser);
+    private user: User | null = this.application.user.get();
 
     public constructor(
         // Views
@@ -22,7 +22,7 @@ export default class UserEditPageController {
 
     private async initialize(): Promise<void> {
         // Precondition
-        const currentUser: User | null = this.application.get(Item.CurrentUser);
+        const currentUser: User | null = this.application.user.get();
         if (!currentUser) {
             console.error("UserPage: no user connected");
             return;

@@ -1,48 +1,17 @@
-export enum Item {
-    AuthToken = "authToken",
-    CurrentUser = "currentUser",
-}
+import ObservableValue from "./ObservableValue";
+import User from "./User";
 
 export default class Application {
 
     private static instance: Application | null = null;
 
-    public loading: boolean = false;
-    private listeners: { [item: string]: CallableFunction[] } = {};
-
-    private constructor() {
-        for (const item in Item)
-            this.listeners[Item[item as keyof typeof Item]] = [];
-        console.log(localStorage);
-    }
+    public loading: ObservableValue<boolean> = new ObservableValue<boolean>(false);
+    public token: ObservableValue<string | null> = new ObservableValue<string | null>(null);
+    public user: ObservableValue<User | null> = new ObservableValue<User | null>(null);
 
     public static getInstance(): Application {
         if (this.instance === null)
             this.instance = new Application();
         return this.instance;
-    }
-
-    public addListener(item: Item, listener: CallableFunction): void {
-        this.listeners[item].push(listener);
-    }
-
-    public set(item: Item, value: any): void {
-        if (value === null)
-            localStorage.removeItem(item);
-        else
-            localStorage.setItem(item, JSON.stringify(value));
-        this.notifyListeners(item);
-    }
-
-    public get(item: Item): any {
-        const value: string | null = localStorage.getItem(item);
-        if (value === null)
-            return null;
-        return JSON.parse(value);
-    }
-
-    private notifyListeners(item: Item): void {
-        for (const listener of this.listeners[item])
-            listener(this.get(item));
     }
 }

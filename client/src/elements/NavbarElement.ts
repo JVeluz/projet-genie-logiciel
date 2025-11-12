@@ -4,13 +4,6 @@ import User from "../models/User";
 import UserElement from "../elements/UserElement";
 import LoginController from "../controllers/LoginController";
 
-export class NavbarModel {
-    public displayLogin: boolean = true;
-    public displayProfile: boolean = false;
-    public displayNewOfferButton: boolean = false;
-    public currentUser: User | null = null;
-}
-
 export default class NavbarElement extends HTMLElement {
 
     private loginDropdown!: HTMLElement;
@@ -18,6 +11,8 @@ export default class NavbarElement extends HTMLElement {
     private newOfferButton!: HTMLButtonElement;
     private loginForm!: HTMLFormElement;
     private userElement!: UserElement;
+    private loadingBarContainer!: HTMLElement;
+    private loadingBar!: HTMLElement;
 
     public async connectedCallback(): Promise<void> {
         await customElements.whenDefined("user-element");
@@ -29,16 +24,22 @@ export default class NavbarElement extends HTMLElement {
         this.newOfferButton = this.querySelector(".new-offer-button") as HTMLButtonElement;
         this.loginForm = this.querySelector(".login-form") as HTMLFormElement;
         this.userElement = this.querySelector(".navbar-user") as UserElement;
+        this.loadingBarContainer = this.querySelector(".loading-bar-container") as HTMLElement;
+        this.loadingBar = this.querySelector(".loading-bar") as HTMLElement;
 
         new NavbarController(this);
         new LoginController(this.loginForm, this.logoutButton);
     }
 
-    public update(model: NavbarModel): void {
-        this.loginDropdown.style.display = model.displayLogin ? "block" : "none";
-        this.userElement.style.display = model.displayProfile ? "block" : "none";
-        this.newOfferButton.style.display = model.displayNewOfferButton ? "block" : "none";
-        if (model.currentUser)
-            this.userElement.update(model.currentUser);
+    public updateUser(user: User | null): void {
+        this.loginDropdown.style.display = user ? "none" : "block";
+        this.userElement.style.display = user ? "block" : "none";
+        this.newOfferButton.style.display = user ? "block" : "none";
+        if (user)
+            this.userElement.update(user);
+    }
+
+    public updateLoading(loading: boolean): void {
+        this.loadingBar.style.width = loading ? "100%" : "0%";
     }
 }

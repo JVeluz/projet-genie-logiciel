@@ -1,4 +1,4 @@
-import Application, { Item } from "../models/Application";
+import Application from "../models/Application";
 import User from "../models/User";
 import UserService from "../services/UserService";
 
@@ -25,20 +25,17 @@ export default class RegisterController {
 
         let response;
         try {
-            this.application.loading = true;
             response = await UserService.register(user, password);
         } catch (error) {
             console.error("Registration failed:", error);
             return;
-        } finally {
-            this.application.loading = false;
         }
 
         const newUser: User = response.user;
         const token: string = response.token;
 
-        this.application.set(Item.CurrentUser, newUser);
-        this.application.set(Item.AuthToken, token);
+        this.application.user.set(newUser);
+        this.application.token.set(token);
 
         window.location.href = "/";
     }

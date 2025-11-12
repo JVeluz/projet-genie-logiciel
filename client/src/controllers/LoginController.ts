@@ -1,4 +1,4 @@
-import Application, { Item } from "../models/Application";
+import Application from "../models/Application";
 import UserService from "../services/UserService";
 
 export default class LoginController {
@@ -21,8 +21,8 @@ export default class LoginController {
         const password: string = formData.get("password") as string;
 
         const { token, user } = await UserService.login(email, password);
-        this.application.set(Item.CurrentUser, user);
-        this.application.set(Item.AuthToken, token);
+        this.application.user.set(user);
+        this.application.token.set(token);
 
         if (window.location.pathname === "/login") {
             window.location.href = "/";
@@ -33,8 +33,8 @@ export default class LoginController {
 
     public onLogout(event: Event): void {
         event.preventDefault();
-        this.application.set(Item.CurrentUser, null);
-        this.application.set(Item.AuthToken, null);
+        this.application.token.set(null);
+        this.application.user.set(null);
         window.location.reload();
     }
 }

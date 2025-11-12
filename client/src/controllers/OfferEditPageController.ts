@@ -1,4 +1,4 @@
-import Application, { Item } from "../models/Application";
+import Application from "../models/Application";
 import OfferElement from "../elements/OfferElement";
 import OfferForm from "../elements/OfferForm";
 import Offer from "../models/Offer";
@@ -8,7 +8,7 @@ import OfferService from "../services/OfferService";
 export default class OfferEditPageController {
 
     private application: Application = Application.getInstance();
-    private currentUser: User = Application.getInstance().get(Item.CurrentUser);
+    private currentUser: User | null = this.application.user.get();
     private offer: Offer = new Offer();
 
     public constructor(
@@ -27,6 +27,11 @@ export default class OfferEditPageController {
         const offerID: string | null = urlParams.get("id");
         if (!offerID) {
             console.log("Offer ID is missing in URL parameters.");
+            return;
+        }
+        // Precondition
+        if (!this.currentUser) {
+            console.error("OfferEditPage: no user connected");
             return;
         }
         // Load offer data
@@ -54,7 +59,7 @@ export default class OfferEditPageController {
         event.preventDefault();
         let newOffer: Offer;
         try {
-            newOffer = await OfferService.create(this.offer, this.currentUser);
+            newOffer = await OfferService.create(this.offer, this.currentUser!);
         } catch (error) {
             alert((error as Error).message);
             return;
@@ -66,7 +71,7 @@ export default class OfferEditPageController {
         event.preventDefault();
         this.offer = this.form.getEntries();
         try {
-            await OfferService.update(this.offer, this.currentUser);
+            await OfferService.update(this.offer, this.currentUser!);
         } catch (error) {
             alert((error as Error).message);
             return;
@@ -77,7 +82,7 @@ export default class OfferEditPageController {
     private async onDeleteButton(event: Event): Promise<void> {
         event.preventDefault();
         try {
-            await OfferService.delete(this.offer, this.currentUser);
+            await OfferService.delete(this.offer, this.currentUser!);
         } catch (error) {
             alert((error as Error).message);
             return;

@@ -1,4 +1,4 @@
-import Application, { Item } from "../models/Application";
+import Application from "../models/Application";
 import Chat from "../models/Chat";
 import User from "../models/User";
 import ChatService from "../services/ChatService";
@@ -10,8 +10,8 @@ export default class NewChatForm extends HTMLFormElement {
 
     // Models
     private application = Application.getInstance();
-    private currentUser: User | null = this.application.get(Item.CurrentUser);
-    private token: string | null = this.application.get(Item.AuthToken);
+    private currentUser: User | null = this.application.user.get();
+    private token: string | null = this.application.token.get();
 
     public async connectedCallback(): Promise<void> {
         if (!this.currentUser || !this.token) {
