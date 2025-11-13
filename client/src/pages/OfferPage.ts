@@ -42,7 +42,6 @@ export default class OfferPage extends HTMLElement {
     }
 
     public update(model: OfferPageModel): void {
-        console.log(model);
         const editButton = this.querySelector("#offer-edit-button") as HTMLAnchorElement;
         const chatListCard = this.querySelector("#chat-list-card") as HTMLElement;
         const chatList = chatListCard.querySelector("#offer-chat-list") as HTMLElement;

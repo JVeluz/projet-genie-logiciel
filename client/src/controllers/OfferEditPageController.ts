@@ -4,6 +4,7 @@ import OfferForm from "../elements/OfferForm";
 import Offer from "../models/Offer";
 import User from "../models/User";
 import OfferService from "../services/OfferService";
+import { WithLoading } from "./decorators";
 
 export default class OfferEditPageController {
 
@@ -14,13 +15,11 @@ export default class OfferEditPageController {
     public constructor(
         private preview: OfferElement,
         private form: OfferForm,
-        private createButton: HTMLButtonElement,
-        private updateButton: HTMLButtonElement,
-        private deleteButton: HTMLButtonElement
     ) {
         this.initialize();
     }
 
+    @WithLoading()
     public async initialize(): Promise<void> {
         // URL parameters
         const urlParams: URLSearchParams = new URLSearchParams(window.location.search);
@@ -41,37 +40,27 @@ export default class OfferEditPageController {
             console.error("Failed to load offer:", error);
             return;
         }
-        // Update form and preview
-        this.form.update(this.offer);
-        this.preview.update(this.offer);
-
-        this.connectEvents();
-    }
-
-    private connectEvents(): void {
-        this.createButton.onclick = (event: Event) => this.onCreateButton(event);
-        this.updateButton.onclick = (event: Event) => this.onUpdateButton(event);
-        this.deleteButton.onclick = (event: Event) => this.onDeleteButton(event);
-        this.form.oninput = () => this.onChange();
-    }
-
-    private async onCreateButton(event: Event): Promise<void> {
-        event.preventDefault();
-        let newOffer: Offer;
-        try {
-            newOffer = await OfferService.create(this.offer, this.currentUser!);
-        } catch (error) {
-            alert((error as Error).message);
+        // Conditions
+        if (this.offer.sellerID !== this.currentUser._id) {
+            console.error("OfferEditPage: current user is not the seller of this offer");
             return;
         }
-        window.location.href = `/offer?id=${newOffer._id}`;
+        // Update Views
+        this.form.update(this.offer);
+        this.preview.update(this.offer);
     }
 
-    private async onUpdateButton(event: Event): Promise<void> {
+    @WithLoading()
+    public async onUpdateButton(event: Event): Promise<void> {
         event.preventDefault();
-        this.offer = this.form.getEntries();
+        this.offer.title = this.form.titleInput.value;
+        this.offer.description = this.form.descriptionInput.value;
+        this.offer.category = this.form.categoryInput.value;
+        this.offer.type = this.form.typeInput.value;
+        this.offer.exchange = this.form.exchangeInput.value;
+        this.offer.location = this.form.locationInput.value;
         try {
-            await OfferService.update(this.offer, this.currentUser!);
+            await OfferService.update(this.offer);
         } catch (error) {
             alert((error as Error).message);
             return;
@@ -79,10 +68,11 @@ export default class OfferEditPageController {
         window.location.href = `/offer?id=${this.offer._id}`;
     }
 
-    private async onDeleteButton(event: Event): Promise<void> {
+    @WithLoading()
+    public async onDeleteButton(event: Event): Promise<void> {
         event.preventDefault();
         try {
-            await OfferService.delete(this.offer, this.currentUser!);
+            await OfferService.delete(this.offer);
         } catch (error) {
             alert((error as Error).message);
             return;
@@ -90,8 +80,13 @@ export default class OfferEditPageController {
         window.location.href = `/user?id=${this.offer.sellerID}`;
     }
 
-    private onChange(): void {
-        this.offer = this.form.getEntries();
+    public onFormChange(): void {
+        this.offer.title = this.form.titleInput.value;
+        this.offer.description = this.form.descriptionInput.value;
+        this.offer.category = this.form.categoryInput.value;
+        this.offer.type = this.form.typeInput.value;
+        this.offer.exchange = this.form.exchangeInput.value;
+        this.offer.location = this.form.locationInput.value;
         this.preview.update(this.offer);
     }
 }

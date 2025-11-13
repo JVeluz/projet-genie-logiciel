@@ -11,7 +11,7 @@ export function WithLoading() {
             } catch (error) {
                 throw error;
             } finally {
-                application.loading.set(false);
+                setTimeout(() => { application.loading.set(false); }, 1000);
             }
         };
         return descriptor;

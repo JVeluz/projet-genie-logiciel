@@ -5,30 +5,33 @@ import OfferEditPageController from "../controllers/OfferEditPageController";
 
 export default class OfferEditPage extends HTMLElement {
 
+    private controller!: OfferEditPageController;
+
     public connectedCallback(): void {
         this.innerHTML = HTML;
 
         const pageTitle = this.querySelector(".page-title") as HTMLHeadingElement;
         const offerForm = this.querySelector(".offer-form") as OfferForm;
         const offerPreview = this.querySelector(".offer-preview") as OfferElement;
-        const createButton = this.querySelector(".offer-create-button") as HTMLButtonElement;
         const updateButton = this.querySelector(".offer-update-button") as HTMLButtonElement;
         const deleteButton = this.querySelector(".offer-delete-button") as HTMLButtonElement;
         const confirmDeleteButton = this.querySelector(".offer-confirm-delete-button") as HTMLButtonElement;
 
-        new OfferEditPageController(
+        this.controller = new OfferEditPageController(
             offerPreview, offerForm,
-            createButton, updateButton, confirmDeleteButton
         );
+
+        offerForm.oninput = () => { this.controller.onFormChange(); };
+        updateButton.onclick = (event) => { this.controller.onUpdateButton(event); };
+        deleteButton.onclick = (event) => { this.controller.onDeleteButton(event); };
+        confirmDeleteButton.onclick = (event) => { this.controller.onDeleteButton(event); };
 
         const editMode: boolean = true;
         if (editMode) {
-            createButton.style.display = "none";
             updateButton.style.display = "block";
             deleteButton.style.display = "block";
             pageTitle.textContent = "Modifier l'offre";
         } else {
-            createButton.style.display = "block";
             updateButton.style.display = "none";
             deleteButton.style.display = "none";
             pageTitle.textContent = "Créer une offre";

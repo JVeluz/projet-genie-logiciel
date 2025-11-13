@@ -70,17 +70,6 @@
                                 required>
                         </div>
 
-                        <!-- NOUVEAU CHAMP: Prix Demandé -->
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Prix / Valeur estimée (Optionnel)</label>
-                            <div class="input-group">
-                                <input name="price" type="number" class="form-control" placeholder="Ex: 50" min="0"
-                                    step="1">
-                                <span class="input-group-text">€</span>
-                            </div>
-                            <div class="form-text">Laissez vide si c'est un pur échange ou un don.</div>
-                        </div>
-
                         <!-- Champ Images -->
                         <div class="mb-3">
                             <label class="form-label fw-bold">Ajouter des photos</label>
@@ -133,11 +122,6 @@
                                 Titre de votre annonce
                             </h3>
 
-                            <!-- APERÇU: Prix -->
-                            <h4 class="offer-price text-success fw-bold mb-3">
-                                Prix ou valeur
-                            </h4>
-
                             <!-- Badges -->
                             <div>
                                 <span class="offer-category badge bg-primary text-uppercase me-2">
@@ -174,3 +158,24 @@
         </div> <!-- Fin de la colonne aperçu -->
     </div>
 </main>
+
+<!-- Modal de Confirmation de Suppression -->
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="deleteModalLabel">Confirmer la suppression</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Êtes-vous sûr de vouloir supprimer cette annonce ? Cette action est irréversible.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <!-- Ce bouton devrait avoir sa propre logique de suppression -->
+                <button type="button" class="offer-confirm-delete-button btn btn-danger">Oui, supprimer</button>
+            </div>
+        </div>
+    </div>
+</div>

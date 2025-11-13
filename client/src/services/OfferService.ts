@@ -13,21 +13,15 @@ export default class OfferService {
     }
 
     public static async create(offer: Offer, currentUser: User): Promise<Offer> {
-        if (!currentUser)
-            throw new Error("Unauthorized: You must be logged in to create an offer.");
         offer.sellerID = currentUser._id;
         return await OfferRepository.create(offer);
     }
 
-    public static async update(offer: Offer, currentUser: User): Promise<void> {
-        if (currentUser?._id !== offer.sellerID)
-            throw new Error("Unauthorized: You can only update your own offers.");
+    public static async update(offer: Offer): Promise<void> {
         return await OfferRepository.update(offer);
     }
 
-    public static async delete(offer: Offer, currentUser: User): Promise<void> {
-        if (currentUser?._id !== offer.sellerID)
-            throw new Error("Unauthorized: You can only delete your own offers.");
+    public static async delete(offer: Offer): Promise<void> {
         return await OfferRepository.delete(offer._id);
     }
 }

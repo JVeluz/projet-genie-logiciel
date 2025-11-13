@@ -15,7 +15,6 @@ export interface IOffer {
     exchange?: string;
     location?: string;
     pictures?: string[];
-    comments?: string[];
 
     sellerID: ObjectId;
     chatIDs: ObjectId[];
@@ -31,7 +30,6 @@ export const offerSchema = new Schema<IOffer>({
     exchange: { type: String },
     location: { type: String },
     pictures: { type: [String], default: [] },
-    comments: { type: [String], default: [] },
 
     sellerID: { type: Schema.Types.ObjectId, ref: "User", required: true },
     chatIDs: { type: [Schema.Types.ObjectId], ref: "Chat", default: [] },

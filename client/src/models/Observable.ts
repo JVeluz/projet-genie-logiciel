@@ -1,4 +1,4 @@
-export default class ObservableValue<T> {
+export default class Observable<T> {
     private _value: T;
     private observers: Array<(value: T) => void> = [];
 

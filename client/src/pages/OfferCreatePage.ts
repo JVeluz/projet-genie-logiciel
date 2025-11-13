@@ -15,9 +15,7 @@ export default class OfferCreatePage extends HTMLElement {
         this.form = this.querySelector("#offer-form") as OfferForm;
         this.createButton = this.querySelector("#create-button") as HTMLButtonElement;
         this.preview = this.querySelector("#offer-preview") as OfferElement;
-        new OfferCreatePageController(
-            this, this.form, this.createButton
-        );
+        new OfferCreatePageController(this, this.form, this.createButton);
     }
 
     public update(offer: Offer): void {

@@ -4,6 +4,7 @@ import Offer from "../models/Offer";
 import User from "../models/User";
 import OfferCreatePage from "../pages/OfferCreatePage";
 import OfferService from "../services/OfferService";
+import { WithLoading } from "./decorators";
 
 export default class OfferCreatePageController {
 
@@ -17,10 +18,11 @@ export default class OfferCreatePageController {
         private form: OfferForm,
         private createButton: HTMLButtonElement,
     ) {
-        this.createButton.onclick = (event: Event) => this.onCreateButton(event);
         this.form.oninput = () => this.onChange();
+        this.createButton.onclick = (event: Event) => this.onCreateButton(event);
     }
 
+    @WithLoading()
     private async onCreateButton(event: Event): Promise<void> {
         event.preventDefault();
         const currentUser: User | null = this.application.user.get();
@@ -35,11 +37,18 @@ export default class OfferCreatePageController {
             alert((error as Error).message);
             return;
         }
+        currentUser.offers.push(newOffer);
+        this.application.user.set(currentUser);
         window.location.href = `/offer?id=${newOffer._id}`;
     }
 
     private onChange(): void {
-        this.offer = this.form.getEntries();
+        this.offer.title = this.form.titleInput.value;
+        this.offer.description = this.form.descriptionInput.value;
+        this.offer.category = this.form.categoryInput.value;
+        this.offer.type = this.form.typeInput.value;
+        this.offer.exchange = this.form.exchangeInput.value;
+        this.offer.location = this.form.locationInput.value;
         this.page.update(this.offer);
     }
 }
