@@ -3,36 +3,40 @@ import OfferRepository from "../repositories/OfferRepository";
 
 export default class OfferService {
 
-    public static async getAll(): Promise<any[]> {
-        return OfferRepository.findAll();
+    public constructor(
+        private offerRepository: OfferRepository
+    ) { }
+
+    public async getAll(): Promise<any[]> {
+        return this.offerRepository.findAll();
     }
 
-    public static async getById(id: string): Promise<any> {
-        const offer = await OfferRepository.findById(id);
+    public async getById(id: string): Promise<any> {
+        const offer = await this.offerRepository.findById(id);
         if (!offer)
             throw new Error("Offer not found");
         return offer;
     }
 
-    public static async getByTerms(terms: string): Promise<any[]> {
-        return OfferRepository.findByTerms(terms);
+    public async getByTerms(terms: string): Promise<any[]> {
+        return this.offerRepository.findByTerms(terms);
     }
 
-    public static async create(offer: IOffer): Promise<any> {
-        return OfferRepository.create(offer);
+    public async create(offer: IOffer): Promise<any> {
+        return this.offerRepository.create(offer);
     }
 
-    public static async update(data: any): Promise<any> {
-        const offer = await OfferRepository.findById(data._id);
+    public async update(data: any): Promise<any> {
+        const offer = await this.offerRepository.findById(data._id);
         if (!offer)
             throw new Error("Offer not found");
-        return OfferRepository.update(data);
+        return this.offerRepository.update(data);
     }
 
-    public static async delete(id: string): Promise<void> {
-        const offer = await OfferRepository.findById(id);
+    public async delete(id: string): Promise<void> {
+        const offer = await this.offerRepository.findById(id);
         if (!offer)
             throw new Error("Offer not found");
-        return OfferRepository.delete(id);
+        return this.offerRepository.delete(id);
     }
 }

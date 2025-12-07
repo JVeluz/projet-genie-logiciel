@@ -1,30 +1,29 @@
-import { IOffer } from "../models/Offer";
 import { User, IUser } from "../models/User";
 
 export default class UserRepository {
 
-    public static async findAll(): Promise<IUser[]> {
+    public async findAll(): Promise<IUser[]> {
         return User.find().exec();
     }
 
-    public static async findById(id: string): Promise<IUser | null> {
+    public async findById(id: string): Promise<IUser | null> {
         return User.findById(id).exec();
     }
 
-    public static async findByEmail(email: string): Promise<IUser | null> {
+    public async findByEmail(email: string): Promise<IUser | null> {
         return User.findOne({ email }).exec();
     }
 
-    public static async findByEmailWithPassword(email: string): Promise<IUser | null> {
+    public async findByEmailWithPassword(email: string): Promise<IUser | null> {
         return User.findOne({ email }).select('+password').exec();
     }
 
-    public static async create(userData: IUser): Promise<IUser> {
+    public async create(userData: IUser): Promise<IUser> {
         const newUser = new User(userData);
         return newUser.save();
     }
 
-    public static async update(user: Partial<IUser>): Promise<IUser | null> {
+    public async update(user: Partial<IUser>): Promise<IUser | null> {
         return User.findByIdAndUpdate(user._id, user, { new: true }).exec();
     }
 }

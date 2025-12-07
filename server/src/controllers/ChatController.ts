@@ -3,38 +3,42 @@ import ChatService from "../services/ChatService";
 
 export default class ChatController {
 
-    public static async getById(request: Request, response: Response): Promise<Response> {
+    public constructor(
+        private chatService: ChatService
+    ) { }
+
+    public getById = async (request: Request, response: Response): Promise<Response> => {
         const { id } = request.params;
-        const chat = await ChatService.getById(id);
+        const chat = await this.chatService.getById(id);
         return response.status(200).json(chat);
     }
 
-    public static async getByOfferAndBuyer(request: Request, response: Response): Promise<Response> {
+    public getByOfferAndBuyer = async (request: Request, response: Response): Promise<Response> => {
         const { offerID, buyerID } = request.body;
-        const chat = await ChatService.getByOfferAndBuyer(offerID, buyerID);
+        const chat = await this.chatService.getByOfferAndBuyer(offerID, buyerID);
         return response.status(200).json(chat);
     }
 
-    public static async getOrCreateWithMessage(request: Request, response: Response): Promise<Response> {
+    public getOrCreateWithMessage = async (request: Request, response: Response): Promise<Response> => {
         const { offerID, buyerID, message } = request.body;
-        const chat = await ChatService.getOrCreateWithMessage(offerID, buyerID, message);
+        const chat = await this.chatService.getOrCreateWithMessage(offerID, buyerID, message);
         return response.status(201).json(chat);
     }
 
-    public static async getMessages(request: Request, response: Response): Promise<Response> {
+    public getMessages = async (request: Request, response: Response): Promise<Response> => {
         const { chatID } = request.params;
-        const chat = await ChatService.getMessages(chatID);
+        const chat = await this.chatService.getMessages(chatID);
         return response.status(200).json(chat);
     }
 
-    public static async sendMessage(request: Request, response: Response): Promise<Response> {
+    public sendMessage = async (request: Request, response: Response): Promise<Response> => {
         const { id } = request.params;
         const { senderID, content } = request.body;
-        await ChatService.sendMessage(id, senderID, content);
+        await this.chatService.sendMessage(id, senderID, content);
         return response.status(204).send();
     }
 
-    public static async deleteMessage(request: Request, response: Response): Promise<void> {
+    public deleteMessage = async (request: Request, response: Response): Promise<void> => {
         const { messageID } = request.params;
     }
 }

@@ -3,38 +3,42 @@ import OfferService from "../services/OfferService";
 
 export default class OfferController {
 
-    public static async getAll(request: Request, response: Response): Promise<Response> {
-        const result = await OfferService.getAll();
+    public constructor(
+        private offerService: OfferService
+    ) { }
+
+    public getAll = async (request: Request, response: Response): Promise<Response> => {
+        const result = await this.offerService.getAll();
         return response.status(200).json(result);
     }
 
-    public static async getById(request: Request, response: Response): Promise<Response> {
+    public getById = async (request: Request, response: Response): Promise<Response> => {
         const id = request.params.id;
-        const result = await OfferService.getById(id);
+        const result = await this.offerService.getById(id);
         return response.status(200).json(result);
     }
 
-    public static async search(request: Request, response: Response): Promise<Response> {
+    public search = async (request: Request, response: Response): Promise<Response> => {
         const terms = request.params.terms;
-        const result = await OfferService.getByTerms(terms);
+        const result = await this.offerService.getByTerms(terms);
         return response.status(200).json(result);
     }
 
-    public static async create(request: Request, response: Response): Promise<Response> {
+    public create = async (request: Request, response: Response): Promise<Response> => {
         const offer = request.body;
-        const result = await OfferService.create(offer);
+        const result = await this.offerService.create(offer);
         return response.status(201).json(result);
     }
 
-    public static async update(request: Request, response: Response): Promise<Response> {
+    public update = async (request: Request, response: Response): Promise<Response> => {
         const offer = request.body;
-        const result = await OfferService.update(offer);
+        const result = await this.offerService.update(offer);
         return response.status(200).json(result);
     }
 
-    public static async delete(request: Request, response: Response): Promise<Response> {
+    public delete = async (request: Request, response: Response): Promise<Response> => {
         const id = request.params.id;
-        await OfferService.delete(id);
+        await this.offerService.delete(id);
         return response.status(204).send();
     }
 }

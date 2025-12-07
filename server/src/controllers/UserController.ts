@@ -1,30 +1,34 @@
 import { Request, Response } from "express";
-import { UserService } from "../services/UserService";
+import UserService from "../services/UserService";
 
 export default class UserController {
 
-    public static async getById(request: Request, response: Response): Promise<Response> {
+    public constructor(
+        private userService: UserService
+    ) { }
+
+    public getById = async (request: Request, response: Response): Promise<Response> => {
         const { id } = request.params;
-        const result = await UserService.getById(id);
+        const result = await this.userService.getById(id);
         return response.status(200).json(result);
     }
 
-    public static async register(request: Request, response: Response): Promise<Response> {
+    public register = async (request: Request, response: Response): Promise<Response> => {
         const userData = request.body;
-        const result = await UserService.register(userData);
+        const result = await this.userService.register(userData);
         return response.status(201).json(result);
     }
 
-    public static async login(request: Request, response: Response): Promise<Response> {
+    public login = async (request: Request, response: Response): Promise<Response> => {
         const userData = request.body;
-        const result = await UserService.login(userData);
+        const result = await this.userService.login(userData);
         return response.status(200).json(result);
     }
 
-    public static async update(request: Request, response: Response): Promise<Response> {
+    public update = async (request: Request, response: Response): Promise<Response> => {
         const { id } = request.params;
         const userData = request.body;
-        const result = await UserService.update(id, userData);
+        const result = await this.userService.update(id, userData);
         return response.status(200).json(result);
     }
 }
