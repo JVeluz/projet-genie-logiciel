@@ -1,4 +1,4 @@
-import Offer from "./Offer";
+import IOffer from "shared/src/interfaces/IOffer";
 
 export default class User {
     public _id!: string;
@@ -6,7 +6,7 @@ export default class User {
     public email!: string;
     public rating!: number;
     public createdAt!: Date;
-    public offers!: Offer[];
+    public offers!: IOffer[];
 
     public bio?: string;
     public avatar?: string;
@@ -19,7 +19,7 @@ export default class User {
         user.email = data.email;
         user.rating = data.rating;
         user.createdAt = new Date(data.createdAt);
-        user.offers = data.offers.map((offer: any) => Offer.fromJSON(offer));
+        user.offers = data.offers;
         user.bio = data.bio || "";
         return user;
     }

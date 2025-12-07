@@ -1,21 +1,21 @@
 {
-  "scripts": {
-    "start": "node public/index.js",
-    "build": "tsc",
-    "dev": "node --watch --env-file=.env public/index.js"
-  },
-  "devDependencies": {
-    "@types/bcryptjs": "^2.4.6",
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.5",
-    "@types/jsonwebtoken": "^9.0.10",
-    "express": "^5.1.0",
-    "mongoose": "^8.19.2",
-    "ts-loader": "^9.5.4"
-  },
-  "dependencies": {
-    "bcryptjs": "^3.0.2",
-    "cors": "^2.8.5",
-    "jsonwebtoken": "^9.0.2"
-  }
+    "scripts": {
+        "start": "node build/index.js",
+        "build": "tsc -b",
+        "dev": "node --watch --env-file=.env build/index.js"
+    },
+    "devDependencies": {
+        "@types/bcryptjs": "^2.4.6",
+        "@types/cors": "^2.8.19",
+        "@types/express": "^5.0.5",
+        "@types/jsonwebtoken": "^9.0.10",
+        "express": "^5.1.0",
+        "mongoose": "^8.19.2",
+        "ts-loader": "^9.5.4"
+    },
+    "dependencies": {
+        "bcryptjs": "^3.0.2",
+        "cors": "^2.8.5",
+        "jsonwebtoken": "^9.0.2"
+    }
 }

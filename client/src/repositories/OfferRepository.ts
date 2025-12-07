@@ -1,21 +1,21 @@
+import IOffer from "shared/src/interfaces/IOffer";
 import ServerAPI from "../ServerAPI";
-import Offer from "../models/Offer";
 
-export default class OfferRepository {
+export default class IOfferRepository {
 
-    public static async getAll(): Promise<Offer[]> {
-        return (await ServerAPI.get("/offers")).map(Offer.fromJSON);
+    public static async getAll(): Promise<IOffer[]> {
+        return await ServerAPI.get("/offers");
     }
 
-    public static async getByID(offerID: string): Promise<Offer> {
-        return Offer.fromJSON(await ServerAPI.get(`/offers/${offerID}`));
+    public static async getByID(offerID: string): Promise<IOffer> {
+        return await ServerAPI.get(`/offers/${offerID}`);
     }
 
-    public static async create(offer: Offer): Promise<Offer> {
-        return Offer.fromJSON(await ServerAPI.post("/offers", JSON.stringify(offer)));
+    public static async create(offer: IOffer): Promise<IOffer> {
+        return await ServerAPI.post("/offers", JSON.stringify(offer));
     }
 
-    public static async update(offer: Offer): Promise<void> {
+    public static async update(offer: IOffer): Promise<void> {
         await ServerAPI.put(`/offers/${offer._id}`, JSON.stringify(offer));
     }
 

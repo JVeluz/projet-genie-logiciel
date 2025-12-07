@@ -1,8 +1,8 @@
-import Offer from "../models/Offer";
+import IOffer from "shared/src/interfaces/IOffer";
 
 export default class OfferElement extends HTMLElement {
 
-    public update(offer: Offer): void {
+    public update(offer: Partial<IOffer>): void {
         const lookupButton = this.querySelector('.offer-lookup-button') as HTMLAnchorElement;
         const titleElement = this.querySelector('.offer-title') as HTMLElement;
         const typeElement = this.querySelector('.offer-type') as HTMLElement;
@@ -13,9 +13,9 @@ export default class OfferElement extends HTMLElement {
         const exchangeElement = this.querySelector('.offer-exchange') as HTMLElement;
 
         if (lookupButton) lookupButton.href = `/offer?id=${offer._id}`;
-        if (titleElement) titleElement.textContent = offer.title === "" ? "Sans titre" : offer.title;
-        if (typeElement) typeElement.textContent = offer.type;
-        if (descriptionElement) descriptionElement.textContent = offer.description;
+        if (titleElement) titleElement.textContent = offer.title || "Sans titre";
+        if (typeElement) typeElement.textContent = offer.type || "";
+        if (descriptionElement) descriptionElement.textContent = offer.description || "";
 
         if (categoryElement) categoryElement.textContent = offer.category || "";
         if (locationElement) locationElement.textContent = offer.location || "Non spécifiée";

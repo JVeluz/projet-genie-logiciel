@@ -1,4 +1,4 @@
-import Offer from "../models/Offer";
+import IOffer from "shared/src/interfaces/IOffer";
 
 export default class OfferForm extends HTMLFormElement {
 
@@ -18,11 +18,11 @@ export default class OfferForm extends HTMLFormElement {
         this.exchangeInput = this.querySelector('textarea[name="exchange"]') as HTMLTextAreaElement;
     }
 
-    public update(offer: Offer): void {
-        this.titleInput.value = offer.title;
-        this.descriptionInput.value = offer.description;
-        this.categoryInput.value = offer.category;
-        this.typeInput.value = offer.type;
+    public update(offer: Partial<IOffer>): void {
+        this.titleInput.value = offer.title || "Sans titre";
+        this.descriptionInput.value = offer.description || "Pas de description";
+        this.categoryInput.value = offer.category || "";
+        this.typeInput.value = offer.type || "";
         this.exchangeInput.value = offer.exchange || '';
         this.locationInput.value = offer.location || '';
     }

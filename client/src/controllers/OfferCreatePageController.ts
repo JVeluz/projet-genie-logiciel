@@ -1,6 +1,6 @@
+import IOffer from "shared/src/interfaces/IOffer";
 import OfferForm from "../elements/OfferForm";
 import Application from "../models/Application";
-import Offer from "../models/Offer";
 import User from "../models/User";
 import OfferCreatePage from "../pages/OfferCreatePage";
 import OfferService from "../services/OfferService";
@@ -10,7 +10,7 @@ export default class OfferCreatePageController {
 
     // Models
     private application = Application.getInstance();
-    private offer: Offer = new Offer();
+    private offer: Partial<IOffer> = {}
 
     public constructor(
         // View
@@ -30,9 +30,9 @@ export default class OfferCreatePageController {
             alert("You must be logged in to create an offer.");
             return;
         }
-        let newOffer: Offer;
+        let newOffer: IOffer;
         try {
-            newOffer = await OfferService.create(this.offer, currentUser);
+            newOffer = await OfferService.create(this.offer as IOffer, currentUser);
         } catch (error) {
             alert((error as Error).message);
             return;

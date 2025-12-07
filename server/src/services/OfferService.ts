@@ -1,4 +1,4 @@
-import { IOffer } from "../models/Offer";
+import IOffer from "shared/src/interfaces/IOffer";
 import OfferRepository from "../repositories/OfferRepository";
 
 export default class OfferService {

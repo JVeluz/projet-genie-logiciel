@@ -1,8 +1,8 @@
+import IOffer from "shared/src/interfaces/IOffer";
 import OfferCreatePageController from "../controllers/OfferCreatePageController";
 import OfferElement from "../elements/OfferElement";
 import OfferForm from "../elements/OfferForm";
 import HTML from "../html/offer-create-page.html"
-import Offer from "../models/Offer";
 
 export default class OfferCreatePage extends HTMLElement {
 
@@ -18,7 +18,7 @@ export default class OfferCreatePage extends HTMLElement {
         new OfferCreatePageController(this, this.form, this.createButton);
     }
 
-    public update(offer: Offer): void {
+    public update(offer: Partial<IOffer>): void {
         this.preview.update(offer);
     }
 }

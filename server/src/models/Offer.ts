@@ -1,24 +1,7 @@
-import { ObjectId, Schema, model } from "mongoose";
+import IOffer from "shared/src/interfaces/IOffer";
+import { Schema, model } from "mongoose";
 import { User } from "./User";
 import { Chat } from "./Chat";
-
-export interface IOffer {
-    _id: string;
-    title: string;
-    description: string;
-    price: number;
-    available: boolean;
-    category: string;
-    type: string;
-    createdAt: Date;
-
-    exchange?: string;
-    location?: string;
-    pictures?: string[];
-
-    sellerID: ObjectId;
-    chatIDs: ObjectId[];
-}
 
 export const offerSchema = new Schema<IOffer>({
     title: { type: String, required: true },
@@ -31,8 +14,8 @@ export const offerSchema = new Schema<IOffer>({
     location: { type: String },
     pictures: { type: [String], default: [] },
 
-    sellerID: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    chatIDs: { type: [Schema.Types.ObjectId], ref: "Chat", default: [] },
+    sellerID: { type: Schema.Types.ObjectId as any, ref: "User", required: true },
+    chatIDs: { type: [Schema.Types.ObjectId as any], ref: "Chat", default: [] },
 });
 
 offerSchema.post("save", async function (offer, next) {

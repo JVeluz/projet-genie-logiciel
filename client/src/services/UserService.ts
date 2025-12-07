@@ -4,6 +4,7 @@ import User from "../models/User";
 export default class UserService {
 
     public static async getByID(userID: string): Promise<User> {
+        console.log(await UserRepository.getByID(userID));
         return await UserRepository.getByID(userID);
     }
 

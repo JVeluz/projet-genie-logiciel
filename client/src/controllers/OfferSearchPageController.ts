@@ -1,8 +1,8 @@
 import OfferSearchPage from "../pages/OfferSearchPage";
 import Application from "../models/Application";
-import Offer from "../models/Offer";
 import OfferService from "../services/OfferService";
 import { WithLoading } from "./decorators";
+import IOffer from "shared/src/interfaces/IOffer";
 
 export default class OfferSearchPageController {
 
@@ -25,7 +25,7 @@ export default class OfferSearchPageController {
         const search: Object = Object.fromEntries(new FormData(this.searchForm));
         const filter: Object = Object.fromEntries(new FormData(this.filterForm));
         const query: Object = { search, filter }
-        let result: Offer[];
+        let result: IOffer[];
         try {
             result = await OfferService.getAll(); // TODO: Pass query to service
         } catch (error) {

@@ -1,6 +1,5 @@
 import Application from "../models/Application";
 import Chat from "../models/Chat";
-import Offer from "../models/Offer";
 import User from "../models/User";
 import OfferPage, { ChatPreview, OfferPageModel } from "../pages/OfferPage";
 import OfferElement from "../elements/OfferElement";
@@ -9,6 +8,7 @@ import OfferService from "../services/OfferService";
 import UserService from "../services/UserService";
 import ChatService from "../services/ChatService";
 import { WithLoading } from "./decorators";
+import IOffer from "shared/src/interfaces/IOffer";
 
 export default class OfferPageController {
 
@@ -44,7 +44,7 @@ export default class OfferPageController {
         }
 
         // Fetching Data
-        let offer: Offer | null = null;
+        let offer: IOffer
         try {
             offer = await OfferService.getByID(this.offerID);
         } catch (error) {

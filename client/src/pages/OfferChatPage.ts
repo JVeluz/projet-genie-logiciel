@@ -1,14 +1,14 @@
 import OfferChatPageController from "../controllers/OfferChatPageController";
 import HTML from "../html/offer-chat-page.html";
 import HTMLLoader from "../html/HTMLLoader";
-import Offer from "../models/Offer";
 import User from "../models/User";
 import OfferElement from "../elements/OfferElement";
 import UserElement from "../elements/UserElement";
+import IOffer from "shared/src/interfaces/IOffer";
 
 export class OfferChatPageModel {
     messages: Message[] = [];
-    offer: Offer = new Offer();
+    offer: Partial<IOffer> = {}
     seller: User = new User();
 }
 

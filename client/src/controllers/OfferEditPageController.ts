@@ -1,16 +1,16 @@
 import Application from "../models/Application";
 import OfferElement from "../elements/OfferElement";
 import OfferForm from "../elements/OfferForm";
-import Offer from "../models/Offer";
 import User from "../models/User";
 import OfferService from "../services/OfferService";
 import { WithLoading } from "./decorators";
+import IOffer from "shared/src/interfaces/IOffer";
 
 export default class OfferEditPageController {
 
     private application: Application = Application.getInstance();
     private currentUser: User | null = this.application.user.get();
-    private offer: Offer = new Offer();
+    private offer: Partial<IOffer> = {}
 
     public constructor(
         private preview: OfferElement,
@@ -60,7 +60,7 @@ export default class OfferEditPageController {
         this.offer.exchange = this.form.exchangeInput.value;
         this.offer.location = this.form.locationInput.value;
         try {
-            await OfferService.update(this.offer);
+            await OfferService.update(this.offer as IOffer);
         } catch (error) {
             alert((error as Error).message);
             return;
@@ -72,7 +72,7 @@ export default class OfferEditPageController {
     public async onDeleteButton(event: Event): Promise<void> {
         event.preventDefault();
         try {
-            await OfferService.delete(this.offer);
+            await OfferService.delete(this.offer as IOffer);
         } catch (error) {
             alert((error as Error).message);
             return;

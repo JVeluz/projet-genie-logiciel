@@ -48,7 +48,7 @@ export default class OfferChatPageController {
             if (!this.model.offer)
                 throw new Error("offer not found");
 
-            this.model.seller = await UserService.getByID(this.model.offer.sellerID);
+            this.model.seller = await UserService.getByID(this.model.offer.sellerID!);
             if (!this.model.seller)
                 throw new Error("seller not found");
 

@@ -1,6 +1,7 @@
 import { Schema, model } from "mongoose";
 import bcrypt from "bcryptjs";
-import { IOffer, Offer } from "./Offer";
+import IOffer from "shared/src/interfaces/IOffer";
+import { Offer, offerSchema } from "./Offer";
 
 export interface IUser {
     _id: string;
@@ -30,7 +31,7 @@ const userSchema = new Schema<IUser>({
     avatar: { type: String },
     location: { type: String },
 
-    offers: [Offer.schema],
+    offers: [offerSchema],
 });
 
 userSchema.pre("save", async function (next) {
