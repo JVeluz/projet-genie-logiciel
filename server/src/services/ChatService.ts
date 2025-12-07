@@ -1,4 +1,4 @@
-import { IChat } from "../models/Chat";
+import IChat from "shared/src/interfaces/IChat";
 import ChatRepository from "../repositories/ChatRepository";
 
 export default class ChatService {

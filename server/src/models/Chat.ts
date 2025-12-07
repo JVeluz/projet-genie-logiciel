@@ -1,24 +1,13 @@
+import IChat from "shared/src/interfaces/IChat";
 import { model, ObjectId, Schema } from "mongoose";
 import { Offer } from "./Offer";
 
-export interface IChat {
-    _id: string;
-    offerID: ObjectId;
-    buyerID: ObjectId;
-    sellerID: ObjectId;
-    messages: {
-        senderID: ObjectId;
-        content: string;
-        timestamp: Date;
-    }[];
-}
-
 export const chatSchema = new Schema<IChat>({
-    offerID: { type: Schema.Types.ObjectId, ref: "Offer", required: true },
-    buyerID: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    sellerID: { type: Schema.Types.ObjectId, ref: "User" },
+    offerID: { type: Schema.Types.ObjectId as any, ref: "Offer", required: true },
+    buyerID: { type: Schema.Types.ObjectId as any, ref: "User", required: true },
+    sellerID: { type: Schema.Types.ObjectId as any, ref: "User" },
     messages: [{
-        senderID: { type: Schema.Types.ObjectId, ref: "User", required: true },
+        senderID: { type: Schema.Types.ObjectId as any, ref: "User", required: true },
         content: { type: String, required: true },
         timestamp: { type: Date, default: Date.now }
     }]

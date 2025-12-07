@@ -1,26 +1,13 @@
-import { Schema, model } from "mongoose";
+import IUser from "shared/src/interfaces/IUser";
+import { Document, Schema, model } from "mongoose";
 import bcrypt from "bcryptjs";
-import IOffer from "shared/src/interfaces/IOffer";
 import { Offer, offerSchema } from "./Offer";
 
-export interface IUser {
-    _id: string;
-    name: string;
-    email: string;
-    rating: number;
-    password: string;
-    createdAt: Date;
-
-    bio?: string;
-    avatar?: string;
-    location?: string;
-
+export interface IUserDocument extends IUser {
     comparePassword(candidatePassword: string): Promise<boolean>;
-
-    offers: IOffer[];
 }
 
-const userSchema = new Schema<IUser>({
+const userSchema = new Schema<IUserDocument>({
     email: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     password: { type: String, required: true, select: false },
@@ -63,4 +50,4 @@ userSchema.methods.comparePassword = async function (candidatePassword: string):
     return bcrypt.compare(candidatePassword, this.password);
 };
 
-export const User = model<IUser>("User", userSchema);
+export const User = model<IUserDocument>("User", userSchema);
