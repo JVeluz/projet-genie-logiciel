@@ -1,14 +1,17 @@
+import IUser from "shared/src/interfaces/IUser";
 import Application from "../models/Application";
-import User from "../models/User";
 import UserService from "../services/UserService";
 import UserEditForm from "../elements/UserEditForm";
 import UserEditPage from "../pages/UserEditPage";
 
 export default class UserEditPageController {
 
+    // Services
+    private userService = new UserService();
+
     // Models
     private application: Application = Application.getInstance();
-    private user: User | null = this.application.user.get();
+    private user: IUser | null = this.application.user.get();
 
     public constructor(
         // Views
@@ -22,7 +25,7 @@ export default class UserEditPageController {
 
     private async initialize(): Promise<void> {
         // Precondition
-        const currentUser: User | null = this.application.user.get();
+        const currentUser: IUser | null = this.application.user.get();
         if (!currentUser) {
             console.error("UserPage: no user connected");
             return;
@@ -41,7 +44,7 @@ export default class UserEditPageController {
         }
         // Fetch User
         try {
-            this.user = await UserService.getByID(userID);
+            this.user = await this.userService.getByID(userID);
         } catch (error) {
             console.error("UserPage: user not found");
             return;
@@ -55,7 +58,7 @@ export default class UserEditPageController {
         const entries = this.form.getEntries();
         this.user = { ...this.user, ...entries };
         try {
-            await UserService.update(this.user!);
+            await this.userService.update(this.user!);
         } catch (error) {
             console.error("Failed to update user:", error);
             return;

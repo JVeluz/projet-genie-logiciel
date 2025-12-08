@@ -1,13 +1,15 @@
 import IOffer from "shared/src/interfaces/IOffer";
 import OfferForm from "../elements/OfferForm";
 import Application from "../models/Application";
-import User from "../models/User";
 import OfferCreatePage from "../pages/OfferCreatePage";
 import OfferService from "../services/OfferService";
 import { WithLoading } from "./decorators";
+import IUser from "shared/src/interfaces/IUser";
 
 export default class OfferCreatePageController {
 
+    // Services
+    private offerService = new OfferService();
     // Models
     private application = Application.getInstance();
     private offer: Partial<IOffer> = {}
@@ -25,14 +27,14 @@ export default class OfferCreatePageController {
     @WithLoading()
     private async onCreateButton(event: Event): Promise<void> {
         event.preventDefault();
-        const currentUser: User | null = this.application.user.get();
+        const currentUser: IUser | null = this.application.user.get();
         if (!currentUser) {
             alert("You must be logged in to create an offer.");
             return;
         }
         let newOffer: IOffer;
         try {
-            newOffer = await OfferService.create(this.offer as IOffer, currentUser);
+            newOffer = await this.offerService.create(this.offer as IOffer, currentUser);
         } catch (error) {
             alert((error as Error).message);
             return;

@@ -1,27 +1,31 @@
-import OfferRepository from "../repositories/OfferRepository";
-import User from "../models/User";
 import IOffer from "shared/src/interfaces/IOffer";
+import IUser from "shared/src/interfaces/IUser";
+import OfferRepository from "../repositories/OfferRepository";
 
 export default class OfferService {
 
-    public static async getAll(): Promise<IOffer[]> {
-        return await OfferRepository.getAll();
+    public constructor(
+        private offerRepository = new OfferRepository()
+    ) { }
+
+    public async getAll(): Promise<IOffer[]> {
+        return await this.offerRepository.getAll();
     }
 
-    public static async getByID(offerID: string): Promise<IOffer> {
-        return await OfferRepository.getByID(offerID);
+    public async getByID(offerID: string): Promise<IOffer> {
+        return await this.offerRepository.getByID(offerID);
     }
 
-    public static async create(offer: IOffer, currentUser: User): Promise<IOffer> {
+    public async create(offer: IOffer, currentUser: IUser): Promise<IOffer> {
         offer.sellerID = currentUser._id;
-        return await OfferRepository.create(offer as IOffer);
+        return await this.offerRepository.create(offer as IOffer);
     }
 
-    public static async update(offer: IOffer): Promise<void> {
-        return await OfferRepository.update(offer);
+    public async update(offer: IOffer): Promise<void> {
+        return await this.offerRepository.update(offer);
     }
 
-    public static async delete(offer: IOffer): Promise<void> {
-        return await OfferRepository.delete(offer._id);
+    public async delete(offer: IOffer): Promise<void> {
+        return await this.offerRepository.delete(offer._id);
     }
 }

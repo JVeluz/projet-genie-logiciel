@@ -1,22 +1,21 @@
+import IUser from "shared/src/interfaces/IUser";
 import Application from "../models/Application";
-import User from "../models/User";
 import UserPage, { Model } from "../pages/UserPage";
 import UserService from "../services/UserService";
 
 export default class UserPageController {
 
+    // Services
+    private userService = new UserService();
     // URLSearchParams
     private urlParams: URLSearchParams = new URLSearchParams(window.location.search);
     private userID: string | null = this.urlParams.get("id");
-
     // Models
     private application: Application = Application.getInstance();
     private model: Model = {
-        user: new User(),
-        isCurrentUser: false
+        user: {}, isCurrentUser: false
     }
-
-    // View
+    // Views
     private page: UserPage;
 
     public constructor(page: UserPage) {
@@ -32,14 +31,14 @@ export default class UserPageController {
         }
         // Fetch User
         try {
-            this.model.user = await UserService.getByID(this.userID);
+            this.model.user = await this.userService.getByID(this.userID);
         } catch (error) {
             console.error("UserPage: user not found");
             return;
         }
 
         // Check Current User
-        const currentUser: User | null = this.application.user.get();
+        const currentUser: IUser | null = this.application.user.get();
         this.model.isCurrentUser = currentUser ?
             (currentUser._id === this.model.user._id) : false;
 

@@ -1,9 +1,11 @@
+import IUser from "shared/src/interfaces/IUser";
 import Application from "../models/Application";
-import User from "../models/User";
 import UserService from "../services/UserService";
 
 export default class RegisterController {
 
+    // Services
+    private userService = new UserService();
     // Models
     private application: Application = Application.getInstance();
     // Views
@@ -19,20 +21,20 @@ export default class RegisterController {
         event.preventDefault();
         const formData: FormData = new FormData(this.form);
         const password: string = formData.get("password") as string;
-        const user: User = new User();
+        const user: Partial<IUser> = {};
         user.name = formData.get("name") as string;
         user.email = formData.get("email") as string;
 
-        let response;
+        let newUser: IUser;
+        let token: string;
         try {
-            response = await UserService.register(user, password);
+            const response = await this.userService.register(user, password);
+            newUser = response.user;
+            token = response.token;
         } catch (error) {
             console.error("Registration failed:", error);
             return;
         }
-
-        const newUser: User = response.user;
-        const token: string = response.token;
 
         this.application.user.set(newUser);
         this.application.token.set(token);

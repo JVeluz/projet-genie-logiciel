@@ -1,27 +1,22 @@
-import Chat from "../models/Chat";
+import IChat from "shared/src/interfaces/IChat";
 import ServerAPI from "../ServerAPI";
+import ChatMapper from "../mappers/ChatMapper";
 
 export default class ChatRepository {
 
-    public static async getByID(chatID: string): Promise<any> {
-        return Chat.fromJSON(
-            await ServerAPI.get(`/chats/${chatID}`)
-        );
+    public async getByID(chatID: string): Promise<IChat> {
+        const response = await ServerAPI.get(`/chats/${chatID}`);
+        return ChatMapper.toDomain(response);
     }
 
-    public static async getOrCreateWithMessage(offerID: string, userID: string, message: string): Promise<Chat> {
-        const body: BodyInit = JSON.stringify({
-            offerID, buyerID: userID, message
-        });
-        return Chat.fromJSON(
-            await ServerAPI.post(`/chats`, body)
-        );
+    public async getOrCreateWithMessage(offerID: string, userID: string, message: string): Promise<IChat> {
+        const body = JSON.stringify({ offerID, buyerID: userID, message });
+        const response = await ServerAPI.post(`/chats`, body);
+        return ChatMapper.toDomain(response);
     }
 
-    public static async sendMessage(chatID: string, senderID: string, content: string): Promise<void> {
-        const body: BodyInit = JSON.stringify({
-            senderID, content
-        });
+    public async sendMessage(chatID: string, senderID: string, content: string): Promise<void> {
+        const body = JSON.stringify({ senderID, content });
         await ServerAPI.post(`/chats/${chatID}`, body);
     }
 }

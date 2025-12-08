@@ -1,15 +1,15 @@
+import IOffer from "shared/src/interfaces/IOffer";
+import IUser from "shared/src/interfaces/IUser";
 import OfferChatPageController from "../controllers/OfferChatPageController";
 import HTML from "../html/offer-chat-page.html";
 import HTMLLoader from "../html/HTMLLoader";
-import User from "../models/User";
 import OfferElement from "../elements/OfferElement";
 import UserElement from "../elements/UserElement";
-import IOffer from "shared/src/interfaces/IOffer";
 
 export class OfferChatPageModel {
     messages: Message[] = [];
     offer: Partial<IOffer> = {}
-    seller: User = new User();
+    seller?: IUser;
 }
 
 export class Message {
@@ -50,7 +50,8 @@ export default class OfferChatPage extends HTMLElement {
         const sellerElement: UserElement = this.querySelector(".offer-seller") as UserElement;
 
         offerElement.update(model.offer);
-        sellerElement.update(model.seller);
+        if (model.seller)
+            sellerElement.update(model.seller);
 
         const chatBox: HTMLDivElement = this.querySelector(".chat-box")!;
         for (const message of model.messages) {

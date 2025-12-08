@@ -1,6 +1,6 @@
+import IUser from "shared/src/interfaces/IUser";
 import NavbarController from "../controllers/NavbarController";
 import HTML from "../html/navbar-element.html";
-import User from "../models/User";
 import UserElement from "../elements/UserElement";
 import LoginController from "../controllers/LoginController";
 
@@ -31,7 +31,7 @@ export default class NavbarElement extends HTMLElement {
         new LoginController(this.loginForm, this.logoutButton);
     }
 
-    public updateUser(user: User | null): void {
+    public updateUser(user: IUser | null): void {
         this.loginDropdown.style.display = user ? "none" : "block";
         this.userElement.style.display = user ? "block" : "none";
         this.newOfferButton.style.display = user ? "block" : "none";

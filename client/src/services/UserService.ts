@@ -1,22 +1,27 @@
+import IUser from "shared/src/interfaces/IUser";
 import UserRepository from "../repositories/UserRepository";
-import User from "../models/User";
 
 export default class UserService {
 
-    public static async getByID(userID: string): Promise<User> {
-        console.log(await UserRepository.getByID(userID));
-        return await UserRepository.getByID(userID);
+    public constructor(
+        private userRepository = new UserRepository()
+    ) { }
+
+    public async getByID(userID: string): Promise<IUser> {
+        return await this.userRepository.getByID(userID);
     }
 
-    public static async login(email: string, password: string): Promise<{ token: string, user: User }> {
-        return await UserRepository.login(email, password);
+    public async login(email: string, password: string): Promise<{ token: string, user: IUser }> {
+        return await this.userRepository.login(email, password);
     }
 
-    public static async register(user: User, password: string): Promise<{ token: string, user: User }> {
-        return await UserRepository.register(user.name, user.email, password);
+    public async register(user: Partial<IUser>, password: string): Promise<{ token: string, user: IUser }> {
+        if (!user.name) throw Error("Name requiered");
+        if (!user.email) throw Error("Email requiered");
+        return await this.userRepository.register(user.name, user.email, password);
     }
 
-    public static async update(user: User): Promise<User> {
-        return await UserRepository.update(user);
+    public async update(user: IUser): Promise<IUser> {
+        return await this.userRepository.update(user);
     }
 }

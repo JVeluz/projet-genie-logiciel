@@ -1,6 +1,7 @@
+import IOffer from "shared/src/interfaces/IOffer";
+import IUser from "shared/src/interfaces/IUser";
+import IChat from "shared/src/interfaces/IChat";
 import Application from "../models/Application";
-import Chat from "../models/Chat";
-import User from "../models/User";
 import OfferPage, { ChatPreview, OfferPageModel } from "../pages/OfferPage";
 import OfferElement from "../elements/OfferElement";
 import UserElement from "../elements/UserElement";
@@ -8,21 +9,22 @@ import OfferService from "../services/OfferService";
 import UserService from "../services/UserService";
 import ChatService from "../services/ChatService";
 import { WithLoading } from "./decorators";
-import IOffer from "shared/src/interfaces/IOffer";
 
 export default class OfferPageController {
+
+    // Services
+    private userService = new UserService();
+    private chatService = new ChatService();
+    private offerService = new OfferService();
 
     // URL Parameters
     private urlParams: URLSearchParams = new URLSearchParams(window.location.search);
     private offerID: string | null = this.urlParams.get("id");
-
     // Model
     private application: Application = Application.getInstance();
     private model: OfferPageModel = {
         offerID: "", isOfferMine: false, isUserLoggedIn: false, chats: []
     };
-
-
     // View
     private page: OfferPage;
     private offerElement: OfferElement;
@@ -46,26 +48,26 @@ export default class OfferPageController {
         // Fetching Data
         let offer: IOffer
         try {
-            offer = await OfferService.getByID(this.offerID);
+            offer = await this.offerService.getByID(this.offerID);
         } catch (error) {
             console.error("Error fetching offer data:", error);
             return;
         }
 
-        let seller: User;
+        let seller: IUser;
         try {
-            seller = await UserService.getByID(offer.sellerID);
+            seller = await this.userService.getByID(offer.sellerID);
         } catch (error) {
             console.error("Error fetching seller data:", error);
             return;
         }
 
-        let chats: Chat[] = [];
-        let buyers: User[] = [];
+        let chats: IChat[] = [];
+        let buyers: IUser[] = [];
         for (const chatID of offer.chatIDs) {
             try {
-                const chat: Chat = await ChatService.getByID(chatID);
-                const buyer: User = await UserService.getByID(chat.buyerID);
+                const chat: IChat = await this.chatService.getByID(chatID);
+                const buyer: IUser = await this.userService.getByID(chat.buyerID);
                 buyers.push(buyer);
                 chats.push(chat);
             } catch (error) {
@@ -75,13 +77,13 @@ export default class OfferPageController {
 
         // Updating Model
         this.model.offerID = this.offerID;
-        const currentUser: User | null = this.application.user.get();
+        const currentUser: IUser | null = this.application.user.get();
         this.model.isUserLoggedIn = currentUser !== null;
         if (currentUser) {
             this.model.isOfferMine = currentUser.offers.some(offer => offer._id === this.offerID);
             for (let i = 0; i < chats.length; i++) {
-                const chat: Chat = chats[i];
-                const buyer: User = buyers[i];
+                const chat: IChat = chats[i];
+                const buyer: IUser = buyers[i];
                 const lastMessage: string = (chat.messages.length > 0) ?
                     chat.messages[chat.messages.length - 1].content : "";
                 const chatPreview: ChatPreview = {

@@ -1,25 +1,29 @@
 import IOffer from "shared/src/interfaces/IOffer";
 import ServerAPI from "../ServerAPI";
+import OfferMapper from "../mappers/OfferMapper";
 
 export default class IOfferRepository {
 
-    public static async getAll(): Promise<IOffer[]> {
-        return await ServerAPI.get("/offers");
+    public async getAll(): Promise<IOffer[]> {
+        const response = await ServerAPI.get("/offers");
+        return response.map((offerData: any) => OfferMapper.toDomain(offerData));
     }
 
-    public static async getByID(offerID: string): Promise<IOffer> {
-        return await ServerAPI.get(`/offers/${offerID}`);
+    public async getByID(offerID: string): Promise<IOffer> {
+        const response = await ServerAPI.get(`/offers/${offerID}`);
+        return OfferMapper.toDomain(response);
     }
 
-    public static async create(offer: IOffer): Promise<IOffer> {
-        return await ServerAPI.post("/offers", JSON.stringify(offer));
+    public async create(offer: IOffer): Promise<IOffer> {
+        const response = await ServerAPI.post("/offers", JSON.stringify(offer));
+        return OfferMapper.toDomain(response);
     }
 
-    public static async update(offer: IOffer): Promise<void> {
+    public async update(offer: IOffer): Promise<void> {
         await ServerAPI.put(`/offers/${offer._id}`, JSON.stringify(offer));
     }
 
-    public static async delete(offerID: string): Promise<void> {
+    public async delete(offerID: string): Promise<void> {
         await ServerAPI.delete(`/offers/${offerID}`);
     }
 }

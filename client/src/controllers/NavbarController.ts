@@ -1,12 +1,12 @@
+import IUser from "shared/src/interfaces/IUser";
 import Application from "../models/Application";
 import NavbarElement from "../elements/NavbarElement";
-import User from "../models/User";
 
 export default class NavbarController {
 
     // Models
     private application: Application = Application.getInstance();
-    private currentUser: User | null = this.application.user.get();
+    private currentUser: IUser | null = this.application.user.get();
 
     constructor(
         // Views
@@ -17,7 +17,7 @@ export default class NavbarController {
         this.application.user.addObserver(this.onUserChange.bind(this));
     }
 
-    private onUserChange(user: User | null): void {
+    private onUserChange(user: IUser | null): void {
         this.currentUser = user;
         this.navbarElement.updateUser(this.currentUser);
     }

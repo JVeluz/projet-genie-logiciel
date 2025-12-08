@@ -1,16 +1,19 @@
+import IUser from "shared/src/interfaces/IUser";
 import Application from "../models/Application";
-import Chat from "../models/Chat";
-import User from "../models/User";
 import ChatService from "../services/ChatService";
+import IChat from "shared/src/interfaces/IChat";
 
 export default class NewChatForm extends HTMLFormElement {
+
+    // Services
+    private chatService = new ChatService();
 
     // Attributes to inject
     public offerID: string | null = null;
 
     // Models
     private application = Application.getInstance();
-    private currentUser: User | null = this.application.user.get();
+    private currentUser: IUser | null = this.application.user.get();
     private token: string | null = this.application.token.get();
 
     public async connectedCallback(): Promise<void> {
@@ -31,9 +34,9 @@ export default class NewChatForm extends HTMLFormElement {
         const form = event.target as HTMLFormElement;
         const formData = new FormData(form);
         const message = formData.get("message") as string;
-        let chat: Chat;
+        let chat: IChat;
         try {
-            chat = await ChatService.getOrCreateWithMessage(this.offerID!, this.currentUser!._id, message);
+            chat = await this.chatService.getOrCreateWithMessage(this.offerID!, this.currentUser!._id, message);
         } catch (error) {
             console.error("Error creating or retrieving chat:", error);
             return;

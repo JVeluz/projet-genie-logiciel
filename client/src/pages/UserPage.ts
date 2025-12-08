@@ -1,12 +1,12 @@
+import IUser from "shared/src/interfaces/IUser";
 import HTML from "../html/user-page.html";
 import OfferCardHTML from "../html/offer-card.html";
 import UserPageController from "../controllers/UserPageController";
 import UserElement from "../elements/UserElement";
-import User from "../models/User";
 import OfferElement from "../elements/OfferElement";
 
 export interface Model {
-    user: User;
+    user: Partial<IUser>;
     isCurrentUser: boolean;
 }
 
@@ -26,6 +26,8 @@ export default class UserPage extends HTMLElement {
         editButton.style.display = model.isCurrentUser ? "block" : "none";
         userElement.update(model.user);
 
+        if (!model.user.offers)
+            return;
         for (const offer of model.user.offers) {
             const offerElement = document.createElement("offer-element") as OfferElement;
             offerElement.innerHTML = OfferCardHTML;

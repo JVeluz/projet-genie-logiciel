@@ -1,0 +1,18 @@
+import IChat from "shared/src/interfaces/IChat";
+
+export default class ChatMapper {
+
+    public static toDomain(raw: any): IChat {
+        return {
+            ...raw,
+            messages: raw.messages.map((m: any) => ChatMapper.toDomainMessage(m))
+        };
+    }
+
+    private static toDomainMessage(raw: any) {
+        return {
+            ...raw,
+            createdAt: new Date(raw.createdAt),
+        };
+    }
+}

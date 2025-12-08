@@ -1,12 +1,16 @@
+import IOffer from "shared/src/interfaces/IOffer";
 import OfferSearchPage from "../pages/OfferSearchPage";
 import Application from "../models/Application";
 import OfferService from "../services/OfferService";
 import { WithLoading } from "./decorators";
-import IOffer from "shared/src/interfaces/IOffer";
 
 export default class OfferSearchPageController {
 
+    // Services
+    private offerService = new OfferService();
+    // Views
     private page: OfferSearchPage;
+    // Models
     private application: Application = Application.getInstance();
     private searchForm: HTMLFormElement;
     private filterForm: HTMLFormElement;
@@ -27,7 +31,7 @@ export default class OfferSearchPageController {
         const query: Object = { search, filter }
         let result: IOffer[];
         try {
-            result = await OfferService.getAll(); // TODO: Pass query to service
+            result = await this.offerService.getAll(); // TODO: Pass query to service
         } catch (error) {
             return;
         }

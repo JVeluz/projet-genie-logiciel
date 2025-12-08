@@ -1,20 +1,24 @@
-import Chat from "../models/Chat";
-import User from "../models/User";
+import IChat from "shared/src/interfaces/IChat";
+import IUser from "shared/src/interfaces/IUser";
 import ChatRepository from "../repositories/ChatRepository";
 
 export default class ChatService {
 
-    public static async getByID(chatID: string): Promise<Chat> {
-        return await ChatRepository.getByID(chatID);
+    public constructor(
+        private chatRepository = new ChatRepository()
+    ) { }
+
+    public async getByID(chatID: string): Promise<IChat> {
+        return await this.chatRepository.getByID(chatID);
     }
 
-    public static async getOrCreateWithMessage(offerID: string, userID: string, message: string): Promise<Chat> {
-        return await ChatRepository.getOrCreateWithMessage(offerID, userID, message);
+    public async getOrCreateWithMessage(offerID: string, userID: string, message: string): Promise<IChat> {
+        return await this.chatRepository.getOrCreateWithMessage(offerID, userID, message);
     }
 
-    public static async sendMessage(chatID: string, content: string, currentUser: User): Promise<void> {
+    public async sendMessage(chatID: string, content: string, currentUser: IUser): Promise<void> {
         if (!currentUser)
             throw new Error("Unauthorized: You must be logged in to send messages.");
-        return await ChatRepository.sendMessage(chatID, currentUser._id, content);
+        return await this.chatRepository.sendMessage(chatID, currentUser._id, content);
     }
 }

@@ -1,4 +1,4 @@
-import User from "../models/User";
+import IUser from "shared/src/interfaces/IUser";
 
 export default class UserEditForm extends HTMLFormElement {
 
@@ -14,7 +14,7 @@ export default class UserEditForm extends HTMLFormElement {
         this.passwordInput = this.querySelector("input[name='password']") as HTMLInputElement;
     }
 
-    public update(user: User) {
+    public update(user: IUser) {
         this.nameInput.value = user.name;
         this.bioInput.value = user.bio || "";
     }

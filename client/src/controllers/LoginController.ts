@@ -4,6 +4,7 @@ import UserService from "../services/UserService";
 export default class LoginController {
 
     private application: Application = Application.getInstance();
+    private userService: UserService = new UserService();
 
     public constructor(
         private form: HTMLFormElement,
@@ -20,7 +21,7 @@ export default class LoginController {
         const email: string = formData.get("email") as string;
         const password: string = formData.get("password") as string;
 
-        const { token, user } = await UserService.login(email, password);
+        const { token, user } = await this.userService.login(email, password);
         this.application.user.set(user);
         this.application.token.set(token);
 

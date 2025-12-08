@@ -1,5 +1,5 @@
+import IChat from "shared/src/interfaces/IChat";
 import Application from "../models/Application";
-import Chat from "../models/Chat";
 import OfferChatPage, { OfferChatPageModel } from "../pages/OfferChatPage";
 import ChatService from "../services/ChatService";
 import OfferService from "../services/OfferService";
@@ -9,18 +9,19 @@ const UPDATE_WAIT_TIME: number = 10000; // 10 seconds
 
 export default class OfferChatPageController {
 
+    // Services
+    private userService = new UserService();
+    private offerService = new OfferService();
+    private chatService = new ChatService();
     // URLSearchParams
     private urlParams: URLSearchParams = new URLSearchParams(window.location.search);
     private chatID: string | null = this.urlParams.get("id");
-
     // Models
     private application: Application = Application.getInstance();
     private currentUser: any = this.application.user.get();
     private model: OfferChatPageModel = new OfferChatPageModel();
-
     // view
     private view: OfferChatPage;
-
     // Other
     private updateInterval!: NodeJS.Timeout;
 
@@ -37,18 +38,18 @@ export default class OfferChatPageController {
         if (!this.chatID)
             throw new Error("missing chat ID");
 
-        let chat: Chat;
+        let chat: IChat;
         try {
             // Fetch data
-            chat = await ChatService.getByID(this.chatID);
+            chat = await this.chatService.getByID(this.chatID);
             if (!chat)
                 throw new Error("chat not found");
 
-            this.model.offer = await OfferService.getByID(chat.offerID);
+            this.model.offer = await this.offerService.getByID(chat.offerID);
             if (!this.model.offer)
                 throw new Error("offer not found");
 
-            this.model.seller = await UserService.getByID(this.model.offer.sellerID!);
+            this.model.seller = await this.userService.getByID(this.model.offer.sellerID!);
             if (!this.model.seller)
                 throw new Error("seller not found");
 
@@ -83,14 +84,14 @@ export default class OfferChatPageController {
         const form = event.target as HTMLFormElement;
         const formData: FormData = new FormData(form);
         const message = formData.get("message") as string;
-        await ChatService.sendMessage(this.chatID!, message, this.currentUser);
+        await this.chatService.sendMessage(this.chatID!, message, this.currentUser);
         form.reset();
     }
 
     private async keepUpdated(): Promise<void> {
-        let newChat: Chat;
+        let newChat: IChat;
         try {
-            newChat = await ChatService.getByID(this.chatID!);
+            newChat = await this.chatService.getByID(this.chatID!);
         } catch (error) {
             console.error(`Error updating chat: ${error}`);
         }

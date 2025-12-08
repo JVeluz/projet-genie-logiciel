@@ -1,8 +1,8 @@
+import IUser from "shared/src/interfaces/IUser";
 import UserEditPageController from "../controllers/UserEditPageController";
 import UserEditForm from "../elements/UserEditForm";
 import UserElement from "../elements/UserElement";
 import HTML from "../html/user-edit-page.html";
-import User from "../models/User";
 
 export default class UserEditPage extends HTMLElement {
 
@@ -18,11 +18,11 @@ export default class UserEditPage extends HTMLElement {
         new UserEditPageController(this, this.form);
     }
 
-    public updateForm(user: User): void {
+    public updateForm(user: IUser): void {
         this.form.update(user);
     }
 
-    public updatePreview(user: User): void {
+    public updatePreview(user: IUser): void {
         this.preview.update(user);
     }
 }
