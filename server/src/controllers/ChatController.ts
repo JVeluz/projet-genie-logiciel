@@ -4,7 +4,7 @@ import ChatService from "../services/ChatService";
 export default class ChatController {
 
     public constructor(
-        private chatService: ChatService
+        private chatService = new ChatService()
     ) { }
 
     public getById = async (request: Request, response: Response): Promise<Response> => {

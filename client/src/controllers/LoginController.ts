@@ -25,11 +25,11 @@ export default class LoginController {
         this.application.user.set(user);
         this.application.token.set(token);
 
-        // if (window.location.pathname === "/login") {
-        //     window.location.href = "/";
-        // } else {
-        //     window.location.reload();
-        // }
+        if (window.location.pathname === "/login") {
+            window.location.href = "/";
+        } else {
+            window.location.reload();
+        }
     }
 
     public onLogout(event: Event): void {

@@ -12,7 +12,7 @@ export default class ChatMapper {
     private static toDomainMessage(raw: any) {
         return {
             ...raw,
-            createdAt: new Date(raw.createdAt),
+            timestamp: new Date(raw.timestamp),
         };
     }
 }

@@ -4,7 +4,7 @@ import ChatRepository from "../repositories/ChatRepository";
 export default class ChatService {
 
     public constructor(
-        private chatRepository: ChatRepository
+        private chatRepository = new ChatRepository()
     ) { }
 
     public async getById(id: string): Promise<IChat> {

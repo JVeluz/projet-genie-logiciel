@@ -36,7 +36,7 @@ export default class OfferCreatePageController {
         try {
             newOffer = await this.offerService.create(this.offer as IOffer, currentUser);
         } catch (error) {
-            alert((error as Error).message);
+            console.error(error);
             return;
         }
         currentUser.offers.push(newOffer);

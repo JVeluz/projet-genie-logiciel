@@ -6,7 +6,7 @@ import { IUserDocument } from "../models/User";
 export default class UserService {
 
     public constructor(
-        private userRepository: UserRepository
+        private userRepository = new UserRepository()
     ) { }
 
     public async getById(id: string): Promise<Partial<IUser>> {

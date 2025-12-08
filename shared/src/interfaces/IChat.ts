@@ -1,10 +1,13 @@
+import IOffer from "./IOffer";
+import IUser from "./IUser";
+
 export default interface IChat {
     _id: string;
-    offerID: string;
-    buyerID: string;
-    sellerID: string;
+    offerID: IOffer;
+    buyerID: IUser;
+    sellerID: IUser;
     messages: {
-        senderID: string;
+        sender: IUser;
         content: string;
         timestamp: Date;
     }[];

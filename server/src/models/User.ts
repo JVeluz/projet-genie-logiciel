@@ -1,9 +1,9 @@
 import IUser from "shared/src/interfaces/IUser";
-import { Document, Schema, model } from "mongoose";
+import { Schema, model, Document } from "mongoose";
 import bcrypt from "bcryptjs";
-import { Offer, offerSchema } from "./Offer";
 
-export interface IUserDocument extends IUser {
+export interface IUserDocument extends IUser, Document {
+    _id: string;
     comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
@@ -18,31 +18,28 @@ const userSchema = new Schema<IUserDocument>({
     avatar: { type: String },
     location: { type: String },
 
-    offers: [offerSchema],
+    offers: [{ type: Schema.Types.ObjectId as any, ref: "Offer", default: [] }],
 });
 
 userSchema.pre("save", async function (next) {
-    const user = this;
-
-    if (user.isModified("password") === false)
-        return next();
+    if (!this.isModified("password")) return next();
 
     try {
-        // (une chaîne aléatoire pour renforcer le hachage)
-        const salt = await bcrypt.genSalt(10); // (force du hachage)
-        const hash = await bcrypt.hash(user.password, salt);
-        user.password = hash;
+        const salt = await bcrypt.genSalt(10);
+        this.password = await bcrypt.hash(this.password, salt);
         next();
     } catch (error: any) {
         return next(error);
     }
 });
 
-userSchema.post("findOneAndDelete", async function (user: IUser) {
+userSchema.post("findOneAndDelete", async function (doc) {
+    if (!doc) return;
     try {
-        await Offer.deleteMany({ sellerID: user._id });
+        // ASTUCE CIRCULAIRE : On appelle le modèle par son nom string
+        await model("Offer").deleteMany({ sellerID: doc._id });
     } catch (error) {
-        throw Error("Error deleting user offers");
+        console.error("Error deleting user offers", error);
     }
 });
 

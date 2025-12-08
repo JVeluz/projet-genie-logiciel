@@ -4,7 +4,7 @@ import UserService from "../services/UserService";
 export default class UserController {
 
     public constructor(
-        private userService: UserService
+        private userService = new UserService()
     ) { }
 
     public getById = async (request: Request, response: Response): Promise<Response> => {

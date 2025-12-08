@@ -45,7 +45,7 @@ export default class OfferEditPageController {
             return;
         }
         // Conditions
-        if (this.offer.sellerID !== this.currentUser._id) {
+        if (this.offer.sellerID?._id !== this.currentUser._id) {
             console.error("OfferEditPage: current user is not the seller of this offer");
             return;
         }

@@ -7,7 +7,7 @@ import OfferElement from "../elements/OfferElement";
 import UserElement from "../elements/UserElement";
 import OfferService from "../services/OfferService";
 import UserService from "../services/UserService";
-import ChatService from "../services/ChatService";
+import ChatService, { ChatSummaryDTO } from "../services/ChatService";
 import { WithLoading } from "./decorators";
 
 export default class OfferPageController {
@@ -16,7 +16,6 @@ export default class OfferPageController {
     private userService = new UserService();
     private chatService = new ChatService();
     private offerService = new OfferService();
-
     // URL Parameters
     private urlParams: URLSearchParams = new URLSearchParams(window.location.search);
     private offerID: string | null = this.urlParams.get("id");
@@ -39,61 +38,43 @@ export default class OfferPageController {
 
     @WithLoading()
     public async initialize(): Promise<void> {
-        // URL Parameters
-        if (!this.offerID) {
-            console.error("Offer ID is missing in URL parameters.");
-            return;
-        }
+        if (!this.offerID) return;
 
-        // Fetching Data
-        let offer: IOffer
         try {
-            offer = await this.offerService.getByID(this.offerID);
-        } catch (error) {
-            console.error("Error fetching offer data:", error);
-            return;
-        }
+            const offer = await this.offerService.getByID(this.offerID);
 
-        let seller: IUser;
-        try {
-            seller = await this.userService.getByID(offer.sellerID);
-        } catch (error) {
-            console.error("Error fetching seller data:", error);
-            return;
-        }
+            const seller = await this.userService.getByID(
+                typeof offer.sellerID === 'string' ? offer.sellerID : offer.sellerID._id
+            );
 
-        let chats: IChat[] = [];
-        let buyers: IUser[] = [];
-        for (const chatID of offer.chatIDs) {
-            try {
-                const chat: IChat = await this.chatService.getByID(chatID);
-                const buyer: IUser = await this.userService.getByID(chat.buyerID);
-                buyers.push(buyer);
-                chats.push(chat);
-            } catch (error) {
-                console.error(`Error fetching chat data for chat ID ${chatID}:`, error);
+            const currentUser = this.application.user.get();
+
+            const isMine = this.offerService.isOwner(offer, currentUser);
+
+            let chatDTOs: ChatSummaryDTO[] = [];
+            if (offer.chatIDs.length > 0) {
+                chatDTOs = await this.chatService.getSummaries(offer.chatIDs as unknown as IChat[]);
             }
-        }
 
-        // Updating Model
-        this.model.offerID = this.offerID;
-        const currentUser: IUser | null = this.application.user.get();
-        this.model.isUserLoggedIn = currentUser !== null;
-        if (currentUser) {
-            this.model.isOfferMine = currentUser.offers.some(offer => offer._id === this.offerID);
-            for (let i = 0; i < chats.length; i++) {
-                const chat: IChat = chats[i];
-                const buyer: IUser = buyers[i];
-                const lastMessage: string = (chat.messages.length > 0) ?
-                    chat.messages[chat.messages.length - 1].content : "";
-                const chatPreview: ChatPreview = {
-                    id: chat._id, buyerName: buyer.name, lastMessage: lastMessage
-                };
-                this.model.chats.push(chatPreview);
-            }
+            const chatPreviews: ChatPreview[] = chatDTOs.filter(dto => isMine || dto.buyerID === currentUser?._id).map(dto => ({
+                id: dto.id,
+                buyerName: dto.buyerName,
+                lastMessage: dto.lastMessage
+            }));
+
+            this.model = {
+                offerID: this.offerID,
+                isUserLoggedIn: !!currentUser,
+                isOfferMine: isMine,
+                chats: chatPreviews
+            };
+
+            this.page.update(this.model);
+            this.offerElement.update(offer);
+            this.userElement.update(seller);
+
+        } catch (error) {
+            console.error("Error initializing page:", error);
         }
-        this.page.update(this.model);
-        this.offerElement.update(offer);
-        this.userElement.update(seller);
     }
 }

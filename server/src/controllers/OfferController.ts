@@ -4,7 +4,7 @@ import OfferService from "../services/OfferService";
 export default class OfferController {
 
     public constructor(
-        private offerService: OfferService
+        private offerService = new OfferService()
     ) { }
 
     public getAll = async (request: Request, response: Response): Promise<Response> => {

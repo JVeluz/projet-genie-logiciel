@@ -50,7 +50,7 @@ export default class OfferPage extends HTMLElement {
 
         editButton.href = `/offer/edit?id=${model.offerID}`;
         editButton.style.display = model.isOfferMine ? "block" : "none";
-        chatListCard.style.display = (model.isOfferMine && model.chats.length > 0) ? "block" : "none";
+        chatListCard.style.display = model.chats.length > 0 ? "block" : "none";
         tradeCard.style.display = (model.isUserLoggedIn && !model.isOfferMine) ? "block" : "none";
 
         (newChatForm as any).offerID = model.offerID;

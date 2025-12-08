@@ -17,7 +17,7 @@ export default class OfferService {
     }
 
     public async create(offer: IOffer, currentUser: IUser): Promise<IOffer> {
-        offer.sellerID = currentUser._id;
+        offer.sellerID = currentUser;
         return await this.offerRepository.create(offer as IOffer);
     }
 
@@ -27,5 +27,11 @@ export default class OfferService {
 
     public async delete(offer: IOffer): Promise<void> {
         return await this.offerRepository.delete(offer._id);
+    }
+
+    public isOwner(offer: IOffer, user: IUser | null): boolean {
+        if (!user) return false;
+        const sellerId = typeof offer.sellerID === 'string' ? offer.sellerID : offer.sellerID._id;
+        return sellerId === user._id;
     }
 }

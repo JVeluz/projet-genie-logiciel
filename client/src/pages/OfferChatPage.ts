@@ -44,8 +44,6 @@ export default class OfferChatPage extends HTMLElement {
     }
 
     public create(model: OfferChatPageModel): void {
-        console.log(model);
-
         const offerElement: OfferElement = this.querySelector("offer-element") as OfferElement;
         const sellerElement: UserElement = this.querySelector(".offer-seller") as UserElement;
 
@@ -66,6 +64,7 @@ export default class OfferChatPage extends HTMLElement {
             messageTime.textContent = message.timestamp.toLocaleString();
             chatBox.appendChild(messageElement);
         }
+        chatBox.scrollTop = chatBox.scrollHeight;
     }
 
     public update(messages: Message[]): void {

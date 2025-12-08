@@ -1,3 +1,6 @@
+import IChat from "./IChat";
+import IUser from "./IUser";
+
 export default interface IOffer {
     _id: string;
     title?: string;
@@ -11,6 +14,6 @@ export default interface IOffer {
     location?: string;
     pictures?: string[];
 
-    sellerID: string;
-    chatIDs: string[];
+    sellerID: IUser;
+    chatIDs: IChat[];
 }

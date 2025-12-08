@@ -1,6 +1,6 @@
 import IChat from "shared/src/interfaces/IChat";
 import Application from "../models/Application";
-import OfferChatPage, { OfferChatPageModel } from "../pages/OfferChatPage";
+import OfferChatPage, { Message, OfferChatPageModel } from "../pages/OfferChatPage";
 import ChatService from "../services/ChatService";
 import OfferService from "../services/OfferService";
 import UserService from "../services/UserService";
@@ -45,11 +45,11 @@ export default class OfferChatPageController {
             if (!chat)
                 throw new Error("chat not found");
 
-            this.model.offer = await this.offerService.getByID(chat.offerID);
+            this.model.offer = await this.offerService.getByID(chat.offerID._id);
             if (!this.model.offer)
                 throw new Error("offer not found");
 
-            this.model.seller = await this.userService.getByID(this.model.offer.sellerID!);
+            this.model.seller = await this.userService.getByID(this.model.offer.sellerID?._id!);
             if (!this.model.seller)
                 throw new Error("seller not found");
 
@@ -59,10 +59,15 @@ export default class OfferChatPageController {
         }
 
         // Processing data
+        console.log(chat);
+
         for (let i = 0; i < chat.messages.length; i++) {
             const message = chat.messages[i];
             this.model.messages.push({
-                isMine: message.senderID === this.currentUser._id,
+                isMine: message.sender ?
+                    message.sender._id === this.currentUser._id
+                    :
+                    (message as any).senderID === this.currentUser._id,
                 content: message.content,
                 timestamp: message.timestamp
             });
@@ -83,8 +88,15 @@ export default class OfferChatPageController {
         event.preventDefault();
         const form = event.target as HTMLFormElement;
         const formData: FormData = new FormData(form);
-        const message = formData.get("message") as string;
-        await this.chatService.sendMessage(this.chatID!, message, this.currentUser);
+        const content = formData.get("message") as string;
+        await this.chatService.sendMessage(this.chatID!, content, this.currentUser);
+        const message: Message = {
+            content,
+            isMine: true,
+            timestamp: new Date()
+        }
+        this.view.update([message]);
+        this.model.messages.push(message);
         form.reset();
     }
 
@@ -99,10 +111,13 @@ export default class OfferChatPageController {
         const oldMessagesCount = this.model.messages.length;
         const newMessagesCount = newChat!.messages.length;
 
-        const newMessages = newChat!.messages.map(msg => ({
-            isMine: msg.senderID === this.currentUser._id,
-            content: msg.content,
-            timestamp: msg.timestamp
+        const newMessages = newChat!.messages.map(message => ({
+            isMine: message.sender ?
+                message.sender._id === this.currentUser._id
+                :
+                (message as any).senderID === this.currentUser._id,
+            content: message.content,
+            timestamp: message.timestamp
         }));
 
         if (newMessagesCount > oldMessagesCount) {

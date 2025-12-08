@@ -4,19 +4,27 @@ import { User, IUserDocument } from "../models/User";
 export default class UserRepository {
 
     public async findAll(): Promise<IUserDocument[]> {
-        return User.find().exec();
+        return User.find()
+            .populate("offers")
+            .exec();
     }
 
     public async findById(id: string): Promise<IUserDocument | null> {
-        return User.findById(id).exec();
+        return User.findById(id)
+            .populate("offers")
+            .exec();
     }
 
     public async findByEmail(email: string): Promise<IUserDocument | null> {
-        return User.findOne({ email }).exec();
+        return User.findOne({ email })
+            .populate("offers")
+            .exec();
     }
 
     public async findByEmailWithPassword(email: string): Promise<IUserDocument | null> {
-        return User.findOne({ email }).select('+password').exec();
+        return User.findOne({ email })
+            .select('+password')
+            .exec();
     }
 
     public async create(userData: IUser): Promise<IUserDocument> {
@@ -27,6 +35,8 @@ export default class UserRepository {
     public async update(id: string, updateData: Partial<IUser>): Promise<IUserDocument | null> {
         return User.findByIdAndUpdate(
             id, updateData, { new: true }
-        ).exec();
+        )
+            .populate("offers")
+            .exec();
     }
 }

@@ -4,7 +4,7 @@ import OfferRepository from "../repositories/OfferRepository";
 export default class OfferService {
 
     public constructor(
-        private offerRepository: OfferRepository
+        private offerRepository = new OfferRepository()
     ) { }
 
     public async getAll(): Promise<any[]> {
@@ -37,6 +37,6 @@ export default class OfferService {
         const offer = await this.offerRepository.findById(id);
         if (!offer)
             throw new Error("Offer not found");
-        return this.offerRepository.delete(id);
+        await this.offerRepository.delete(id);
     }
 }
