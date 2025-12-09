@@ -1,4 +1,4 @@
-import IOffer from "shared/src/interfaces/IOffer";
+import { IOffer } from "shared";
 
 export default class OfferForm extends HTMLFormElement {
 

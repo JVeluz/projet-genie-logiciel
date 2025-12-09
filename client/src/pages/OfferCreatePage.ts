@@ -1,4 +1,4 @@
-import IOffer from "shared/src/interfaces/IOffer";
+import { IOffer } from "shared";
 import OfferCreatePageController from "../controllers/OfferCreatePageController";
 import OfferElement from "../elements/OfferElement";
 import OfferForm from "../elements/OfferForm";

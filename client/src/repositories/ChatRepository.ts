@@ -1,4 +1,4 @@
-import IChat from "shared/src/interfaces/IChat";
+import { IChat } from "shared";
 import ServerAPI from "../ServerAPI";
 import ChatMapper from "../mappers/ChatMapper";
 

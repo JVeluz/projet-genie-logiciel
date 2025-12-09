@@ -1,4 +1,4 @@
-import IUser from "shared/src/interfaces/IUser";
+import { IUser } from "shared";
 import Application from "../models/Application";
 import UserService from "../services/UserService";
 

@@ -1,4 +1,4 @@
-import IChat from "shared/src/interfaces/IChat";
+import { IChat } from "shared";
 
 export default class ChatMapper {
 

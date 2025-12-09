@@ -1,4 +1,4 @@
-import IChat from "shared/src/interfaces/IChat";
+import { IChat } from "shared";
 import Application from "../models/Application";
 import OfferChatPage, { Message, OfferChatPageModel } from "../pages/OfferChatPage";
 import ChatService from "../services/ChatService";

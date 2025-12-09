@@ -1,5 +1,4 @@
-import IOffer from "shared/src/interfaces/IOffer";
-import IUser from "shared/src/interfaces/IUser";
+import { IOffer, IUser } from "shared";
 import OfferChatPageController from "../controllers/OfferChatPageController";
 import HTML from "../html/offer-chat-page.html";
 import HTMLLoader from "../html/HTMLLoader";

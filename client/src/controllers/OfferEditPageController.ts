@@ -1,5 +1,4 @@
-import IOffer from "shared/src/interfaces/IOffer";
-import IUser from "shared/src/interfaces/IUser";
+import { IUser, IOffer } from "shared";
 import Application from "../models/Application";
 import OfferElement from "../elements/OfferElement";
 import OfferForm from "../elements/OfferForm";

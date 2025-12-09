@@ -1,6 +1,4 @@
-import IOffer from "shared/src/interfaces/IOffer";
-import IUser from "shared/src/interfaces/IUser";
-import IChat from "shared/src/interfaces/IChat";
+import { IChat } from "shared";
 import Application from "../models/Application";
 import OfferPage, { ChatPreview, OfferPageModel } from "../pages/OfferPage";
 import OfferElement from "../elements/OfferElement";

@@ -1,7 +1,6 @@
-import IUser from "shared/src/interfaces/IUser";
+import { IUser, IChat } from "shared";
 import Application from "../models/Application";
 import ChatService from "../services/ChatService";
-import IChat from "shared/src/interfaces/IChat";
 
 export default class NewChatForm extends HTMLFormElement {
 

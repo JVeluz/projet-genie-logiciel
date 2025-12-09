@@ -1,5 +1,4 @@
-import IOffer from "shared/src/interfaces/IOffer";
-import IUser from "shared/src/interfaces/IUser";
+import { IOffer, IUser } from "shared";
 import OfferRepository from "../repositories/OfferRepository";
 
 export default class OfferService {

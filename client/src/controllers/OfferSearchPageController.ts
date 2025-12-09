@@ -1,4 +1,4 @@
-import IOffer from "shared/src/interfaces/IOffer";
+import { IOffer } from "shared";
 import OfferSearchPage from "../pages/OfferSearchPage";
 import Application from "../models/Application";
 import OfferService from "../services/OfferService";

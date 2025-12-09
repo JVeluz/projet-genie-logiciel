@@ -1,4 +1,4 @@
-import IUser from "shared/src/interfaces/IUser";
+import { IUser } from "shared";
 
 export default class UserEditForm extends HTMLFormElement {
 

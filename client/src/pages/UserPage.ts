@@ -1,4 +1,4 @@
-import IUser from "shared/src/interfaces/IUser";
+import { IUser } from "shared";
 import HTML from "../html/user-page.html";
 import OfferCardHTML from "../html/offer-card.html";
 import UserPageController from "../controllers/UserPageController";

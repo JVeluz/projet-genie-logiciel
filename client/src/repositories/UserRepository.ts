@@ -1,4 +1,4 @@
-import IUser from "shared/src/interfaces/IUser";
+import { IUser } from "shared";
 import ServerAPI from "../ServerAPI";
 import UserMapper from "../mappers/UserMapper";
 

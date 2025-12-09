@@ -1,4 +1,4 @@
-import IUser from "shared/src/interfaces/IUser";
+import { IUser } from "shared";
 import NavbarController from "../controllers/NavbarController";
 import HTML from "../html/navbar-element.html";
 import UserElement from "../elements/UserElement";

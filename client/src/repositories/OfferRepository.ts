@@ -1,4 +1,4 @@
-import IOffer from "shared/src/interfaces/IOffer";
+import { IOffer } from "shared";
 import ServerAPI from "../ServerAPI";
 import OfferMapper from "../mappers/OfferMapper";
 

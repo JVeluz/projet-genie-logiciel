@@ -1,5 +1,4 @@
-import IChat from "shared/src/interfaces/IChat";
-import IUser from "shared/src/interfaces/IUser";
+import { IChat, IUser } from "shared";
 import ChatRepository from "../repositories/ChatRepository";
 import UserService from "./UserService";
 

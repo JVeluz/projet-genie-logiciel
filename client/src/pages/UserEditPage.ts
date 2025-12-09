@@ -1,4 +1,4 @@
-import IUser from "shared/src/interfaces/IUser";
+import { IUser } from "shared";
 import UserEditPageController from "../controllers/UserEditPageController";
 import UserEditForm from "../elements/UserEditForm";
 import UserElement from "../elements/UserElement";

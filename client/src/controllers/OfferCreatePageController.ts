@@ -1,10 +1,9 @@
-import IOffer from "shared/src/interfaces/IOffer";
+import { IOffer, IUser } from "shared";
 import OfferForm from "../elements/OfferForm";
 import Application from "../models/Application";
 import OfferCreatePage from "../pages/OfferCreatePage";
 import OfferService from "../services/OfferService";
 import { WithLoading } from "./decorators";
-import IUser from "shared/src/interfaces/IUser";
 
 export default class OfferCreatePageController {
 
