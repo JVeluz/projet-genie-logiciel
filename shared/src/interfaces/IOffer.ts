@@ -1,7 +1,8 @@
-import IChat from "./IChat";
-import IUser from "./IUser";
+import { OfferStatus } from "../enums/OfferStatus";
+import { IChat } from "./IChat";
+import { IUser } from "./IUser";
 
-export default interface IOffer {
+export interface IOffer {
     _id: string;
     title?: string;
     description?: string;
@@ -16,4 +17,7 @@ export default interface IOffer {
 
     sellerID: IUser;
     chatIDs: IChat[];
+
+    status: OfferStatus;
+    reservedTo: string;
 }

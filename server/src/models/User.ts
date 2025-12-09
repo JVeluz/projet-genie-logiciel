@@ -1,4 +1,4 @@
-import IUser from "shared/src/interfaces/IUser";
+import { IUser } from "shared";
 import { Schema, model, Document } from "mongoose";
 import bcrypt from "bcryptjs";
 

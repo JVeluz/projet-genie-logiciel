@@ -1,17 +1,17 @@
 export default class Observable<T> {
-    private _value: T;
+    private value: T;
     private observers: Array<(value: T) => void> = [];
 
     constructor(value: T) {
-        this._value = value;
+        this.value = value;
     }
 
     public get(): T {
-        return this._value;
+        return this.value;
     }
 
     public set(newValue: T) {
-        this._value = newValue;
+        this.value = newValue;
         this.notifyObservers();
     }
 
@@ -19,9 +19,13 @@ export default class Observable<T> {
         this.observers.push(observer);
     }
 
+    public removeObserver(observer: (value: T) => void): void {
+        this.observers.filter(o => o !== observer);
+    }
+
     private notifyObservers(): void {
         for (const observer of this.observers) {
-            observer(this._value);
+            observer(this.value);
         }
     }
 }

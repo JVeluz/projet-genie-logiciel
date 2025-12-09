@@ -1,5 +1,4 @@
 export default class Storagable<T> {
-
     private key: string;
 
     constructor(key: string, defaultValue: T) {
@@ -11,9 +10,8 @@ export default class Storagable<T> {
 
     public get(): T | null {
         const item = localStorage.getItem(this.key);
-        if (item === null) {
+        if (item === null)
             return null;
-        }
         return JSON.parse(item) as T;
     }
 
@@ -23,6 +21,5 @@ export default class Storagable<T> {
         } else {
             localStorage.setItem(this.key, JSON.stringify(value));
         }
-        console.log(localStorage);
     }
 }

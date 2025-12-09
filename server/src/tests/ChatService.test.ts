@@ -1,6 +1,5 @@
 import assert from "node:assert";
 import ChatService from "../services/ChatService";
-import IChat from "shared/src/interfaces/IChat";
 
 class MockChatRepository {
     public db: any[] = [];

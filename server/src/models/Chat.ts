@@ -1,4 +1,4 @@
-import IChat from "shared/src/interfaces/IChat";
+import { IChat } from "shared";
 import { model, Schema } from "mongoose";
 
 export const chatSchema = new Schema<IChat>({

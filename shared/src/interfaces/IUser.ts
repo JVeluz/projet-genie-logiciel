@@ -1,6 +1,6 @@
-import IOffer from "./IOffer";
+import { IOffer } from "./IOffer";
 
-export default interface IUser {
+export interface IUser {
     _id: string;
     name: string;
     email: string;

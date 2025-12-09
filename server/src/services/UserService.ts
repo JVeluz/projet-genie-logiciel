@@ -1,4 +1,4 @@
-import IUser from "shared/src/interfaces/IUser";
+import { IUser } from "shared";
 import UserRepository from "../repositories/UserRepository";
 import jwt from "jsonwebtoken";
 import { IUserDocument } from "../models/User";

@@ -1,5 +1,5 @@
-import IOffer from "shared/src/interfaces/IOffer";
 import { Schema, model } from "mongoose";
+import { IOffer, OfferStatus } from "shared";
 
 export const offerSchema = new Schema<IOffer>({
     title: { type: String, required: true },
@@ -13,6 +13,10 @@ export const offerSchema = new Schema<IOffer>({
 
     sellerID: { type: Schema.Types.ObjectId as any, ref: "User", required: true },
     chatIDs: [{ type: Schema.Types.ObjectId as any, ref: "Chat", default: [] }],
+
+    status: { type: String, enum: Object.values(OfferStatus), default: OfferStatus.AVAILABLE },
+
+    reservedTo: { type: Schema.Types.ObjectId as any, ref: "User", default: null }
 });
 
 offerSchema.post("save", async function (offer, next) {
@@ -33,7 +37,7 @@ offerSchema.post("findOneAndDelete", async function (offer) {
         await model("Chat").deleteMany({ _id: { $in: offer.chatIDs } });
         await model("User").updateOne(
             { _id: offer.sellerID },
-            { $pull: { offers: offer._id } } // ON RETIRE L'ID
+            { $pull: { offers: offer._id } }
         );
     } catch (error) {
         console.error("Error cleaning up offer dependencies", error);

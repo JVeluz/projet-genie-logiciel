@@ -1,6 +1,6 @@
+import { IUser } from "shared";
 import assert from "node:assert";
 import UserService from "../services/UserService";
-import IUser from "shared/src/interfaces/IUser";
 
 class MockUserRepository {
     private db: any[] = [];

@@ -1,6 +1,6 @@
 import assert from "node:assert";
+import { IOffer } from "shared";
 import OfferService from "../services/OfferService";
-import IOffer from "shared/src/interfaces/IOffer";
 
 class MockOfferRepository {
     private db: any[] = [];

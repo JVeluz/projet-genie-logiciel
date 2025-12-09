@@ -1,5 +1,5 @@
+import { IOffer } from "shared";
 import { Offer } from "../models/Offer";
-import IOffer from "shared/src/interfaces/IOffer";
 
 export default class OfferRepository {
 
@@ -38,9 +38,7 @@ export default class OfferRepository {
 
     public async update(updateData: Partial<IOffer> & { _id: string }): Promise<IOffer | null> {
         return Offer.findByIdAndUpdate(
-            updateData._id,
-            updateData,
-            { new: true }
+            updateData._id, updateData, { new: true }
         )
             .populate("sellerID")
             .exec();

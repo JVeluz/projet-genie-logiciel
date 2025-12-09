@@ -1,4 +1,4 @@
-import IOffer from "shared/src/interfaces/IOffer";
+import { IOffer, OfferStatus } from "shared";
 import OfferRepository from "../repositories/OfferRepository";
 
 export default class OfferService {
@@ -38,5 +38,56 @@ export default class OfferService {
         if (!offer)
             throw new Error("Offer not found");
         await this.offerRepository.delete(id);
+    }
+
+    public async reserve(offerID: string, sellerID: string, candidateBuyerID: string): Promise<void> {
+        const offer = await this.offerRepository.findById(offerID);
+        if (!offer) throw new Error("Offer not found");
+
+        if (offer.sellerID._id.toString() !== sellerID)
+            throw new Error("Unauthorized");
+        if (offer.status !== OfferStatus.AVAILABLE)
+            throw new Error("Offer is not available");
+
+        await this.offerRepository.update({
+            _id: offerID,
+            status: OfferStatus.PENDING,
+            reservedTo: candidateBuyerID
+        });
+    }
+
+    public async confirm(offerID: string, buyerID: string): Promise<void> {
+        const offer = await this.offerRepository.findById(offerID);
+        if (!offer)
+            throw new Error("Offer not found");
+
+        if (offer.status !== OfferStatus.PENDING)
+            throw new Error("Offer is not pending validation");
+
+        if (offer.reservedTo !== buyerID)
+            throw new Error("This offer is reserved to someone else");
+
+        await this.offerRepository.update({
+            _id: offerID,
+            status: OfferStatus.EXCHANGED
+        });
+    }
+
+    public async cancel(offerID: string, userID: string): Promise<void> {
+        const offer = await this.offerRepository.findById(offerID);
+        if (!offer)
+            throw new Error("Offer not found");
+
+        if (offer.status === OfferStatus.AVAILABLE)
+            return;
+
+        if (offer.sellerID._id !== userID && offer.reservedTo !== userID)
+            throw new Error("Unauthorized to cancel this offer");
+
+        await this.offerRepository.update({
+            _id: offerID,
+            status: OfferStatus.AVAILABLE,
+            reservedTo: ""
+        });
     }
 }

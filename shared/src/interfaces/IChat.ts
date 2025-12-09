@@ -1,7 +1,7 @@
-import IOffer from "./IOffer";
-import IUser from "./IUser";
+import { IOffer } from "./IOffer";
+import { IUser } from "./IUser";
 
-export default interface IChat {
+export interface IChat {
     _id: string;
     offerID: IOffer;
     buyerID: IUser;

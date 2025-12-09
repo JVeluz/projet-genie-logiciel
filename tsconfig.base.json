@@ -8,11 +8,5 @@
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
         "experimentalDecorators": true,
-        "baseUrl": "./",
-        "paths": {
-            "@shared/*": [
-                "packages/shared/*"
-            ]
-        }
     }
 }
