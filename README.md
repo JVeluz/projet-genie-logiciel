@@ -1,11 +1,11 @@
-# LesBonBails – Plateforme d'Échange Local  
+# LesBonsBails – Plateforme d'Échange Local  
 
 **Cours : Génie Logiciel**
 
 **Auteur : VELUZ Jesse (592040)**
 
-
-Ce dépôt contient le code source du projet de synthèse **LesBonBails**, une application web permettant l’échange de biens et de compétences entre particuliers.
+Ce dépôt contient le code source du projet de synthèse **LesBonsBails**, une application web permettant l’échange de biens et de compétences entre particuliers.  
+Le site est déployé à l’adresse suivante : **https://les-bons-bails.onrender.com**
 
 ---
 
@@ -65,4 +65,3 @@ Pour exécuter les tests unitaires du backend :
 cd server
 npm test
 ```
-
