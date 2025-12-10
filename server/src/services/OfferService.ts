@@ -40,14 +40,12 @@ export default class OfferService {
         await this.offerRepository.delete(id);
     }
 
-    public async reserve(offerID: string, sellerID: string, candidateBuyerID: string): Promise<void> {
+    public async reserve(offerID: string, candidateBuyerID: string): Promise<void> {
         const offer = await this.offerRepository.findById(offerID);
         if (!offer) throw new Error("Offer not found");
 
-        if (offer.sellerID._id.toString() !== sellerID)
-            throw new Error("Unauthorized");
         if (offer.status !== OfferStatus.AVAILABLE)
-            throw new Error("Offer is not available");
+            throw new Error("Offer is not available (already reserved or exchanged)");
 
         await this.offerRepository.update({
             _id: offerID,
@@ -56,16 +54,16 @@ export default class OfferService {
         });
     }
 
-    public async confirm(offerID: string, buyerID: string): Promise<void> {
+    public async confirm(offerID: string, sellerID: string): Promise<void> {
         const offer = await this.offerRepository.findById(offerID);
-        if (!offer)
-            throw new Error("Offer not found");
+        if (!offer) throw new Error("Offer not found");
+
+        if (offer.sellerID._id != sellerID) {
+            throw new Error("Unauthorized: Only the seller can confirm the exchange");
+        }
 
         if (offer.status !== OfferStatus.PENDING)
-            throw new Error("Offer is not pending validation");
-
-        if (offer.reservedTo !== buyerID)
-            throw new Error("This offer is reserved to someone else");
+            throw new Error("Cannot confirm: Offer is not pending validation");
 
         await this.offerRepository.update({
             _id: offerID,
@@ -73,21 +71,23 @@ export default class OfferService {
         });
     }
 
-    public async cancel(offerID: string, userID: string): Promise<void> {
+    public async cancel(offerID: string, actionUserID: string): Promise<void> {
         const offer = await this.offerRepository.findById(offerID);
-        if (!offer)
-            throw new Error("Offer not found");
+        if (!offer) throw new Error("Offer not found");
 
-        if (offer.status === OfferStatus.AVAILABLE)
-            return;
+        if (offer.status === OfferStatus.AVAILABLE) return;
 
-        if (offer.sellerID._id !== userID && offer.reservedTo !== userID)
+        const isSeller = offer.sellerID._id == actionUserID;
+        const isBuyer = offer.reservedTo == actionUserID;
+
+        if (!isSeller && !isBuyer) {
             throw new Error("Unauthorized to cancel this offer");
+        }
 
         await this.offerRepository.update({
             _id: offerID,
             status: OfferStatus.AVAILABLE,
-            reservedTo: ""
+            reservedTo: null as any
         });
     }
 }

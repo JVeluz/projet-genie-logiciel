@@ -64,7 +64,7 @@ export default class UserService {
 
     private generateToken(user: IUserDocument): string {
         return jwt.sign(
-            { userId: user._id, email: user.email }, process.env.JWT_SECRET!, { expiresIn: '1h' }
+            { userID: user._id, email: user.email }, process.env.JWT_SECRET!, { expiresIn: '1h' }
         );
     }
 

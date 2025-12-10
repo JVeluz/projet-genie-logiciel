@@ -26,4 +26,21 @@ export default class IOfferRepository {
     public async delete(offerID: string): Promise<void> {
         await ServerAPI.delete(`/offers/${offerID}`);
     }
+
+    public async reserve(offerID: string, candidateBuyerID: string): Promise<void> {
+        const response = await ServerAPI.post(`/offers/${offerID}/reserve`, JSON.stringify({
+            candidateBuyerID
+        }));
+        console.log(response);
+    }
+
+    public async confirm(offerID: string): Promise<void> {
+        const response = await ServerAPI.post(`/offers/${offerID}/confirm`, JSON.stringify({}));
+        console.log(response);
+    }
+
+    public async cancel(offerID: string): Promise<void> {
+        const response = await ServerAPI.post(`/offers/${offerID}/cancel`, JSON.stringify({}));
+        console.log(response);
+    }
 }

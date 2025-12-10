@@ -41,4 +41,38 @@ export default class OfferController {
         await this.offerService.delete(id);
         return response.status(204).send();
     }
+
+    public reserve = async (request: Request, response: Response): Promise<Response> => {
+        const offerID = request.params.id;
+        const { candidateBuyerID } = request.body;
+
+        const currentUserID = request.user?.userID;
+        if (!currentUserID)
+            throw Error("Current session is invalid");
+
+        await this.offerService.reserve(offerID, candidateBuyerID);
+        return response.status(200).json({ message: "Offer reserved" });
+    }
+
+    public confirm = async (request: Request, response: Response): Promise<Response> => {
+        const offerID = request.params.id;
+
+        const currentUserID = request.user?.userID;
+        if (!currentUserID)
+            throw Error("Current session is invalid");
+
+        await this.offerService.confirm(offerID, currentUserID);
+        return response.status(200).json({ message: "Transaction confirmed" });
+    }
+
+    public cancel = async (request: Request, response: Response): Promise<Response> => {
+        const offerID = request.params.id;
+
+        const currentUserID = request.user?.userID;
+        if (!currentUserID)
+            throw Error("Current session is invalid");
+
+        await this.offerService.cancel(offerID, currentUserID);
+        return response.status(200).json({ message: "Transaction cancelled" });
+    }
 }

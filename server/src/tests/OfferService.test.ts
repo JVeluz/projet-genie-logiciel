@@ -1,5 +1,5 @@
 import assert from "node:assert";
-import { IOffer } from "shared";
+import { IOffer, OfferStatus } from "shared";
 import OfferService from "../services/OfferService";
 
 class MockOfferRepository {
@@ -144,6 +144,119 @@ export default class OfferServiceTest {
         } catch (e) { console.error("❌ Search By Terms: ECHEC", e); }
     }
 
+    // 1. Test du flux de Réservation (Succès)
+    private async reserveSuccess() {
+        try {
+            const mockRepo = new MockOfferRepository();
+            const service = new OfferService(mockRepo as any);
+
+            // On crée une offre DISPONIBLE appartenant au vendeur "vendeur_1"
+            const offer = await mockRepo.create({
+                title: "Objet",
+                status: OfferStatus.AVAILABLE,
+                sellerID: { _id: "vendeur_1" } // Simulation de l'objet peuplé
+            } as any);
+
+            // Action : Le vendeur réserve l'offre pour "acheteur_X"
+            await service.reserve(offer._id, "vendeur_1");
+
+            // Vérification
+            const updated = await mockRepo.findById(offer._id);
+            assert.strictEqual(updated.status, OfferStatus.PENDING, "Le statut doit être PENDING");
+            assert.strictEqual(updated.reservedTo, "acheteur_X", "L'offre doit être réservée à acheteur_X");
+
+            console.log("✅ Reserve Success: OK");
+        } catch (e) { console.error("❌ Reserve Success: ECHEC", e); }
+    }
+
+    // 2. Test Réservation Interdite (Mauvais utilisateur)
+    private async reserveUnauthorized() {
+        try {
+            const mockRepo = new MockOfferRepository();
+            const service = new OfferService(mockRepo as any);
+            const offer = await mockRepo.create({
+                status: OfferStatus.AVAILABLE,
+                sellerID: { _id: "vrai_vendeur" }
+            } as any);
+
+            // Action : Un imposteur essaie de réserver
+            await service.reserve(offer._id, "imposteur");
+            throw new Error("Aurait dû échouer");
+        } catch (error: any) {
+            if (error.message === "Unauthorized") console.log("✅ Reserve Unauthorized: OK");
+            else console.error("❌ Reserve Unauthorized: ECHEC", error);
+        }
+    }
+
+    // 3. Test du flux de Confirmation (Succès)
+    private async confirmSuccess() {
+        try {
+            const mockRepo = new MockOfferRepository();
+            const service = new OfferService(mockRepo as any);
+
+            // On crée une offre EN ATTENTE, réservée à "acheteur_X"
+            const offer = await mockRepo.create({
+                status: OfferStatus.PENDING,
+                reservedTo: "acheteur_X",
+                sellerID: { _id: "vendeur_1" }
+            } as any);
+
+            // Action : "acheteur_X" confirme la réception
+            await service.confirm(offer._id, "acheteur_X");
+
+            // Vérification
+            const updated = await mockRepo.findById(offer._id);
+            assert.strictEqual(updated.status, OfferStatus.EXCHANGED, "Le statut doit être EXCHANGED");
+
+            console.log("✅ Confirm Success: OK");
+        } catch (e) { console.error("❌ Confirm Success: ECHEC", e); }
+    }
+
+    // 4. Test Confirmation par le mauvais acheteur
+    private async confirmWrongBuyer() {
+        try {
+            const mockRepo = new MockOfferRepository();
+            const service = new OfferService(mockRepo as any);
+            const offer = await mockRepo.create({
+                status: OfferStatus.PENDING,
+                reservedTo: "acheteur_X", // Réservé à X
+                sellerID: { _id: "v" }
+            } as any);
+
+            // Action : "acheteur_Y" essaie de confirmer (Vol de transaction)
+            await service.confirm(offer._id, "acheteur_Y");
+            throw new Error("Aurait dû échouer");
+        } catch (error: any) {
+            if (error.message.includes("reserved to someone else")) console.log("✅ Confirm Wrong Buyer: OK");
+            else console.error("❌ Confirm Wrong Buyer: ECHEC", error);
+        }
+    }
+
+    // 5. Test Annulation (Retour à Available)
+    private async cancelSuccess() {
+        try {
+            const mockRepo = new MockOfferRepository();
+            const service = new OfferService(mockRepo as any);
+
+            // Offre en cours de transaction
+            const offer = await mockRepo.create({
+                status: OfferStatus.PENDING,
+                reservedTo: "acheteur_X",
+                sellerID: { _id: "vendeur_1" }
+            } as any);
+
+            // Action : Le vendeur annule tout
+            await service.cancel(offer._id, "vendeur_1");
+
+            // Vérification
+            const updated = await mockRepo.findById(offer._id);
+            assert.strictEqual(updated.status, OfferStatus.AVAILABLE, "Doit redevenir AVAILABLE");
+            assert.strictEqual(updated.reservedTo, null, "ReservedTo doit être nettoyé");
+
+            console.log("✅ Cancel Success: OK");
+        } catch (e) { console.error("❌ Cancel Success: ECHEC", e); }
+    }
+
     public async runTests() {
         console.log("🔵 Tests de OfferService...");
         await this.createSuccess();
@@ -153,5 +266,10 @@ export default class OfferServiceTest {
         await this.updateNotFound();
         await this.deleteSuccess();
         await this.searchByTerms();
+        await this.reserveSuccess();
+        await this.reserveUnauthorized();
+        await this.confirmSuccess();
+        await this.confirmWrongBuyer();
+        await this.cancelSuccess();
     }
 }

@@ -33,4 +33,19 @@ export default class OfferService {
         const sellerId = typeof offer.sellerID === 'string' ? offer.sellerID : offer.sellerID._id;
         return sellerId === user._id;
     }
+
+    // Action Vendeur : Réserver l'offre pour un acheteur
+    public async reserve(offerID: string, candidateBuyerID: string): Promise<void> {
+        await this.offerRepository.reserve(offerID, candidateBuyerID);
+    }
+
+    // Action Acheteur : Confirmer la transaction
+    public async confirm(offerID: string): Promise<void> {
+        await this.offerRepository.confirm(offerID);
+    }
+
+    // Action Commune : Annuler
+    public async cancel(offerID: string): Promise<void> {
+        await this.offerRepository.cancel(offerID);
+    }
 }

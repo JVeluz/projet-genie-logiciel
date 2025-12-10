@@ -8,9 +8,9 @@ async function runTests() {
     const chatService = new ChatServiceTest();
 
     console.log("🏁 Début des tests.");
-    // await userService.runTests();
-    // await offerService.runTests();
-    // await chatService.runTests();
+    await userService.runTests();
+    await offerService.runTests();
+    await chatService.runTests();
     console.log("🏁 Fin des tests.");
 }
 

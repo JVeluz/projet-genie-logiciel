@@ -1,6 +1,6 @@
 import Storagable from "./Storagable";
 
-export default class StorgedObservable<T> extends Storagable<T> {
+export default class StoredObservable<T> extends Storagable<T> {
 
     private observers: Array<(value: T | null) => void> = [];
 
@@ -14,7 +14,7 @@ export default class StorgedObservable<T> extends Storagable<T> {
     }
 
     public removeObserver(observer: (value: T | null) => void): void {
-        this.observers.filter(o => o !== observer);
+        this.observers = this.observers.filter(o => o !== observer);
     }
 
     private notifyObservers(): void {

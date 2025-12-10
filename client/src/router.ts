@@ -17,7 +17,6 @@ export default class Router {
         const path: string = window.location.pathname + window.location.search;
         history.replaceState(null, "", path);
         Router.renderCurrentPage();
-
         window.onpopstate = () => Router.onPopState();
         window.onclick = (event: Event) => Router.onClick(event);
     }
@@ -31,6 +30,7 @@ export default class Router {
 
     private static onPopState(): void { Router.renderCurrentPage(); }
 
+    // Interception des liens dans les balises <a>
     private static onClick(event: Event): void {
         const target: HTMLElement = event.target as HTMLElement;
         const anchor: HTMLAnchorElement | null = target.closest("a");
