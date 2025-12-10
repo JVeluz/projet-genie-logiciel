@@ -18,7 +18,7 @@ type PageState = 'DISCUSSION' | 'PROPOSED' | 'CONFIRMED' | 'UNAVAILABLE';
 
 const MESSAGE_TEMPLATE = (isMine: boolean, content: string, date: string) => `
     <div class="d-flex justify-content-${isMine ? "end" : "start"} mb-3">
-        <div class="${isMine ? "bg-primary text-white" : "bg-white border"} rounded-3 p-3 shadow-sm" style="max-width: 75%;">
+        <div class="${isMine ? "bg-primary text-white" : "border"} rounded-3 p-3 shadow-sm" style="max-width: 75%;">
             <p class="mb-1 text-break">${content}</p>
             <small class="${isMine ? "text-white-50" : "text-muted"} d-block text-end" style="font-size: 0.7rem;">${date}</small>
         </div>
