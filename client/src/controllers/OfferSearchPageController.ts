@@ -1,40 +1,40 @@
-import { IOffer } from "shared";
-import OfferSearchPage from "../pages/OfferSearchPage";
-import Application from "../models/Application";
-import OfferService from "../services/OfferService";
-import { WithLoading } from "./decorators";
+// import { IOffer } from "shared";
+// import OfferSearchPage from "../pages/OfferSearchPage";
+// import Application from "../models/Application";
+// import OfferService from "../services/OfferService";
+// import { WithLoading } from "./decorators";
 
-export default class OfferSearchPageController {
+// export default class OfferSearchPageController {
 
-    // Services
-    private offerService = new OfferService();
-    // Views
-    private page: OfferSearchPage;
-    // Models
-    private application: Application = Application.getInstance();
-    private searchForm: HTMLFormElement;
-    private filterForm: HTMLFormElement;
+//     // Services
+//     private offerService = new OfferService();
+//     // Views
+//     private page: OfferSearchPage;
+//     // Models
+//     private application: Application = Application.getInstance();
+//     private searchForm: HTMLFormElement;
+//     private filterForm: HTMLFormElement;
 
-    public constructor(page: OfferSearchPage, searchForm: HTMLFormElement, filterForm: HTMLFormElement) {
-        this.page = page;
-        this.searchForm = searchForm;
-        this.filterForm = filterForm;
-        this.searchForm.onsubmit = (event) => this.onSearchSubmit(event);
-        this.filterForm.onsubmit = (event) => this.onSearchSubmit(event);
-    }
+//     public constructor(page: OfferSearchPage, searchForm: HTMLFormElement, filterForm: HTMLFormElement) {
+//         this.page = page;
+//         this.searchForm = searchForm;
+//         this.filterForm = filterForm;
+//         this.searchForm.onsubmit = (event) => this.onSearchSubmit(event);
+//         this.filterForm.onsubmit = (event) => this.onSearchSubmit(event);
+//     }
 
-    @WithLoading()
-    public async onSearchSubmit(event: Event): Promise<void> {
-        event.preventDefault();
-        const search: Object = Object.fromEntries(new FormData(this.searchForm));
-        const filter: Object = Object.fromEntries(new FormData(this.filterForm));
-        const query: Object = { search, filter }
-        let result: IOffer[];
-        try {
-            result = await this.offerService.getAll(); // TODO: Pass query to service
-        } catch (error) {
-            return;
-        }
-        this.page.update(result);
-    }
-}
+//     @WithLoading()
+//     public async onSearchSubmit(event: Event): Promise<void> {
+//         event.preventDefault();
+//         const search: Object = Object.fromEntries(new FormData(this.searchForm));
+//         const filter: Object = Object.fromEntries(new FormData(this.filterForm));
+//         const query: Object = { search, filter }
+//         let result: IOffer[];
+//         try {
+//             result = await this.offerService.getAll(); // TODO: Pass query to service
+//         } catch (error) {
+//             return;
+//         }
+//         this.page.update(result);
+//     }
+// }

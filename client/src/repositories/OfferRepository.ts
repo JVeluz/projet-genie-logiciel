@@ -9,6 +9,12 @@ export default class IOfferRepository {
         return response.map((offerData: any) => OfferMapper.toDomain(offerData));
     }
 
+    public async getByTerms(terms: string): Promise<IOffer[]> {
+        // encodeURIComponent pour gérer les espaces ou caractères spéciaux dans l'URL
+        const response = await ServerAPI.get(`/offers/search/${encodeURIComponent(terms)}`);
+        return response.map((offerData: any) => OfferMapper.toDomain(offerData));
+    }
+
     public async getByID(offerID: string): Promise<IOffer> {
         const response = await ServerAPI.get(`/offers/${offerID}`);
         return OfferMapper.toDomain(response);
@@ -28,9 +34,7 @@ export default class IOfferRepository {
     }
 
     public async reserve(offerID: string, candidateBuyerID: string): Promise<void> {
-        const response = await ServerAPI.post(`/offers/${offerID}/reserve`, JSON.stringify({
-            candidateBuyerID
-        }));
+        const response = await ServerAPI.post(`/offers/${offerID}/reserve`, JSON.stringify({ candidateBuyerID }));
         console.log(response);
     }
 

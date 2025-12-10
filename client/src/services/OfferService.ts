@@ -11,6 +11,13 @@ export default class OfferService {
         return await this.offerRepository.getAll();
     }
 
+    public async getByTerms(terms: string): Promise<IOffer[]> {
+        if (!terms || terms.trim() === "") {
+            return await this.getAll();
+        }
+        return await this.offerRepository.getByTerms(terms);
+    }
+
     public async getByID(offerID: string): Promise<IOffer> {
         return await this.offerRepository.getByID(offerID);
     }
