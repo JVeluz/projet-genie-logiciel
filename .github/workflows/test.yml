@@ -21,5 +21,7 @@ jobs:
     - name: Install and Test Backend
       run: |
         cd server
+        echo "JWT_SECRET=secret_bidon_pour_les_tests" > .env  # Crée un faux fichier .env
+        echo "PORT=3000" >> .env                             # Ajoute une variable au cas où
         npm install
         npm test
