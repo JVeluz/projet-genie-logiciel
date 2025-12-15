@@ -80,7 +80,7 @@ export default class OfferEditPageController {
             alert((error as Error).message);
             return;
         }
-        window.location.href = `/user?id=${this.offer.sellerID}`;
+        window.location.href = `/user?id=${this.offer.sellerID?._id}`;
     }
 
     public onFormChange(): void {
