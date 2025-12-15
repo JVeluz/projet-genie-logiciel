@@ -20,7 +20,7 @@ export default class Observable<T> {
     }
 
     public removeObserver(observer: (value: T) => void): void {
-        this.observers.filter(o => o !== observer);
+        this.observers = this.observers.filter(o => o !== observer);
     }
 
     private notifyObservers(): void {
