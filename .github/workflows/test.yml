@@ -18,10 +18,10 @@ jobs:
       with:
         node-version: '20.x'
 
-    - name: Install and Test Backend
+    - name: Install, Build and Test Backend
       run: |
         cd server
-        echo "JWT_SECRET=secret_bidon_pour_les_tests" > .env  # Crée un faux fichier .env
-        echo "PORT=3000" >> .env                             # Ajoute une variable au cas où
+        echo "JWT_SECRET=secret_bidon" > .env
         npm install
+        npm run build      # <--- C'est la ligne magique qui manquait !
         npm test
